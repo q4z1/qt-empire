@@ -1,0 +1,1 @@
+"""Empire game package."""

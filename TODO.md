@@ -3,6 +3,8 @@
 ## Kurzfristig
 
 - GUI lokal interaktiv weiter prüfen und Layout iterativ verbessern
+- Fernbewegung ueber mehrere Zuege mit gemerktem Ziel bauen
+- Fernbewegung spaeter mit optionalem Klick-zu-Bestaetigen oder kleiner Schrittanimation pruefen
 - rechte Seitenleiste weiter verfeinern: Gruppierung, kompaktere Cards, bessere Scroll-Indikatoren
 - Menü und Statusbereich weiter atmosphärisch schärfen
 - Tooltip-/Hover-System später noch gezielter für Einheiten, Städte und Produktion ausbauen
@@ -13,10 +15,11 @@
 - Startmenü ausbauen: Dateiauswahl für Laden/Speichern, Einstellungen, Szenarioauswahl
 - Szenarioauswahl weiter ausbauen: Vorschaubilder, Schwierigkeitsgrad, Fraktionen
 - Terrain-Icons oder detailliertere Terrain-Darstellung später ergänzen
-- Demo-Capture spaeter mit gezielteren Sequenzen und weicheren Kamera-/Ablaufwechseln ausbauen
+- Demo-Capture spaeter noch weiter ausbauen: weichere Kamera-/Ablaufwechsel und gezielte Kampf-/Transport-Szenen
 
 ## Regeln als Nächstes
 
+- Bewegung zuerst fertigziehen, bevor neue groessere Regelsysteme dazukommen
 - differenzierteres Produktionssystem mit mehr Bautypen und echten Werften
 - Produktionsoberflaeche weiter ausbauen: Kosten, Bauzeit, Stadtrolle klarer darstellen
 - Stadtrollen weiter ausbauen: Harbor/Factory weiter spezialisieren, dazu Hauptstadt

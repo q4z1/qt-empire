@@ -18,6 +18,11 @@ ApplicationWindow {
         "game_over": false,
         "winner_id": null,
         "legal_targets": [],
+        "preview_path": [],
+        "preview_full_path": [],
+        "preview_reachable_path": [],
+        "preview_stop_position": null,
+        "preview_reaches_target": false,
         "tiles": [],
         "units": []
     })
@@ -278,6 +283,32 @@ ApplicationWindow {
                                     opacity: legalTarget ? 0.85 : 0.0
                                 }
 
+                                Rectangle {
+                                    anchors.fill: parent
+                                    anchors.margins: 10
+                                    radius: 5
+                                    color: isPreviewReachableStep(cellX, cellY) ? "#fff4a3" : (isPreviewFullStep(cellX, cellY) ? "#f3df9d" : "transparent")
+                                    opacity: isPreviewReachableStep(cellX, cellY) ? 0.7 : (isPreviewFullStep(cellX, cellY) ? 0.35 : 0.0)
+                                }
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    anchors.margins: 4
+                                    radius: 6
+                                    color: "transparent"
+                                    border.width: isPreviewTarget(cellX, cellY) ? 2 : (isPreviewStop(cellX, cellY) ? 2 : 0)
+                                    border.color: isPreviewTarget(cellX, cellY) ? "#fff4a3" : "#e18b5a"
+                                }
+
+                                Rectangle {
+                                    visible: isPreviewStop(cellX, cellY)
+                                    width: 8
+                                    height: 8
+                                    radius: 4
+                                    anchors.centerIn: parent
+                                    color: "#e18b5a"
+                                }
+
                                 Item {
                                     anchors.centerIn: parent
                                     width: 22
@@ -319,14 +350,22 @@ ApplicationWindow {
                                     anchors.fill: parent
                                     enabled: tileVisible
                                     hoverEnabled: true
-                                    onEntered: hoverInfo = describeTile(cellX, cellY, tileData, occupant, legalTarget)
+                                    onEntered: {
+                                        hoverInfo = describeTile(cellX, cellY, tileData, occupant, legalTarget)
+                                        if (selectedUnitId >= 0) {
+                                            gameController.setPreviewTarget(cellX, cellY)
+                                        }
+                                    }
                                     onExited: {
                                         if (hoverInfo === describeTile(cellX, cellY, tileData, occupant, legalTarget)) {
                                             hoverInfo = ""
                                         }
+                                        gameController.clearPreviewTarget()
                                     }
                                     onClicked: {
                                         if (legalTarget && selectedUnitId >= 0) {
+                                            gameController.moveUnit(selectedUnitId, cellX, cellY)
+                                        } else if (selectedUnitId >= 0 && !occupant) {
                                             gameController.moveUnit(selectedUnitId, cellX, cellY)
                                         } else if (occupant) {
                                             gameController.selectUnit(occupant.id)
@@ -430,6 +469,15 @@ ApplicationWindow {
                                     wrapMode: Text.WordWrap
                                     text: selectedUnitId >= 0 ? selectedTargetSummary() : "Select a unit to see legal actions"
                                     color: "#d9c7a4"
+                                }
+
+                                Text {
+                                    width: parent.width
+                                    wrapMode: Text.WordWrap
+                                    text: previewSummary()
+                                    color: "#f1dfb0"
+                                    font.pixelSize: 12
+                                    visible: previewSummary() !== ""
                                 }
 
                                 Text {
@@ -680,6 +728,44 @@ ApplicationWindow {
         return null
     }
 
+    function isPreviewFullStep(x, y) {
+        if (!gameState.preview_full_path) {
+            return false
+        }
+        for (let i = 0; i < gameState.preview_full_path.length; i++) {
+            const step = gameState.preview_full_path[i]
+            if (step.x === x && step.y === y) {
+                return true
+            }
+        }
+        return false
+    }
+
+    function isPreviewReachableStep(x, y) {
+        if (!gameState.preview_reachable_path) {
+            return false
+        }
+        for (let i = 0; i < gameState.preview_reachable_path.length; i++) {
+            const step = gameState.preview_reachable_path[i]
+            if (step.x === x && step.y === y) {
+                return true
+            }
+        }
+        return false
+    }
+
+    function isPreviewTarget(x, y) {
+        return !!gameState.preview_target
+               && gameState.preview_target.x === x
+               && gameState.preview_target.y === y
+    }
+
+    function isPreviewStop(x, y) {
+        return !!gameState.preview_stop_position
+               && gameState.preview_stop_position.x === x
+               && gameState.preview_stop_position.y === y
+    }
+
     function terrainColor(terrain) {
         if (terrain === "water") {
             return "#6a9fb5"
@@ -754,6 +840,20 @@ ApplicationWindow {
             labels.push(gameState.legal_targets[i].label)
         }
         return labels.join(" | ")
+    }
+
+    function previewSummary() {
+        if (!gameState.preview_target || !gameState.preview_full_path || gameState.preview_full_path.length === 0) {
+            return ""
+        }
+        if (gameState.preview_reaches_target) {
+            return "Preview: reaches target this turn"
+        }
+        if (gameState.preview_stop_position) {
+            return "Preview: stops this turn at "
+                   + gameState.preview_stop_position.x + ", " + gameState.preview_stop_position.y
+        }
+        return "Preview: target not reachable from current position"
     }
 
     function selectedUnitHeadline() {

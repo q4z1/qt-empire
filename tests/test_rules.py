@@ -347,6 +347,50 @@ def test_transport_move_keeps_cargo_position_in_sync() -> None:
     assert game._state.units[1].position == Position(3, 1)
 
 
+def test_unit_can_move_to_distant_reachable_target() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    result = game.move_unit(1, {"x": 3, "y": 1})
+
+    assert result.ok is True
+    assert game._state.units[1].position == Position(3, 1)
+    assert game._state.units[1].moves_remaining == 0
+
+
+def test_unit_moves_partway_toward_distant_target_when_range_is_insufficient() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    result = game.move_unit(1, {"x": 4, "y": 1})
+
+    assert result.ok is True
+    assert game._state.units[1].position == Position(3, 1)
+    assert "toward" in result.message
+
+
+def test_preview_path_matches_reachable_remote_route() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    preview_path = game.get_preview_path(unit_id=1, target=Position(4, 1))
+    preview_data = game.get_preview_data(unit_id=1, target=Position(4, 1))
+
+    assert preview_path == [{"x": 2, "y": 1}, {"x": 3, "y": 1}]
+    assert preview_data["full_path"] == [{"x": 2, "y": 1}, {"x": 3, "y": 1}, {"x": 4, "y": 1}]
+    assert preview_data["stop_position"] == {"x": 3, "y": 1}
+    assert preview_data["reaches_target"] is False
+
+
 def test_visible_state_contains_legal_targets_for_selected_unit() -> None:
     state = make_small_state()
     state.units = {

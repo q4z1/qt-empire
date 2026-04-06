@@ -23,6 +23,9 @@ Bereits vorhanden:
 - Terrain: `plains`, `forest`, `mountain`, `water`, `city`
 - Einheiten: `infantry`, `tank`, `transport`, `destroyer`
 - Bewegung mit Terrain-/Domain-Regeln
+- Einheiten koennen jetzt per Klick auf entfernte Ziele entlang eines Pfads bewegt werden
+- Hover ueber ein entferntes Ziel zeigt jetzt eine einfache Pfadvorschau fuer die aktuell selektierte Einheit
+- Die Vorschau zeigt jetzt auch lange Ziele jenseits des aktuellen Bewegungslimits mit Stopppunkt und Endziel
 - deterministischer Nahkampf mit Gegenschlag
 - Stadteroberung
 - einfache Stadtproduktion
@@ -49,7 +52,14 @@ Bereits vorhanden:
 - kompaktere Pfadangaben und breitere rechte Sidebar
 - minimale Qt/QML-Oberfläche
 - headless Demo-Capture fuer Launcher- und Ingame-Sequenzen als MP4
+- der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung und Save/Load
 - Tests für Kernregeln
+
+Verifiziert zuletzt:
+- `.venv/bin/pytest -q` -> `27 passed`
+- `.venv/bin/python -m compileall main.py game tests`
+- Offscreen-QML-Load erfolgreich
+- aktualisierte Demo unter `captures/demo-launcher-ingame.mp4`
 
 ## Projekt starten
 
@@ -89,6 +99,12 @@ Tests:
 ```bash
 .venv/bin/pytest -q
 ```
+
+## Naechster sinnvoller Schritt
+
+Wenn die naechste Sitzung direkt an die aktuelle Bewegungsarbeit anschliessen soll, ist die beste Fortsetzung:
+- Fernbewegung ueber mehrere Zuege mit gemerktem Ziel
+- optional danach Klick-zu-Bestaetigen oder kleine Schrittanimation
 
 ## Struktur
 

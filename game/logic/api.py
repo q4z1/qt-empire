@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import heapq
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -29,6 +30,12 @@ class GameAPI:
         self._refresh_visibility_memory()
         state = self._state.to_visible_state()
         state["legal_targets"] = self.get_legal_targets()
+        preview_data = self.get_preview_data()
+        state["preview_path"] = preview_data["reachable_path"]
+        state["preview_full_path"] = preview_data["full_path"]
+        state["preview_reachable_path"] = preview_data["reachable_path"]
+        state["preview_stop_position"] = preview_data["stop_position"]
+        state["preview_reaches_target"] = preview_data["reaches_target"]
         self._attach_city_build_options(state)
         return state
 
@@ -42,6 +49,7 @@ class GameAPI:
         if unit.owner_id != self._state.current_player:
             return self._result(False, f"Unit {unit_id} is not controlled by player {self._state.current_player}.")
 
+        self._state.preview_target = None
         self._state.selected_unit_id = unit_id
         return self._result(True, f"Selected unit {unit_id}.")
 
@@ -56,18 +64,21 @@ class GameAPI:
             return self._result(False, f"Unit {unit_id} is not controlled by player {self._state.current_player}.")
 
         target = self._normalize_position(target_position)
+        self._state.preview_target = None
         if not self._state.is_in_bounds(target):
             return self._result(False, f"Target {target.to_dict()} is outside the map.")
 
         if unit.embarked_in is not None:
             return self._disembark_unit(unit, target)
 
-        distance = abs(unit.position.x - target.x) + abs(unit.position.y - target.y)
-        if distance != 1:
-            return self._result(False, "Only orthogonal single-tile movement is supported.")
-
         target_tile = self._state.get_tile(target)
         blocking_unit = self._state.get_unit_at(target)
+        distance = abs(unit.position.x - target.x) + abs(unit.position.y - target.y)
+
+        if distance > 1:
+            if blocking_unit is not None:
+                return self._result(False, f"Target {target.to_dict()} is occupied.")
+            return self._move_unit_towards_target(unit, target)
 
         if blocking_unit is not None and blocking_unit.owner_id == unit.owner_id:
             if self._can_embark(unit, blocking_unit):
@@ -97,6 +108,120 @@ class GameAPI:
         self._state.last_event = f"Moved unit {unit_id} to {target.to_dict()}."
         return self._result(True, self._state.last_event)
 
+    def _move_unit_towards_target(self, unit, target: Position) -> CommandResult:
+        if unit.moves_remaining < 1:
+            return self._result(False, f"Unit {unit.unit_id} has no movement left.")
+
+        path = self._find_path(unit, target)
+        if path is None or len(path) < 2:
+            return self._result(False, f"No path to {target.to_dict()} for unit {unit.unit_id}.")
+
+        current = unit.position
+        reachable_steps = self._reachable_positions_for_path(unit, path)
+        final_position = reachable_steps[-1] if reachable_steps else current
+        remaining_moves = self._remaining_moves_after_path(unit, reachable_steps)
+
+        if final_position == current:
+            return self._result(False, f"Unit {unit.unit_id} cannot advance toward {target.to_dict()} with current movement.")
+
+        unit.position = final_position
+        unit.moves_remaining = remaining_moves
+        self._sync_cargo_positions(unit)
+        self._capture_city_if_present(unit)
+        self._state.selected_unit_id = unit.unit_id
+        if self._state.game_over:
+            return self._result(True, self._state.last_event)
+
+        if final_position == target:
+            self._state.last_event = f"Moved unit {unit.unit_id} to {target.to_dict()}."
+        else:
+            self._state.last_event = (
+                f"Moved unit {unit.unit_id} toward {target.to_dict()} and stopped at {final_position.to_dict()}."
+            )
+        return self._result(True, self._state.last_event)
+
+    def _find_path(self, unit, target: Position) -> list[Position] | None:
+        start = unit.position
+        frontier: list[tuple[int, int, Position]] = [(0, 0, start)]
+        best_costs: dict[tuple[int, int], int] = {(start.x, start.y): 0}
+        previous: dict[tuple[int, int], tuple[int, int] | None] = {(start.x, start.y): None}
+        sequence = 1
+
+        while frontier:
+            cost_so_far, _, current = heapq.heappop(frontier)
+            current_key = (current.x, current.y)
+            if cost_so_far != best_costs[current_key]:
+                continue
+            if current == target:
+                return self._reconstruct_path(previous, target)
+
+            for neighbor in self._state.orthogonal_neighbors(current):
+                if not self._can_step_onto(unit, neighbor, target):
+                    continue
+                neighbor_tile = self._state.get_tile(neighbor)
+                move_cost = terrain_move_cost(unit, neighbor_tile)
+                if move_cost is None:
+                    continue
+                next_cost = cost_so_far + move_cost
+                neighbor_key = (neighbor.x, neighbor.y)
+                if next_cost >= best_costs.get(neighbor_key, 1_000_000):
+                    continue
+                best_costs[neighbor_key] = next_cost
+                previous[neighbor_key] = current_key
+                heapq.heappush(frontier, (next_cost, sequence, neighbor))
+                sequence += 1
+
+        return None
+
+    def _can_step_onto(self, unit, position: Position, target: Position) -> bool:
+        occupant = self._state.get_unit_at(position)
+        if occupant is None:
+            return True
+        if position == unit.position:
+            return True
+        if position != target:
+            return False
+        return occupant.owner_id != unit.owner_id
+
+    def _reconstruct_path(self, previous: dict[tuple[int, int], tuple[int, int] | None], target: Position) -> list[Position]:
+        path: list[Position] = []
+        current_key: tuple[int, int] | None = (target.x, target.y)
+        while current_key is not None:
+            path.append(Position(current_key[0], current_key[1]))
+            current_key = previous[current_key]
+        path.reverse()
+        return path
+
+    def _reachable_positions_for_path(self, unit, path: list[Position]) -> list[Position]:
+        reachable: list[Position] = []
+        remaining_moves = unit.moves_remaining
+        for step in path[1:]:
+            step_tile = self._state.get_tile(step)
+            step_cost = terrain_move_cost(unit, step_tile)
+            if step_cost is None or step_cost > remaining_moves:
+                break
+            reachable.append(step)
+            remaining_moves -= step_cost
+        return reachable
+
+    def _remaining_moves_after_path(self, unit, reachable_steps: list[Position]) -> int:
+        remaining_moves = unit.moves_remaining
+        for step in reachable_steps:
+            step_tile = self._state.get_tile(step)
+            step_cost = terrain_move_cost(unit, step_tile)
+            if step_cost is None:
+                break
+            remaining_moves -= step_cost
+        return remaining_moves
+
+    def _empty_preview_data(self) -> dict[str, object]:
+        return {
+            "full_path": [],
+            "reachable_path": [],
+            "stop_position": None,
+            "reaches_target": False,
+        }
+
     def end_turn(self) -> CommandResult:
         inactive_result = self._ensure_game_active()
         if inactive_result is not None:
@@ -104,6 +229,7 @@ class GameAPI:
         self._state.current_player = 2 if self._state.current_player == 1 else 1
         self._state.turn_number += 1
         self._state.selected_unit_id = None
+        self._state.preview_target = None
 
         support_messages = self._apply_city_support()
         production_messages = self._apply_city_production()
@@ -140,6 +266,14 @@ class GameAPI:
         self._state.last_event = f"City at {target.to_dict()} now builds {unit_type}."
         return self._result(True, self._state.last_event)
 
+    def set_preview_target(self, target_position: dict[str, int] | Position | None) -> dict[str, object]:
+        if target_position is None:
+            self._state.preview_target = None
+            return self.get_visible_state()
+        target = self._normalize_position(target_position)
+        self._state.preview_target = target if self._state.is_in_bounds(target) else None
+        return self.get_visible_state()
+
     def save_to_file(self, path: str | Path) -> Path:
         target = Path(path)
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -169,6 +303,37 @@ class GameAPI:
             if legal_target is not None:
                 legal_targets.append(legal_target)
         return legal_targets
+
+    def get_preview_data(self, unit_id: int | None = None, target: Position | None = None) -> dict[str, object]:
+        selected_unit_id = unit_id if unit_id is not None else self._state.selected_unit_id
+        preview_target = target if target is not None else self._state.preview_target
+        if selected_unit_id is None or preview_target is None:
+            return self._empty_preview_data()
+
+        unit = self._state.units.get(selected_unit_id)
+        if unit is None or unit.owner_id != self._state.current_player or unit.embarked_in is not None:
+            return self._empty_preview_data()
+        if preview_target == unit.position:
+            return self._empty_preview_data()
+
+        occupant = self._state.get_unit_at(preview_target)
+        if occupant is not None and occupant.owner_id == unit.owner_id:
+            return self._empty_preview_data()
+
+        path = self._find_path(unit, preview_target)
+        if path is None or len(path) < 2:
+            return self._empty_preview_data()
+
+        reachable_steps = self._reachable_positions_for_path(unit, path)
+        return {
+            "full_path": [position.to_dict() for position in path[1:]],
+            "reachable_path": [position.to_dict() for position in reachable_steps],
+            "stop_position": reachable_steps[-1].to_dict() if reachable_steps else None,
+            "reaches_target": bool(reachable_steps) and reachable_steps[-1] == preview_target,
+        }
+
+    def get_preview_path(self, unit_id: int | None = None, target: Position | None = None) -> list[dict[str, int]]:
+        return self.get_preview_data(unit_id=unit_id, target=target)["reachable_path"]
 
     def _classify_target(self, unit, target: Position) -> dict[str, object] | None:
         tile = self._state.get_tile(target)

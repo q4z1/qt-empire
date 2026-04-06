@@ -51,33 +51,65 @@ def render_demo_video(output_path: str | Path | None = None, fps: int = 8) -> Pa
                 pixmap.save(str(frame_path))
                 frame_index += 1
 
+        def pause(seconds: float) -> None:
+            capture(seconds)
+
+        def preview(x: int, y: int, seconds: float) -> None:
+            controller.setPreviewTarget(x, y)
+            capture(seconds)
+            controller.clearPreviewTarget()
+
         root.setProperty("currentScreen", "menu")
-        capture(1.2)
+        pause(1.4)
+
+        controller.setSelectedScenario("frontline")
+        pause(1.0)
 
         controller.setSelectedScenario("islands")
-        capture(1.0)
+        pause(1.2)
 
         controller.startNewGame()
         root.setProperty("currentScreen", "game")
-        capture(1.2)
+        pause(1.6)
+
+        controller.setCityProduction(3, 3, "tank")
+        pause(1.0)
 
         controller.selectUnit(1)
-        capture(0.8)
-
-        controller.moveUnit(1, 4, 4)
-        capture(0.8)
+        pause(0.9)
+        preview(7, 4, 1.4)
+        controller.moveUnit(1, 7, 4)
+        pause(1.2)
 
         controller.selectUnit(3)
-        capture(0.8)
+        pause(0.9)
+        preview(13, 8, 1.6)
+        controller.moveUnit(3, 13, 8)
+        pause(1.2)
 
-        controller.moveUnit(3, 8, 8)
-        capture(0.8)
+        controller.selectUnit(2)
+        pause(0.8)
+        preview(10, 7, 1.4)
+        controller.moveUnit(2, 10, 7)
+        pause(1.2)
 
         controller.saveGame()
-        capture(0.8)
+        pause(0.9)
 
         controller.endTurn()
-        capture(1.0)
+        pause(1.0)
+
+        controller.endTurn()
+        pause(1.0)
+
+        controller.loadGame()
+        pause(1.1)
+
+        controller.selectUnit(3)
+        pause(0.8)
+        preview(16, 8, 1.4)
+        controller.moveUnit(3, 16, 8)
+        pause(1.2)
 
         _encode_video(ffmpeg_path, frames_dir, fps, target)
 

@@ -68,6 +68,9 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - JSON Save/Load für headless Nutzung und GUI
 - Produktionslogik und Capture erhalten Stadtrollen explizit mit
 - prueft jetzt auch eine erste Siegbedingung ueber verbliebene `capital`-Staedte
+- enthaelt jetzt auch einfache Pfadsuche fuer entfernte Bewegungsziele
+- liefert ausserdem eine Engine-berechnete Pfadvorschau fuer das aktuell gehoverte Ziel
+- die Vorschau unterscheidet zwischen vollem geplanten Pfad und dem in dieser Runde erreichbaren Teil
 
 ## Aktuelle UI-Module
 
@@ -80,6 +83,7 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 [`game/ui/demo_capture.py`](/home/min/Development/empire/game/ui/demo_capture.py)
 - headless Capture-Helfer fuer kurze UI-Demos
 - rendert Frames direkt aus dem QML-Fenster und kodiert sie mit `ffmpeg` zu MP4
+- bildet inzwischen einen laengeren, skriptbaren Showcase-Ablauf fuer Launcher und Gameplay ab
 
 [`game/ui/qml/Main.qml`](/home/min/Development/empire/game/ui/qml/Main.qml)
 - Startmenü und Spielansicht in einer einfachen Screen-Struktur
@@ -139,3 +143,17 @@ Das Modell ist bewusst pragmatisch und noch nicht final Empire-Deluxe-genau.
 - Produktionssystem pro Stadt fix oder konfigurierbare Bauaufträge?
 - Kampfmodell als einfacher deterministischer Wertvergleich oder näher an Empire Deluxe?
 - Transport-/Carrier-System als frühe Basiskomponente oder später?
+
+## Aktueller Wiedereinstieg
+
+Der zuletzt bearbeitete Schwerpunkt war Bewegung und Bewegungs-UX:
+
+- entfernte Ziele koennen bereits per Pfadsuche angeklickt werden
+- die Engine liefert eine Pfadvorschau mit vollem Pfad, erreichbarem Teil und Stopppunkt
+- QML rendert diese Vorschau nur noch, berechnet aber keine Route selbst
+
+Der naechste logische Architektur-Schritt waere:
+
+- gemerktes Bewegungsziel pro Einheit oder pro Auswahl
+- automatisches Weiterlaufen ueber mehrere Zuege
+- weiterhin strikt in `game/logic`, ohne Routenlogik in QML zu duplizieren

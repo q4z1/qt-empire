@@ -97,6 +97,16 @@ class GameController(QObject):
     def setCityProduction(self, x: int, y: int, unit_type: str) -> None:
         self._apply_result(self._game.set_city_production({"x": x, "y": y}, unit_type).to_dict())
 
+    @Slot(int, int)
+    def setPreviewTarget(self, x: int, y: int) -> None:
+        self._state = self._game.set_preview_target({"x": x, "y": y})
+        self.stateChanged.emit()
+
+    @Slot()
+    def clearPreviewTarget(self) -> None:
+        self._state = self._game.set_preview_target(None)
+        self.stateChanged.emit()
+
     def _apply_result(self, result: dict[str, Any]) -> None:
         self._state = result["state"]
         self._command_message = result["message"]

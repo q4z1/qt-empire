@@ -19,6 +19,7 @@ class GameState:
     explored_tiles_by_player: dict[int, set[tuple[int, int]]] = field(default_factory=dict)
     game_over: bool = False
     winner_id: int | None = None
+    preview_target: Position | None = None
 
     def is_in_bounds(self, position: Position) -> bool:
         return 0 <= position.x < self.map_size.width and 0 <= position.y < self.map_size.height
@@ -98,6 +99,7 @@ class GameState:
             "last_event": self.last_event,
             "game_over": self.game_over,
             "winner_id": self.winner_id,
+            "preview_target": self.preview_target.to_dict() if self.preview_target is not None else None,
             "tiles": tiles,
             "units": units,
         }
@@ -147,6 +149,7 @@ class GameState:
             "last_event": self.last_event,
             "game_over": self.game_over,
             "winner_id": self.winner_id,
+            "preview_target": self.preview_target.to_dict() if self.preview_target is not None else None,
             "explored_tiles_by_player": {
                 str(player_id): [{"x": x, "y": y} for x, y in sorted(positions)]
                 for player_id, positions in sorted(self.explored_tiles_by_player.items())
@@ -164,6 +167,7 @@ class GameState:
             last_event=str(data["last_event"]),
             game_over=bool(data.get("game_over", False)),
             winner_id=int(data["winner_id"]) if data.get("winner_id") is not None else None,
+            preview_target=Position.from_dict(data["preview_target"]) if data.get("preview_target") is not None else None,
         )
         state.tiles = {}
         for tile_data in data["tiles"]:

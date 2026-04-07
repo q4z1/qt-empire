@@ -16,6 +16,7 @@ class UnitType:
     production_cost: int
     vision_range: int
     cargo_capacity: int = 0
+    attack_range: int = 1
 
 
 UNIT_TYPES: dict[str, UnitType] = {
@@ -52,6 +53,18 @@ UNIT_TYPES: dict[str, UnitType] = {
         vision_range=4,
         cargo_capacity=2,
     ),
+    "artillery": UnitType(
+        name="artillery",
+        domain="land",
+        max_moves=1,
+        max_hp=8,
+        attack=8,
+        defense=2,
+        production_cost=9,
+        vision_range=2,
+        cargo_capacity=0,
+        attack_range=3,
+    ),
     "destroyer": UnitType(
         name="destroyer",
         domain="sea",
@@ -81,17 +94,26 @@ TERRAIN_DEFENSE_BONUS: dict[str, int] = {
     "city": 2,
 }
 
+RANGED_TERRAIN_DEFENSE_BONUS: dict[str, int] = {
+    "plains": 0,
+    "forest": 2,
+    "mountain": 4,
+    "water": 0,
+    "city": 1,
+}
+
 CITY_PRODUCTION_PER_TURN = 2
 CITY_REPAIR_PER_TURN = 3
 CAPITAL_REPAIR_PER_TURN = 5
 DEFAULT_CITY_BUILD = "infantry"
 CITY_VISION_RANGE = 2
 CAPITAL_VISION_RANGE = 4
+RANGE_BLOCKING_TERRAINS = {"forest", "mountain"}
 CITY_ROLE_BUILD_OPTIONS: dict[str, tuple[str, ...]] = {
     "city": ("infantry",),
-    "factory": ("infantry", "tank"),
+    "factory": ("infantry", "tank", "artillery"),
     "harbor": ("infantry", "transport", "destroyer"),
-    "capital": ("infantry", "tank"),
+    "capital": ("infantry", "tank", "artillery"),
 }
 
 
@@ -108,6 +130,7 @@ def create_unit(unit_id: int, owner_id: int, unit_type: str, position: Position)
         max_hp=definition.max_hp,
         attack=definition.attack,
         defense=definition.defense,
+        attack_range=definition.attack_range,
         domain=definition.domain,
         vision_range=definition.vision_range,
         cargo_capacity=definition.cargo_capacity,

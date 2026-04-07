@@ -58,13 +58,21 @@ Bereits vorhanden:
 - einfache Schrittanimation fuer Fernbewegungen in der UI
 - queued Bewegungen und Auto-Fortsetzung werden jetzt ebenfalls animiert
 - laufende Bewegungen werden jetzt auch in der rechten Seitenleiste zusammengefasst
+- Artillerie als neue Fernkampfeinheit mit Reichweitenangriff
+- Artillerie-Fernkampf beachtet jetzt eine einfache Sichtlinie über blockierendes Terrain
+- Artillerie hat jetzt eigene Terrainmodifikatoren fuer Fernkampf
+- Artillerie kann auf Reichweite 2 jetzt Gegenfeuer ausloesen
+- Gegenfeuer greift jetzt auch auf Reichweite 3, aber mit abgeschwaechtem Schaden
+- Gegenfeuer verbraucht die Bewegungs-/Reaktionsfaehigkeit der verteidigenden Artillerie
+- Artillerie kann jetzt bis Reichweite 3 bombardieren, mit leichtem Schadensabfall auf Distanz 3
+- die Seitenleiste zeigt jetzt die Reichweite der selektierten Einheit direkt an
 - minimale Qt/QML-Oberfläche
 - headless Demo-Capture fuer Launcher- und Ingame-Sequenzen als MP4
 - der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung und Save/Load
 - Tests für Kernregeln
 
-Verifiziert zuletzt:
-- `.venv/bin/pytest -q` -> `33 passed`
+- Verifiziert zuletzt:
+- `.venv/bin/pytest -q` -> `42 passed`
 - `.venv/bin/python -m compileall main.py game tests`
 - Offscreen-QML-Load und `capture-demo` erfolgreich
 - Bewegungsanimation fuer direkte und queued Fernbewegungen in der UI eingebaut und im Demo-Lauf mitverifiziert
@@ -112,7 +120,9 @@ Tests:
 ## Naechster sinnvoller Schritt
 
 Wenn die naechste Sitzung direkt an die aktuelle Bewegungsarbeit anschliessen soll, ist die beste Fortsetzung:
-- gezielte Schrittanimation fuer queued Bewegungen im Demo-Capture optisch nachschärfen
+
+- Artillerie weiter feinbalancieren: Gegenfeuerwerte, Reichweite 3 und eventuelle Gegenmaßnahmen im Gegenspiel
+- Artillerie-Regeln weiter schaerfen, etwa mit Gegenfeuer- oder Reichweitenbalance
 - danach Rueckkehr zu tieferen Spielregeln
 
 ## Struktur

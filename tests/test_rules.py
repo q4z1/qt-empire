@@ -130,7 +130,7 @@ def test_inland_owned_city_defaults_to_factory_and_cannot_build_destroyer() -> N
     visible_state = game.get_visible_state()
     city_tile = next(tile for tile in visible_state["tiles"] if tile["position"] == {"x": 2, "y": 2})
     assert city_tile["city_role"] == "factory"
-    assert city_tile["available_build_options"] == ["infantry", "tank"]
+    assert city_tile["available_build_options"] == ["infantry", "tank", "artillery"]
 
 
 def test_explicit_harbor_role_controls_build_options() -> None:
@@ -173,7 +173,193 @@ def test_explicit_factory_role_can_build_tank_but_not_destroyer() -> None:
     assert tank_result.ok is True
     assert destroyer_result.ok is False
     assert city_tile["city_role"] == "factory"
-    assert city_tile["available_build_options"] == ["infantry", "tank"]
+    assert city_tile["available_build_options"] == ["infantry", "tank", "artillery"]
+
+
+def test_factory_can_build_artillery() -> None:
+    state = make_small_state()
+    state.tiles[(2, 2)] = Tile(
+        position=Position(2, 2),
+        terrain="city",
+        city_owner_id=1,
+        production_points=0,
+        build_choice="artillery",
+        city_role="factory",
+    )
+    state.units = {}
+    game = GameAPI(state)
+
+    result = game.set_city_production({"x": 2, "y": 2}, "artillery")
+
+    assert result.ok is True
+    assert game._state.tiles[(2, 2)].build_choice == "artillery"
+
+
+def test_artillery_can_bombard_enemy_at_range_without_retaliation() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "infantry", Position(3, 1)),
+    }
+    state.units[2].hp = 4
+    game = GameAPI(state)
+
+    result = game.move_unit(1, {"x": 3, "y": 1})
+
+    assert result.ok is True
+    assert game._state.units[1].position == Position(1, 1)
+    assert game._state.units[1].moves_remaining == 0
+    assert 2 not in game._state.units
+    assert "bombarded" in result.message
+
+
+def test_artillery_can_bombard_at_range_three() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "infantry", Position(4, 1)),
+    }
+    state.units[2].hp = 10
+    game = GameAPI(state)
+
+    result = game.move_unit(1, {"x": 4, "y": 1})
+
+    assert result.ok is True
+    assert game._state.units[2].hp == 5
+    assert game._state.units[1].moves_remaining == 0
+
+
+def test_artillery_does_less_damage_at_range_three_than_two() -> None:
+    range_two_state = make_small_state()
+    range_two_state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "infantry", Position(3, 1)),
+    }
+    range_two_state.units[2].hp = 10
+    range_two_game = GameAPI(range_two_state)
+
+    range_three_state = make_small_state()
+    range_three_state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "infantry", Position(4, 1)),
+    }
+    range_three_state.units[2].hp = 10
+    range_three_game = GameAPI(range_three_state)
+
+    range_two_game.move_unit(1, {"x": 3, "y": 1})
+    range_three_game.move_unit(1, {"x": 4, "y": 1})
+
+    assert range_two_game._state.units[2].hp < range_three_game._state.units[2].hp
+
+
+def test_artillery_does_less_damage_in_forest_than_on_plains() -> None:
+    plains_state = make_small_state()
+    plains_state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "infantry", Position(3, 1)),
+    }
+    plains_state.units[2].hp = 10
+    plains_game = GameAPI(plains_state)
+
+    forest_state = make_small_state()
+    forest_state.tiles[(3, 1)] = Tile(position=Position(3, 1), terrain="forest")
+    forest_state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "infantry", Position(3, 1)),
+    }
+    forest_state.units[2].hp = 10
+    forest_game = GameAPI(forest_state)
+
+    plains_result = plains_game.move_unit(1, {"x": 3, "y": 1})
+    forest_result = forest_game.move_unit(1, {"x": 3, "y": 1})
+
+    assert plains_result.ok is True
+    assert forest_result.ok is True
+    assert plains_game._state.units[2].hp == 4
+    assert forest_game._state.units[2].hp == 6
+
+
+def test_artillery_counterfires_on_ranged_attack() -> None:
+    state = make_small_state()
+    state.tiles[(3, 1)] = Tile(position=Position(3, 1), terrain="forest")
+    state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "artillery", Position(3, 1)),
+    }
+    state.units[1].hp = 4
+    game = GameAPI(state)
+
+    result = game.move_unit(1, {"x": 3, "y": 1})
+
+    assert result.ok is True
+    assert 1 not in game._state.units
+    assert game._state.units[2].hp == 1
+    assert "counterfire" in result.message
+
+
+def test_artillery_counterfire_is_weaker_at_range_three() -> None:
+    range_two_state = make_small_state()
+    range_two_state.tiles[(3, 1)] = Tile(position=Position(3, 1), terrain="mountain")
+    range_two_state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "artillery", Position(3, 1)),
+    }
+    range_two_state.units[1].hp = 10
+    range_two_game = GameAPI(range_two_state)
+
+    range_three_state = make_small_state()
+    range_three_state.tiles[(4, 1)] = Tile(position=Position(4, 1), terrain="mountain")
+    range_three_state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "artillery", Position(4, 1)),
+    }
+    range_three_state.units[1].hp = 10
+    range_three_game = GameAPI(range_three_state)
+
+    range_two_result = range_two_game.move_unit(1, {"x": 3, "y": 1})
+    range_three_result = range_three_game.move_unit(1, {"x": 4, "y": 1})
+
+    assert range_two_result.ok is True
+    assert range_three_result.ok is True
+    assert range_two_game._state.units[1].hp < range_three_game._state.units[1].hp
+    assert "counterfire" in range_two_result.message
+    assert "counterfire" in range_three_result.message
+
+
+def test_artillery_does_not_counterfire_when_moves_are_exhausted() -> None:
+    state = make_small_state()
+    state.tiles[(3, 1)] = Tile(position=Position(3, 1), terrain="forest")
+    state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "artillery", Position(3, 1)),
+    }
+    state.units[2].moves_remaining = 0
+    game = GameAPI(state)
+
+    result = game.move_unit(1, {"x": 3, "y": 1})
+
+    assert result.ok is True
+    assert 1 in game._state.units
+    assert game._state.units[2].hp == 1
+    assert "counterfire" not in result.message
+
+
+def test_artillery_cannot_bombard_through_blocking_terrain() -> None:
+    state = make_small_state()
+    state.tiles[(2, 1)] = Tile(position=Position(2, 1), terrain="mountain")
+    state.units = {
+        1: create_unit(1, 1, "artillery", Position(1, 1)),
+        2: create_unit(2, 2, "infantry", Position(3, 1)),
+    }
+    game = GameAPI(state)
+
+    legal_targets = game.get_legal_targets(1)
+    result = game.move_unit(1, {"x": 3, "y": 1})
+
+    assert all(target["position"] != {"x": 3, "y": 1} for target in legal_targets)
+    assert result.ok is False
+    assert "occupied" in result.message
+    assert 2 in game._state.units
 
 
 def test_capital_role_extends_vision_range() -> None:

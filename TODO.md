@@ -19,6 +19,7 @@
 
 - Bewegung zuerst fertigziehen, bevor neue groessere Regelsysteme dazukommen
 - differenzierteres Produktionssystem mit mehr Bautypen und echten Werften
+- Artillerie-Regeln weiter ausbauen: Gegenfeuer-Feintuning und Reichweitenbalance
 - Produktionsoberflaeche weiter ausbauen: Kosten, Bauzeit, Stadtrolle klarer darstellen
 - Stadtrollen weiter ausbauen: Harbor/Factory weiter spezialisieren, dazu Hauptstadt
 - Hauptstadt-Regeln spaeter weiter ausbauen: Sonderproduktion, Nachschub, klarere Eroberungs- und Niederlageeffekte

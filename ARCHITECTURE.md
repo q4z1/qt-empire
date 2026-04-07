@@ -59,6 +59,13 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - Produktionskonstanten und erlaubte Stadt-Bauoptionen je Stadtrolle
 - Reparatur-/Versorgungswerte fuer Staedte
 - Sonderwerte fuer `capital` wie groessere Sicht und staerkere Reparatur
+- neue Fernkampfeinheit `artillery` mit Reichweitenangriff
+- Sichtlinienblocker fuer Fernkampf ueber ausgewiesene Geländetypen
+- eigene Terrainmodifikatoren fuer Artillerie-Fernkampf
+- Artillerie kann bei Fernangriffen auf Distanz 2 Gegenfeuer ausloesen
+- Artillerie kann bei Fernangriffen auf Distanz 2 und 3 Gegenfeuer ausloesen, auf Distanz 3 mit leichtem Falloff
+- Gegenfeuer verbraucht die Reaktionsfaehigkeit der verteidigenden Artillerie fuer diesen Zug
+- Artillerie kann jetzt bis Reichweite 3 bombardieren, mit leichtem Schadensabfall auf Distanz 3
 
 [`game/logic/scenarios.py`](/home/min/Development/empire/game/logic/scenarios.py)
 - Aufbau mehrerer vordefinierter Szenarien und Szenariometadaten
@@ -72,6 +79,13 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - liefert ausserdem eine Engine-berechnete Pfadvorschau fuer das aktuell gehoverte Ziel
 - die Vorschau unterscheidet zwischen vollem geplanten Pfad und dem in dieser Runde erreichbaren Teil
 - speichert ausserdem gemerkte Bewegungsziele direkt an Einheiten fuer spaetere automatische Fortsetzung
+- behandelt fuer `artillery` einen Reichweitenangriff auf Distanz 2 ohne Gegenangriff
+- prueft fuer Artillerie auch eine einfache Sichtlinie ueber blockierendes Gelände
+- verwendet fuer Artillerie eigene Terrainmodifikatoren statt der Nahkampfwerte
+- löst fuer gegnerische Artillerie auf Distanz 2 und 3 Gegenfeuer aus, wenn die Sichtlinie frei ist
+- setzt dabei die Bewegungs-/Reaktionspunkte des Verteidigers auf 0
+- verteilt den Fernkampfschaden fuer Reichweite 3 mit leichtem Falloff
+- uebergibt die Angriffreichweite jetzt ebenfalls im sichtbaren Unit-State, damit die UI sie anzeigen kann
 
 ## Aktuelle UI-Module
 
@@ -159,9 +173,12 @@ Der zuletzt bearbeitete Schwerpunkt war Bewegung und Bewegungs-UX:
 - teilweise erreichte Fernziele koennen als Orders ueber mehrere eigene Zuege fortgesetzt und bewusst geloescht werden
 - bestaetigte Ziele und laufende Orders werden in QML jetzt nur visualisiert, nicht dort entschieden
 - eine kleine Schrittanimation fuer bestätigte Fernbewegungen und queued Fortsetzungen liegt jetzt in der QML-UI
+- die Seitenleiste zeigt laufende Bewegungen als kompakte Statuskarte
+- die Seitenleiste zeigt jetzt auch die Reichweite der selektierten Einheit an
 
 Der naechste logische Architektur-Schritt waere:
 
-- optionale feinere Animationen fuer Teilpfade oder Transportbewegungen auf Basis derselben Engine-Daten
+- optionale Verfeinerung des Artillerie-Regelsets, etwa mit Gegenfeuer
+- optionales Feintuning des Gegenfeuers auf Distanz 2 und 3 oder des Schadensabfalls auf Distanz 3
 - danach wieder zur Kernlogik zurueck
 - weiterhin strikt in `game/logic`, ohne Routenlogik in QML zu duplizieren

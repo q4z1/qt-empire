@@ -28,6 +28,7 @@ class Unit:
     max_hp: int
     attack: int
     defense: int
+    attack_range: int
     domain: str
     vision_range: int
     cargo_capacity: int
@@ -47,6 +48,7 @@ class Unit:
             "max_hp": self.max_hp,
             "attack": self.attack,
             "defense": self.defense,
+            "attack_range": self.attack_range,
             "domain": self.domain,
             "vision_range": self.vision_range,
             "cargo_capacity": self.cargo_capacity,
@@ -69,6 +71,7 @@ class Unit:
             max_hp=int(data["max_hp"]),
             attack=int(data["attack"]),
             defense=int(data["defense"]),
+            attack_range=int(data.get("attack_range", 1)),
             domain=str(data["domain"]),
             vision_range=int(data["vision_range"]),
             cargo_capacity=int(data["cargo_capacity"]),

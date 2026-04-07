@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .models import Position
-from .rules import CAPITAL_REPAIR_PER_TURN, CITY_REPAIR_PER_TURN, CITY_PRODUCTION_PER_TURN, CITY_ROLE_BUILD_OPTIONS, DEFAULT_CITY_BUILD, UNIT_TYPES, create_unit, resolve_combat, terrain_move_cost
+from .rules import CAPITAL_REPAIR_PER_TURN, CITY_REPAIR_PER_TURN, CITY_PRODUCTION_PER_TURN, CITY_ROLE_BUILD_OPTIONS, DEFAULT_CITY_BUILD, RANGE_BLOCKING_TERRAINS, RANGED_TERRAIN_DEFENSE_BONUS, TERRAIN_DEFENSE_BONUS, UNIT_TYPES, create_unit, resolve_combat, terrain_move_cost
 from .scenarios import create_default_state, create_scenario_state
 from .state import GameState
 
@@ -76,6 +76,9 @@ class GameAPI:
         target_tile = self._state.get_tile(target)
         blocking_unit = self._state.get_unit_at(target)
         distance = abs(unit.position.x - target.x) + abs(unit.position.y - target.y)
+
+        if self._can_ranged_attack(unit, target, blocking_unit, distance):
+            return self._resolve_ranged_attack(unit, blocking_unit, target_tile, target)
 
         if distance > 1:
             if blocking_unit is not None:
@@ -363,6 +366,8 @@ class GameAPI:
             legal_target = self._classify_target(unit, neighbor)
             if legal_target is not None:
                 legal_targets.append(legal_target)
+        if unit.unit_type == "artillery":
+            legal_targets.extend(self._ranged_attack_targets(unit))
         return legal_targets
 
     def get_preview_data(self, unit_id: int | None = None, target: Position | None = None) -> dict[str, object]:
@@ -375,6 +380,10 @@ class GameAPI:
         if unit is None or unit.owner_id != self._state.current_player or unit.embarked_in is not None:
             return self._empty_preview_data()
         if preview_target == unit.position:
+            return self._empty_preview_data()
+
+        attack_target = self._legal_target_at_position(unit, preview_target)
+        if attack_target is not None and attack_target.get("action_type") == "attack" and abs(unit.position.x - preview_target.x) + abs(unit.position.y - preview_target.y) > 1:
             return self._empty_preview_data()
 
         occupant = self._state.get_unit_at(preview_target)
@@ -417,6 +426,118 @@ class GameAPI:
             return self._target_payload(target, "attack", f"Attack unit #{occupant.unit_id}")
 
         return self._target_payload(target, "move", f"Move to {target.to_dict()}")
+
+    def _ranged_attack_targets(self, unit) -> list[dict[str, object]]:
+        attack_range = self._unit_attack_range(unit)
+        if attack_range < 2:
+            return []
+
+        targets: list[dict[str, object]] = []
+        for distance in range(2, attack_range + 1):
+            for delta_x, delta_y in ((-distance, 0), (distance, 0), (0, -distance), (0, distance)):
+                target = Position(unit.position.x + delta_x, unit.position.y + delta_y)
+                if not self._state.is_in_bounds(target):
+                    continue
+                occupant = self._state.get_unit_at(target)
+                if occupant is None or occupant.owner_id == unit.owner_id:
+                    continue
+                if not self._line_clear_for_ranged_attack(unit.position, target):
+                    continue
+                targets.append(self._target_payload(target, "attack", f"Bombard unit #{occupant.unit_id}"))
+        return targets
+
+    def _unit_attack_range(self, unit) -> int:
+        return UNIT_TYPES[unit.unit_type].attack_range
+
+    def _can_ranged_attack(self, unit, target: Position, blocking_unit, distance: int) -> bool:
+        if blocking_unit is None or blocking_unit.owner_id == unit.owner_id:
+            return False
+        attack_range = self._unit_attack_range(unit)
+        if attack_range < 2 or distance < 2 or distance > attack_range:
+            return False
+        if unit.domain != "land":
+            return False
+        return self._line_clear_for_ranged_attack(unit.position, target)
+
+    def _line_clear_for_ranged_attack(self, start: Position, target: Position) -> bool:
+        if start.x == target.x:
+            step = 1 if target.y > start.y else -1
+            intermediate = Position(start.x, start.y + step)
+            if self._state.get_unit_at(intermediate) is not None:
+                return False
+            return self._state.get_tile(intermediate).terrain not in RANGE_BLOCKING_TERRAINS
+        if start.y == target.y:
+            step = 1 if target.x > start.x else -1
+            intermediate = Position(start.x + step, start.y)
+            if self._state.get_unit_at(intermediate) is not None:
+                return False
+            return self._state.get_tile(intermediate).terrain not in RANGE_BLOCKING_TERRAINS
+        return False
+
+    def _resolve_ranged_attack(self, attacker, defender, defender_tile, target: Position) -> CommandResult:
+        if attacker.moves_remaining < 1:
+            return self._result(False, f"Unit {attacker.unit_id} has no movement left.")
+
+        defense_bonus = RANGED_TERRAIN_DEFENSE_BONUS[defender_tile.terrain]
+        distance = abs(attacker.position.x - target.x) + abs(attacker.position.y - target.y)
+        range_falloff = max(0, distance - 2)
+        attacker_damage = max(1, attacker.attack - defender.defense + 3 - defense_bonus - range_falloff)
+        defender.hp = max(0, defender.hp - attacker_damage)
+        attacker.moves_remaining = 0
+
+        counterfire_message = ""
+        if defender.hp > 0:
+            counterfire_distance = abs(defender.position.x - attacker.position.x) + abs(defender.position.y - attacker.position.y)
+            if self._can_counterfire(defender, attacker, counterfire_distance):
+                counterfire_message = self._resolve_counterfire(defender, attacker, counterfire_distance)
+
+        if not defender.hp > 0:
+            self._destroy_unit(defender.unit_id)
+
+        if self._state.game_over:
+            return self._result(True, self._state.last_event)
+
+        message = (
+            f"Unit {attacker.unit_id} bombarded unit {defender.unit_id}: "
+            f"defender -{attacker_damage} HP."
+        )
+        if counterfire_message:
+            message = f"{message} {counterfire_message}"
+        if defender.hp <= 0:
+            message += f" Defender {defender.unit_id} destroyed."
+        self._state.last_event = message
+        self._state.selected_unit_id = attacker.unit_id
+        return self._result(True, message)
+
+    def _can_counterfire(self, defender, attacker, distance: int) -> bool:
+        if defender.unit_type != "artillery":
+            return False
+        if defender.moves_remaining < 1:
+            return False
+        if self._unit_attack_range(defender) < 2:
+            return False
+        if distance not in (2, 3):
+            return False
+        return self._line_clear_for_ranged_attack(defender.position, attacker.position)
+
+    def _resolve_counterfire(self, defender, attacker, distance: int) -> str:
+        defense_bonus = RANGED_TERRAIN_DEFENSE_BONUS[self._state.get_tile(attacker.position).terrain]
+        counter_falloff = max(0, distance - 2)
+        counter_damage = max(1, defender.attack - attacker.defense + 2 - defense_bonus - counter_falloff)
+        attacker.hp = max(0, attacker.hp - counter_damage)
+        defender.moves_remaining = 0
+        if attacker.hp <= 0:
+            self._destroy_unit(attacker.unit_id)
+            self._state.selected_unit_id = defender.unit_id
+            return f"Artillery {defender.unit_id} counterfire damaged attacker {attacker.unit_id} for {counter_damage} HP and destroyed it."
+        self._state.selected_unit_id = defender.unit_id
+        return f"Artillery {defender.unit_id} counterfire damaged attacker {attacker.unit_id} for {counter_damage} HP."
+
+    def _legal_target_at_position(self, unit, position: Position) -> dict[str, object] | None:
+        for legal_target in self.get_legal_targets(unit.unit_id):
+            if legal_target.get("position") == position.to_dict():
+                return legal_target
+        return None
 
     def _legal_disembark_targets(self, unit) -> list[dict[str, object]]:
         carrier = self._state.units.get(unit.embarked_in)

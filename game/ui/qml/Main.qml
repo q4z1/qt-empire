@@ -880,6 +880,11 @@ ApplicationWindow {
                                     }
 
                                     Text {
+                                        text: "Range " + modelData.attack_range
+                                        color: "#d9c7a4"
+                                    }
+
+                                    Text {
                                         width: parent.width
                                         wrapMode: Text.WordWrap
                                         text: (modelData.embarked_in !== undefined && modelData.embarked_in !== null)
@@ -1220,6 +1225,9 @@ ApplicationWindow {
             return "Selected unit unavailable"
         }
         let text = "Selected: " + unit.unit_type + " #" + unit.id
+        if (unit.attack_range !== undefined) {
+            text += " | Range " + unit.attack_range
+        }
         if (unit.queued_destination) {
             text += " | Orders " + unit.queued_destination.x + ", " + unit.queued_destination.y
         } else if (gameState.pending_move_target) {

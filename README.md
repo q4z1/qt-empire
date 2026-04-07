@@ -27,6 +27,8 @@ Bereits vorhanden:
 - Teilweise erreichte Fernziele koennen jetzt als Orders an einer Einheit haengen bleiben und in spaeteren eigenen Zuegen automatisch fortgesetzt werden
 - Diese Orders koennen jetzt bewusst geloescht werden, und ein neues Fernziel ersetzt bestehende Orders
 - Fernbewegung nutzt jetzt Klick-zur-Bestaetigung: erster Klick setzt das Ziel, zweiter Klick fuehrt aus
+- bestaetigte Fernziele, Stopppunkt und laufende Orders werden jetzt auf der Karte klarer markiert
+- Pending-Ziele koennen jetzt auch explizit wieder geloescht werden
 - Hover ueber ein entferntes Ziel zeigt jetzt eine einfache Pfadvorschau fuer die aktuell selektierte Einheit
 - Die Vorschau zeigt jetzt auch lange Ziele jenseits des aktuellen Bewegungslimits mit Stopppunkt und Endziel
 - deterministischer Nahkampf mit Gegenschlag
@@ -53,15 +55,19 @@ Bereits vorhanden:
 - laufender GUI-Feinschliff für besser lesbare Karten- und Sidebar-Hierarchie
 - Hover-Hinweise und Legende fuer Kartenaktionen
 - kompaktere Pfadangaben und breitere rechte Sidebar
+- einfache Schrittanimation fuer Fernbewegungen in der UI
+- queued Bewegungen und Auto-Fortsetzung werden jetzt ebenfalls animiert
+- laufende Bewegungen werden jetzt auch in der rechten Seitenleiste zusammengefasst
 - minimale Qt/QML-Oberfläche
 - headless Demo-Capture fuer Launcher- und Ingame-Sequenzen als MP4
 - der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung und Save/Load
 - Tests für Kernregeln
 
 Verifiziert zuletzt:
-- `.venv/bin/pytest -q` -> `32 passed`
+- `.venv/bin/pytest -q` -> `33 passed`
 - `.venv/bin/python -m compileall main.py game tests`
-- Offscreen-QML-Load erfolgreich
+- Offscreen-QML-Load und `capture-demo` erfolgreich
+- Bewegungsanimation fuer direkte und queued Fernbewegungen in der UI eingebaut und im Demo-Lauf mitverifiziert
 - aktualisierte Demo unter `captures/demo-launcher-ingame.mp4`
 
 ## Projekt starten
@@ -106,8 +112,8 @@ Tests:
 ## Naechster sinnvoller Schritt
 
 Wenn die naechste Sitzung direkt an die aktuelle Bewegungsarbeit anschliessen soll, ist die beste Fortsetzung:
-- bestaetigtes Fernziel noch klarer visualisieren
-- danach kleine Schrittanimation oder Rueckkehr zu tieferen Spielregeln
+- gezielte Schrittanimation fuer queued Bewegungen im Demo-Capture optisch nachschärfen
+- danach Rueckkehr zu tieferen Spielregeln
 
 ## Struktur
 

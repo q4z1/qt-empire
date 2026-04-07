@@ -3,8 +3,6 @@
 ## Kurzfristig
 
 - GUI lokal interaktiv weiter prüfen und Layout iterativ verbessern
-- Fernbewegung spaeter mit kleiner Schrittanimation pruefen
-- bestaetigtes Fernziel noch klarer visualisieren
 - rechte Seitenleiste weiter verfeinern: Gruppierung, kompaktere Cards, bessere Scroll-Indikatoren
 - Menü und Statusbereich weiter atmosphärisch schärfen
 - Tooltip-/Hover-System später noch gezielter für Einheiten, Städte und Produktion ausbauen

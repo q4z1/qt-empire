@@ -80,6 +80,8 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - keine Regeln, nur Weiterleitung und State-Update
 - erzeugt auch einen frischen Spielzustand für "Neues Spiel"
 - bindet Quick Save / Quick Load an einen festen Projektpfad
+- liefert einen transienten `movementAnimation`-State fuer kleine Schrittanimationen in QML
+- erkennt auch Zugstart-Bewegungen aus queued Orders und speist sie als dieselbe UI-Animation ein
 
 [`game/ui/demo_capture.py`](/home/min/Development/empire/game/ui/demo_capture.py)
 - headless Capture-Helfer fuer kurze UI-Demos
@@ -94,6 +96,7 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - Transport- und Cargo-Informationen
 - Einheiten- und Stadt-Icons aus lokalen SVG-Assets
 - Stadtliste mit einfacher Produktionsauswahl
+- zeigt laufende Bewegungen als kleine Statuskarte in der Seitenleiste
 
 ## Architekturregeln für kommende Änderungen
 
@@ -154,9 +157,11 @@ Der zuletzt bearbeitete Schwerpunkt war Bewegung und Bewegungs-UX:
 - die Engine liefert eine Pfadvorschau mit vollem Pfad, erreichbarem Teil und Stopppunkt
 - QML rendert diese Vorschau nur noch, berechnet aber keine Route selbst
 - teilweise erreichte Fernziele koennen als Orders ueber mehrere eigene Zuege fortgesetzt und bewusst geloescht werden
+- bestaetigte Ziele und laufende Orders werden in QML jetzt nur visualisiert, nicht dort entschieden
+- eine kleine Schrittanimation fuer bestätigte Fernbewegungen und queued Fortsetzungen liegt jetzt in der QML-UI
 
 Der naechste logische Architektur-Schritt waere:
 
-- kleine visuelle oder interaktive Verfeinerungen auf dem bestaetigten Bewegungsziel
-- spaeter optional Schrittanimationen auf Basis derselben Engine-Daten
+- optionale feinere Animationen fuer Teilpfade oder Transportbewegungen auf Basis derselben Engine-Daten
+- danach wieder zur Kernlogik zurueck
 - weiterhin strikt in `game/logic`, ohne Routenlogik in QML zu duplizieren

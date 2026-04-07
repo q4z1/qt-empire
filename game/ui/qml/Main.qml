@@ -27,7 +27,19 @@ ApplicationWindow {
         "tiles": [],
         "units": []
     })
+    readonly property var emptyMovementAnimation: ({
+        "active": false,
+        "unit_id": -1,
+        "unit_type": "",
+        "owner_id": -1,
+        "origin": null,
+        "path": [],
+        "duration_ms": 0
+    })
     property var gameState: (typeof gameController !== "undefined" && gameController) ? gameController.state : emptyState
+    property var movementAnimation: (typeof gameController !== "undefined" && gameController) ? gameController.movementAnimation : emptyMovementAnimation
+    property real movementProgress: 0
+    property bool movementTweenInternalStop: false
     property int selectedUnitId: (gameState && gameState.selected_unit_id !== undefined && gameState.selected_unit_id !== null)
                                  ? gameState.selected_unit_id
                                  : -1
@@ -42,8 +54,41 @@ ApplicationWindow {
             root.gameState = gameController.state
         }
 
+        function onMovementAnimationChanged() {
+            if (movementAnimation && movementAnimation.active && movementAnimation.path && movementAnimation.path.length > 0) {
+                movementProgress = 0
+                movementTweenInternalStop = true
+                movementTween.stop()
+                movementTween.from = 0
+                movementTween.to = movementAnimation.path.length
+                movementTween.duration = movementAnimation.duration_ms || 0
+                movementTween.start()
+                movementTweenInternalStop = false
+            } else {
+                movementTweenInternalStop = true
+                movementTween.stop()
+                movementProgress = 0
+                movementTweenInternalStop = false
+            }
+        }
+
         function onSelectedScenarioChanged() {
             root.selectedScenarioId = gameController.selectedScenarioId
+        }
+    }
+
+    NumberAnimation {
+        id: movementTween
+        target: root
+        property: "movementProgress"
+        from: 0
+        to: 0
+        duration: 0
+        easing.type: Easing.InOutQuad
+        onStopped: {
+            if (!movementTweenInternalStop && movementAnimation && movementAnimation.active && typeof gameController !== "undefined" && gameController) {
+                gameController.clearMovementAnimation()
+            }
         }
     }
 
@@ -244,8 +289,8 @@ ApplicationWindow {
                 Flickable {
                     anchors.fill: parent
                     anchors.margins: 18
-                    contentWidth: board.width
-                    contentHeight: board.height
+                    contentWidth: boardPixelWidth()
+                    contentHeight: boardPixelHeight()
                     clip: true
 
                     Grid {
@@ -263,6 +308,8 @@ ApplicationWindow {
                                 property int cellY: Math.floor(index / gameState.map.width)
                                 property var tileData: findTile(cellX, cellY)
                                 property var occupant: findMapUnit(cellX, cellY)
+                                property bool animatedUnitHidden: isMovementAnimationUnit(occupant)
+                                property var displayedOccupant: animatedUnitHidden ? null : occupant
                                 property var legalTarget: findLegalTarget(cellX, cellY)
                                 property bool tileVisible: tileData && tileData.visible
                                 property bool tileExplored: tileData && tileData.explored
@@ -273,8 +320,8 @@ ApplicationWindow {
                                 color: tileVisible
                                        ? terrainColor(tileData ? tileData.terrain : "plains")
                                        : (tileExplored ? "#5e615d" : "#1f2730")
-                                border.width: selectedUnitId >= 0 && occupant && occupant.id === selectedUnitId ? 3 : 1
-                                border.color: selectedUnitId >= 0 && occupant && occupant.id === selectedUnitId ? "#8b1e3f" : (tileVisible ? "#9b8866" : "#39414a")
+                                border.width: selectedUnitId >= 0 && displayedOccupant && displayedOccupant.id === selectedUnitId ? 3 : 1
+                                border.color: selectedUnitId >= 0 && displayedOccupant && displayedOccupant.id === selectedUnitId ? "#8b1e3f" : (tileVisible ? "#9b8866" : "#39414a")
 
                                 Rectangle {
                                     anchors.fill: parent
@@ -297,8 +344,26 @@ ApplicationWindow {
                                     anchors.margins: 4
                                     radius: 6
                                     color: "transparent"
-                                    border.width: isPendingMoveTarget(cellX, cellY) ? 3 : (isPreviewTarget(cellX, cellY) ? 2 : (isPreviewStop(cellX, cellY) ? 2 : 0))
-                                    border.color: isPendingMoveTarget(cellX, cellY) ? "#f6f1e8" : (isPreviewTarget(cellX, cellY) ? "#fff4a3" : "#e18b5a")
+                                    border.width: isPendingMoveTarget(cellX, cellY)
+                                                  ? 4
+                                                  : (isQueuedOrderTarget(cellX, cellY)
+                                                     ? 3
+                                                     : (isPreviewTarget(cellX, cellY) ? 2 : (isPreviewStop(cellX, cellY) ? 2 : 0)))
+                                    border.color: isPendingMoveTarget(cellX, cellY)
+                                                  ? "#f6f1e8"
+                                                  : (isQueuedOrderTarget(cellX, cellY)
+                                                     ? "#8dd8ff"
+                                                     : (isPreviewTarget(cellX, cellY) ? "#fff4a3" : "#e18b5a"))
+                                }
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    anchors.margins: 1
+                                    radius: 8
+                                    color: "transparent"
+                                    border.width: isPendingMoveTarget(cellX, cellY) || isQueuedOrderTarget(cellX, cellY) ? 1 : 0
+                                    border.color: isPendingMoveTarget(cellX, cellY) ? "#17324d" : "#c9f0ff"
+                                    opacity: isPendingMoveTarget(cellX, cellY) ? 0.95 : 0.7
                                 }
 
                                 Rectangle {
@@ -310,36 +375,57 @@ ApplicationWindow {
                                     color: "#e18b5a"
                                 }
 
+                                Rectangle {
+                                    visible: targetBadgeText(cellX, cellY) !== ""
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    anchors.bottom: parent.bottom
+                                    anchors.bottomMargin: 2
+                                    radius: 5
+                                    height: 12
+                                    width: targetBadgeLabel.implicitWidth + 8
+                                    color: targetBadgeColor(cellX, cellY)
+                                    opacity: 0.92
+
+                                    Text {
+                                        id: targetBadgeLabel
+                                        anchors.centerIn: parent
+                                        text: targetBadgeText(cellX, cellY)
+                                        color: "#f6f1e8"
+                                        font.pixelSize: 8
+                                        font.bold: true
+                                    }
+                                }
+
                                 Item {
                                     anchors.centerIn: parent
                                     width: 22
                                     height: 22
                                     opacity: tileVisible ? 1.0 : (tileExplored ? 0.55 : 0.0)
-                                    visible: occupant || hasCityIcon(tileData)
+                                    visible: displayedOccupant || hasCityIcon(tileData)
 
                                     Image {
                                         anchors.centerIn: parent
                                         width: 18
                                         height: 18
-                                        source: occupant ? unitIconSource(occupant.unit_type) : cityIconSource()
+                                        source: displayedOccupant ? unitIconSource(displayedOccupant.unit_type) : cityIconSource()
                                         fillMode: Image.PreserveAspectFit
                                         smooth: true
                                     }
 
                                     Rectangle {
-                                        visible: ownerBadgeText(occupant, tileData) !== ""
+                                        visible: ownerBadgeText(displayedOccupant, tileData) !== ""
                                         width: 11
                                         height: 11
                                         radius: 5.5
                                         anchors.right: parent.right
                                         anchors.top: parent.top
-                                        color: occupant ? ownerBadgeColor(occupant.owner_id) : ownerBadgeColor(tileData.city_owner_id)
+                                        color: displayedOccupant ? ownerBadgeColor(displayedOccupant.owner_id) : ownerBadgeColor(tileData.city_owner_id)
                                         border.color: "#f6f1e8"
                                         border.width: 1
 
                                         Text {
                                             anchors.centerIn: parent
-                                            text: ownerBadgeText(occupant, tileData)
+                                            text: ownerBadgeText(displayedOccupant, tileData)
                                             color: "#f6f1e8"
                                             font.pixelSize: 8
                                             font.bold: true
@@ -352,13 +438,13 @@ ApplicationWindow {
                                     enabled: tileVisible
                                     hoverEnabled: true
                                     onEntered: {
-                                        hoverInfo = describeTile(cellX, cellY, tileData, occupant, legalTarget)
+                                        hoverInfo = describeTile(cellX, cellY, tileData, displayedOccupant, legalTarget)
                                         if (selectedUnitId >= 0) {
                                             gameController.setPreviewTarget(cellX, cellY)
                                         }
                                     }
                                     onExited: {
-                                        if (hoverInfo === describeTile(cellX, cellY, tileData, occupant, legalTarget)) {
+                                        if (hoverInfo === describeTile(cellX, cellY, tileData, displayedOccupant, legalTarget)) {
                                             hoverInfo = ""
                                         }
                                         gameController.clearPreviewTarget()
@@ -372,10 +458,44 @@ ApplicationWindow {
                                             } else {
                                                 gameController.setPendingMoveTarget(selectedUnitId, cellX, cellY)
                                             }
-                                        } else if (occupant) {
-                                            gameController.selectUnit(occupant.id)
+                                        } else if (displayedOccupant) {
+                                            gameController.selectUnit(displayedOccupant.id)
                                         }
                                     }
+                                }
+                            }
+                        }
+
+                        Item {
+                            id: movementLayer
+                            width: boardPixelWidth()
+                            height: boardPixelHeight()
+                            visible: movementAnimation.active && movementAnimation.path && movementAnimation.path.length > 0
+                            z: 10
+
+                            Item {
+                                visible: movementLayer.visible
+                                width: 22
+                                height: 22
+                                x: movementGhostLeft()
+                                y: movementGhostTop()
+                                opacity: 0.96
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: 11
+                                    color: movementGhostColor()
+                                    border.width: 2
+                                    border.color: "#f6f1e8"
+                                }
+
+                                Image {
+                                    anchors.centerIn: parent
+                                    width: 18
+                                    height: 18
+                                    source: movementAnimation.unit_type ? unitIconSource(movementAnimation.unit_type) : ""
+                                    fillMode: Image.PreserveAspectFit
+                                    smooth: true
                                 }
                             }
                         }
@@ -415,6 +535,37 @@ ApplicationWindow {
                                 anchors.fill: parent
                                 anchors.margins: 12
                                 spacing: 8
+
+                                Rectangle {
+                                    visible: movementAnimation && movementAnimation.active && movementAnimation.path && movementAnimation.path.length > 0
+                                    width: parent.width
+                                    radius: 12
+                                    color: "#274867"
+                                    border.color: "#6b92b3"
+                                    border.width: 1
+                                    implicitHeight: movementColumn.implicitHeight + 24
+
+                                    Column {
+                                        id: movementColumn
+                                        anchors.fill: parent
+                                        anchors.margins: 12
+                                        spacing: 6
+
+                                        Text {
+                                            text: "Movement"
+                                            font.pixelSize: 18
+                                            color: "#f6f1e8"
+                                            font.bold: true
+                                        }
+
+                                        Text {
+                                            width: parent.width
+                                            wrapMode: Text.WordWrap
+                                            text: movementSummary()
+                                            color: "#d9c7a4"
+                                        }
+                                    }
+                                }
 
                                 Text {
                                     text: "Status"
@@ -482,6 +633,16 @@ ApplicationWindow {
                                     onClicked: {
                                         if (selectedUnitId >= 0) {
                                             gameController.clearUnitOrders(selectedUnitId)
+                                        }
+                                    }
+                                }
+
+                                Button {
+                                    visible: selectedUnitId >= 0 && !!gameState.pending_move_target
+                                    text: "Clear Target"
+                                    onClicked: {
+                                        if (selectedUnitId >= 0) {
+                                            gameController.clearPendingMoveTarget(selectedUnitId)
                                         }
                                     }
                                 }
@@ -563,6 +724,38 @@ ApplicationWindow {
                                     spacing: 8
                                     Rectangle { width: 14; height: 14; radius: 4; color: "#2e9d8f" }
                                     Text { text: "Disembark"; color: "#d9c7a4" }
+                                }
+
+                                Row {
+                                    spacing: 8
+                                    Rectangle {
+                                        width: 14
+                                        height: 14
+                                        radius: 4
+                                        color: "transparent"
+                                        border.width: 3
+                                        border.color: "#f6f1e8"
+                                    }
+                                    Text { text: "Pending target"; color: "#d9c7a4" }
+                                }
+
+                                Row {
+                                    spacing: 8
+                                    Rectangle {
+                                        width: 14
+                                        height: 14
+                                        radius: 4
+                                        color: "transparent"
+                                        border.width: 3
+                                        border.color: "#8dd8ff"
+                                    }
+                                    Text { text: "Queued orders"; color: "#d9c7a4" }
+                                }
+
+                                Row {
+                                    spacing: 8
+                                    Rectangle { width: 14; height: 14; radius: 7; color: "#e18b5a" }
+                                    Text { text: "Stop this turn"; color: "#d9c7a4" }
                                 }
                             }
                         }
@@ -720,6 +913,109 @@ ApplicationWindow {
         }
     }
 
+    function boardStep() {
+        return 34
+    }
+
+    function boardCellSize() {
+        return 30
+    }
+
+    function boardGap() {
+        return boardStep() - boardCellSize()
+    }
+
+    function boardPixelWidth() {
+        if (!gameState.map || gameState.map.width <= 0) {
+            return 0
+        }
+        return gameState.map.width * boardCellSize() + Math.max(0, gameState.map.width - 1) * boardGap()
+    }
+
+    function boardPixelHeight() {
+        if (!gameState.map || gameState.map.height <= 0) {
+            return 0
+        }
+        return gameState.map.height * boardCellSize() + Math.max(0, gameState.map.height - 1) * boardGap()
+    }
+
+    function boardTileTopLeft(position) {
+        return {
+            "x": position.x * boardStep(),
+            "y": position.y * boardStep()
+        }
+    }
+
+    function movementGhostPosition() {
+        if (!movementAnimation || !movementAnimation.active || !movementAnimation.origin || !movementAnimation.path || movementAnimation.path.length === 0) {
+            return null
+        }
+
+        const path = movementAnimation.path
+        const clampedProgress = Math.max(0, Math.min(movementProgress, path.length))
+        if (clampedProgress <= 0) {
+            return movementAnimation.origin
+        }
+        if (clampedProgress >= path.length) {
+            return path[path.length - 1]
+        }
+
+        const segmentIndex = Math.floor(clampedProgress)
+        const fraction = clampedProgress - segmentIndex
+        const start = segmentIndex === 0 ? movementAnimation.origin : path[segmentIndex - 1]
+        const end = path[segmentIndex]
+        return {
+            "x": start.x + (end.x - start.x) * fraction,
+            "y": start.y + (end.y - start.y) * fraction
+        }
+    }
+
+    function movementGhostLeft() {
+        const position = movementGhostPosition()
+        if (!position) {
+            return 0
+        }
+        return boardTileTopLeft(position).x + 4
+    }
+
+    function movementGhostTop() {
+        const position = movementGhostPosition()
+        if (!position) {
+            return 0
+        }
+        return boardTileTopLeft(position).y + 4
+    }
+
+    function movementGhostColor() {
+        if (movementAnimation && movementAnimation.owner_id === 2) {
+            return "#8b1e3f"
+        }
+        return "#17324d"
+    }
+
+    function movementSummary() {
+        if (!movementAnimation || !movementAnimation.active || !movementAnimation.path || movementAnimation.path.length === 0) {
+            return ""
+        }
+
+        const origin = movementAnimation.origin
+        const destination = movementAnimation.path[movementAnimation.path.length - 1]
+        const unitName = movementAnimation.unit_type ? movementAnimation.unit_type : "unit"
+        if (origin && destination) {
+            return unitName + " #" + movementAnimation.unit_id + " moving from "
+                   + origin.x + ", " + origin.y + " to "
+                   + destination.x + ", " + destination.y + "."
+        }
+        return unitName + " #" + movementAnimation.unit_id + " moving."
+    }
+
+    function isMovementAnimationUnit(unit) {
+        return !!unit
+               && movementAnimation
+               && movementAnimation.active
+               && movementAnimation.unit_id === unit.id
+    }
+
     function findMapUnit(x, y) {
         for (let i = 0; i < gameState.units.length; i++) {
             const unit = gameState.units[i]
@@ -789,6 +1085,17 @@ ApplicationWindow {
         return !!gameState.pending_move_target
                && gameState.pending_move_target.x === x
                && gameState.pending_move_target.y === y
+    }
+
+    function isQueuedOrderTarget(x, y) {
+        if (selectedUnitId < 0 || gameState.pending_move_target || gameState.preview_target) {
+            return false
+        }
+        const unit = findUnitById(selectedUnitId)
+        return !!(unit
+                  && unit.queued_destination
+                  && unit.queued_destination.x === x
+                  && unit.queued_destination.y === y)
     }
 
     function isPreviewStop(x, y) {
@@ -876,7 +1183,13 @@ ApplicationWindow {
     function previewSummary() {
         if (!gameState.preview_target || !gameState.preview_full_path || gameState.preview_full_path.length === 0) {
             if (gameState.pending_move_target) {
-                return "Pending: click the highlighted target again to confirm movement"
+                return "Pending: click the highlighted target again to confirm movement, or clear it."
+            }
+            if (selectedUnitHasOrders()) {
+                const unit = findUnitById(selectedUnitId)
+                return "Orders: this unit will continue toward "
+                       + unit.queued_destination.x + ", " + unit.queued_destination.y
+                       + " at the start of its next own turn"
             }
             return ""
         }
@@ -978,6 +1291,29 @@ ApplicationWindow {
             return "Factory"
         }
         return "City"
+    }
+
+    function targetBadgeText(x, y) {
+        if (isPendingMoveTarget(x, y)) {
+            return "CONFIRM"
+        }
+        if (isQueuedOrderTarget(x, y)) {
+            return "ORDERS"
+        }
+        if (isPreviewStop(x, y) && !gameState.preview_reaches_target) {
+            return "STOP"
+        }
+        return ""
+    }
+
+    function targetBadgeColor(x, y) {
+        if (isPendingMoveTarget(x, y)) {
+            return "#17324d"
+        }
+        if (isQueuedOrderTarget(x, y)) {
+            return "#317196"
+        }
+        return "#9b4b2f"
     }
 
     function describeTile(x, y, tile, occupant, legalTarget) {

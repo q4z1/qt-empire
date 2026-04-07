@@ -396,6 +396,21 @@ def test_pending_move_target_requires_confirmation_before_moving() -> None:
     assert game._state.units[1].position == Position(3, 1)
 
 
+def test_pending_move_target_can_be_cleared_explicitly() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    game.set_pending_move_target(1, {"x": 4, "y": 1})
+    clear_result = game.set_pending_move_target(1, None)
+
+    assert clear_result.ok is True
+    assert game._state.pending_move_target is None
+    assert "Cleared pending move target" in clear_result.message
+
+
 def test_queued_remote_movement_continues_on_next_own_turn() -> None:
     state = make_small_state()
     state.units = {

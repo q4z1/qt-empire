@@ -6,11 +6,13 @@ from typing import Any
 from PySide6.QtCore import QObject, Property, Signal, Slot
 
 from game.logic import GameAPI, create_game, create_game_for_scenario, list_scenarios, load_game
+from game.logic.models import Position
 
 class GameController(QObject):
     stateChanged = Signal()
     commandMessageChanged = Signal()
     selectedScenarioChanged = Signal()
+    movementAnimationChanged = Signal()
 
     def __init__(self, game: GameAPI | None = None) -> None:
         super().__init__()
@@ -20,6 +22,7 @@ class GameController(QObject):
         self._game = game or create_game()
         self._state: dict[str, Any] = self._game.get_visible_state()
         self._command_message = "Ready."
+        self._movement_animation: dict[str, Any] = self._empty_movement_animation()
 
     @Property("QVariant", notify=stateChanged)
     def state(self) -> dict[str, Any]:
@@ -45,23 +48,41 @@ class GameController(QObject):
     def selectedScenarioId(self) -> str:
         return self._selected_scenario_id
 
+    @Property("QVariant", notify=movementAnimationChanged)
+    def movementAnimation(self) -> dict[str, Any]:
+        return self._movement_animation
+
     @Slot(int)
     def selectUnit(self, unit_id: int) -> None:
         self._apply_result(self._game.select_unit(unit_id).to_dict())
 
     @Slot(int, int, int)
     def moveUnit(self, unit_id: int, x: int, y: int) -> None:
-        self._apply_result(self._game.move_unit(unit_id, {"x": x, "y": y}).to_dict())
+        target = Position(x=x, y=y)
+        movement_animation = self._build_movement_animation(unit_id, target)
+        result = self._game.move_unit(unit_id, target).to_dict()
+        self._apply_result(result)
+        if result["ok"] and movement_animation is not None:
+            self._movement_animation = movement_animation
+            self.movementAnimationChanged.emit()
 
     @Slot()
     def endTurn(self) -> None:
-        self._apply_result(self._game.end_turn().to_dict())
+        self._clear_movement_animation()
+        previous_state = self._state
+        result = self._game.end_turn().to_dict()
+        self._apply_result(result)
+        queued_animation = self._build_queued_movement_animation(previous_state, result["state"])
+        if queued_animation is not None:
+            self._movement_animation = queued_animation
+            self.movementAnimationChanged.emit()
 
     @Slot()
     def startNewGame(self) -> None:
         self._game = create_game_for_scenario(self._selected_scenario_id)
         self._state = self._game.get_visible_state()
         self._command_message = f"New game created: {self._selected_scenario_id}."
+        self._clear_movement_animation()
         self.stateChanged.emit()
         self.commandMessageChanged.emit()
 
@@ -90,6 +111,7 @@ class GameController(QObject):
         self._game = load_game(self._save_path)
         self._state = self._game.get_visible_state()
         self._command_message = f"Game loaded from {self._save_path.name}."
+        self._clear_movement_animation()
         self.stateChanged.emit()
         self.commandMessageChanged.emit()
 
@@ -104,6 +126,14 @@ class GameController(QObject):
     @Slot(int, int, int)
     def setPendingMoveTarget(self, unit_id: int, x: int, y: int) -> None:
         self._apply_result(self._game.set_pending_move_target(unit_id, {"x": x, "y": y}).to_dict())
+
+    @Slot(int)
+    def clearPendingMoveTarget(self, unit_id: int) -> None:
+        self._apply_result(self._game.set_pending_move_target(unit_id, None).to_dict())
+
+    @Slot()
+    def clearMovementAnimation(self) -> None:
+        self._clear_movement_animation()
 
     @Slot(int, int)
     def setPreviewTarget(self, x: int, y: int) -> None:
@@ -120,3 +150,108 @@ class GameController(QObject):
         self._command_message = result["message"]
         self.stateChanged.emit()
         self.commandMessageChanged.emit()
+
+    def _build_movement_animation(self, unit_id: int, target: Position) -> dict[str, Any] | None:
+        action_type = self._action_type_for_target(target)
+        if action_type in {"attack", "embark", "disembark"}:
+            return None
+
+        preview_data = self._game.get_preview_data(unit_id, target)
+        path = preview_data["reachable_path"]
+        if not path:
+            return None
+
+        unit = self._find_unit(unit_id)
+        if unit is None:
+            return None
+
+        return {
+            "active": True,
+            "unit_id": unit_id,
+            "unit_type": unit["unit_type"],
+            "owner_id": unit["owner_id"],
+            "origin": unit["position"],
+            "path": path,
+            "duration_ms": max(220, 180 * len(path)),
+        }
+
+    def _build_queued_movement_animation(
+        self,
+        previous_state: dict[str, Any],
+        current_state: dict[str, Any],
+    ) -> dict[str, Any] | None:
+        previous_units = {unit["id"]: unit for unit in previous_state.get("units", [])}
+        current_units = {unit["id"]: unit for unit in current_state.get("units", [])}
+
+        changed_units: list[dict[str, Any]] = []
+        for unit_id, current_unit in current_units.items():
+            previous_unit = previous_units.get(unit_id)
+            if previous_unit is None:
+                continue
+            if previous_unit.get("queued_destination") is None:
+                continue
+            if previous_unit.get("position") == current_unit.get("position"):
+                continue
+            changed_units.append(
+                {
+                    "id": unit_id,
+                    "unit_type": current_unit.get("unit_type", ""),
+                    "owner_id": current_unit.get("owner_id", -1),
+                    "origin": previous_unit.get("position"),
+                    "destination": current_unit.get("position"),
+                    "queued_destination": previous_unit.get("queued_destination"),
+                }
+            )
+
+        if not changed_units:
+            return None
+
+        changed_units.sort(key=lambda item: item["id"])
+        unit = changed_units[0]
+        origin = unit["origin"]
+        destination = unit["destination"]
+        if not isinstance(origin, dict) or not isinstance(destination, dict):
+            return None
+
+        distance = abs(int(origin["x"]) - int(destination["x"])) + abs(int(origin["y"]) - int(destination["y"]))
+        if distance <= 0:
+            return None
+
+        return {
+            "active": True,
+            "unit_id": unit["id"],
+            "unit_type": unit["unit_type"],
+            "owner_id": unit["owner_id"],
+            "origin": origin,
+            "path": [destination],
+            "duration_ms": max(220, 140 * distance),
+        }
+
+    def _action_type_for_target(self, target: Position) -> str | None:
+        target_dict = target.to_dict()
+        for legal_target in self._state.get("legal_targets", []):
+            if legal_target.get("position") == target_dict:
+                return str(legal_target.get("action_type"))
+        return None
+
+    def _find_unit(self, unit_id: int) -> dict[str, Any] | None:
+        for unit in self._state.get("units", []):
+            if unit.get("id") == unit_id:
+                return unit
+        return None
+
+    def _clear_movement_animation(self) -> None:
+        if self._movement_animation["active"]:
+            self._movement_animation = self._empty_movement_animation()
+            self.movementAnimationChanged.emit()
+
+    def _empty_movement_animation(self) -> dict[str, Any]:
+        return {
+            "active": False,
+            "unit_id": -1,
+            "unit_type": "",
+            "owner_id": -1,
+            "origin": None,
+            "path": [],
+            "duration_ms": 0,
+        }

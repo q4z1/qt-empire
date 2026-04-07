@@ -18,6 +18,7 @@ ApplicationWindow {
         "game_over": false,
         "winner_id": null,
         "legal_targets": [],
+        "pending_move_target": null,
         "preview_path": [],
         "preview_full_path": [],
         "preview_reachable_path": [],
@@ -296,8 +297,8 @@ ApplicationWindow {
                                     anchors.margins: 4
                                     radius: 6
                                     color: "transparent"
-                                    border.width: isPreviewTarget(cellX, cellY) ? 2 : (isPreviewStop(cellX, cellY) ? 2 : 0)
-                                    border.color: isPreviewTarget(cellX, cellY) ? "#fff4a3" : "#e18b5a"
+                                    border.width: isPendingMoveTarget(cellX, cellY) ? 3 : (isPreviewTarget(cellX, cellY) ? 2 : (isPreviewStop(cellX, cellY) ? 2 : 0))
+                                    border.color: isPendingMoveTarget(cellX, cellY) ? "#f6f1e8" : (isPreviewTarget(cellX, cellY) ? "#fff4a3" : "#e18b5a")
                                 }
 
                                 Rectangle {
@@ -366,7 +367,11 @@ ApplicationWindow {
                                         if (legalTarget && selectedUnitId >= 0) {
                                             gameController.moveUnit(selectedUnitId, cellX, cellY)
                                         } else if (selectedUnitId >= 0 && !occupant) {
-                                            gameController.moveUnit(selectedUnitId, cellX, cellY)
+                                            if (isPendingMoveTarget(cellX, cellY)) {
+                                                gameController.moveUnit(selectedUnitId, cellX, cellY)
+                                            } else {
+                                                gameController.setPendingMoveTarget(selectedUnitId, cellX, cellY)
+                                            }
                                         } else if (occupant) {
                                             gameController.selectUnit(occupant.id)
                                         }
@@ -469,6 +474,16 @@ ApplicationWindow {
                                     wrapMode: Text.WordWrap
                                     text: selectedUnitId >= 0 ? selectedTargetSummary() : "Select a unit to see legal actions"
                                     color: "#d9c7a4"
+                                }
+
+                                Button {
+                                    visible: selectedUnitHasOrders()
+                                    text: "Clear Orders"
+                                    onClicked: {
+                                        if (selectedUnitId >= 0) {
+                                            gameController.clearUnitOrders(selectedUnitId)
+                                        }
+                                    }
                                 }
 
                                 Text {
@@ -681,6 +696,16 @@ ApplicationWindow {
                                                  : "No cargo")
                                         color: "#d9c7a4"
                                     }
+
+                                    Text {
+                                        width: parent.width
+                                        wrapMode: Text.WordWrap
+                                        visible: modelData.queued_destination !== undefined && modelData.queued_destination !== null
+                                        text: visible
+                                              ? "Orders " + modelData.queued_destination.x + ", " + modelData.queued_destination.y
+                                              : ""
+                                        color: "#f1dfb0"
+                                    }
                                 }
 
                                 MouseArea {
@@ -758,6 +783,12 @@ ApplicationWindow {
         return !!gameState.preview_target
                && gameState.preview_target.x === x
                && gameState.preview_target.y === y
+    }
+
+    function isPendingMoveTarget(x, y) {
+        return !!gameState.pending_move_target
+               && gameState.pending_move_target.x === x
+               && gameState.pending_move_target.y === y
     }
 
     function isPreviewStop(x, y) {
@@ -844,6 +875,9 @@ ApplicationWindow {
 
     function previewSummary() {
         if (!gameState.preview_target || !gameState.preview_full_path || gameState.preview_full_path.length === 0) {
+            if (gameState.pending_move_target) {
+                return "Pending: click the highlighted target again to confirm movement"
+            }
             return ""
         }
         if (gameState.preview_reaches_target) {
@@ -856,6 +890,14 @@ ApplicationWindow {
         return "Preview: target not reachable from current position"
     }
 
+    function selectedUnitHasOrders() {
+        if (selectedUnitId < 0) {
+            return false
+        }
+        const unit = findUnitById(selectedUnitId)
+        return !!(unit && unit.queued_destination)
+    }
+
     function selectedUnitHeadline() {
         if (selectedUnitId < 0) {
             return "No unit selected"
@@ -864,7 +906,13 @@ ApplicationWindow {
         if (!unit) {
             return "Selected unit unavailable"
         }
-        return "Selected: " + unit.unit_type + " #" + unit.id
+        let text = "Selected: " + unit.unit_type + " #" + unit.id
+        if (unit.queued_destination) {
+            text += " | Orders " + unit.queued_destination.x + ", " + unit.queued_destination.y
+        } else if (gameState.pending_move_target) {
+            text += " | Pending " + gameState.pending_move_target.x + ", " + gameState.pending_move_target.y
+        }
+        return text
     }
 
     function findUnitById(unitId) {

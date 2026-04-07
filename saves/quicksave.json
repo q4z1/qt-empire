@@ -1,17 +1,17 @@
 {
   "map_size": {
-    "width": 22,
-    "height": 18
+    "width": 20,
+    "height": 20
   },
-  "current_player": 1,
-  "turn_number": 1,
+  "current_player": 2,
+  "turn_number": 12,
   "tiles": [
     {
       "position": {
         "x": 0,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -22,7 +22,7 @@
         "x": 1,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -33,7 +33,7 @@
         "x": 2,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -44,7 +44,7 @@
         "x": 3,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -55,7 +55,7 @@
         "x": 4,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -66,7 +66,7 @@
         "x": 5,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -77,7 +77,7 @@
         "x": 6,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -88,7 +88,7 @@
         "x": 7,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -99,7 +99,7 @@
         "x": 8,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -110,7 +110,7 @@
         "x": 9,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -121,7 +121,7 @@
         "x": 10,
         "y": 0
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -131,391 +131,6 @@
       "position": {
         "x": 11,
         "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 12,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 13,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 14,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 15,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 16,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 17,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 18,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 19,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 0
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 0,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 1,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 2,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 3,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 4,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 5,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 6,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 7,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 8,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 9,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 10,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 11,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 12,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 13,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 14,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 15,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 16,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 17,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 18,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 19,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 1
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 0,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 1,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 2,
-        "y": 2
       },
       "terrain": "forest",
       "city_owner_id": null,
@@ -525,8 +140,129 @@
     },
     {
       "position": {
+        "x": 12,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 16,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 17,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 18,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 19,
+        "y": 0
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 1
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
         "x": 3,
-        "y": 2
+        "y": 1
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -537,7 +273,7 @@
     {
       "position": {
         "x": 4,
-        "y": 2
+        "y": 1
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -548,7 +284,7 @@
     {
       "position": {
         "x": 5,
-        "y": 2
+        "y": 1
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -559,9 +295,9 @@
     {
       "position": {
         "x": 6,
-        "y": 2
+        "y": 1
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -570,7 +306,7 @@
     {
       "position": {
         "x": 7,
-        "y": 2
+        "y": 1
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -581,183 +317,7 @@
     {
       "position": {
         "x": 8,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 9,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 10,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 11,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 12,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 13,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 14,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 15,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 16,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 17,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 18,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 19,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 2
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 0,
-        "y": 3
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 1,
-        "y": 3
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 2,
-        "y": 3
+        "y": 1
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -767,8 +327,151 @@
     },
     {
       "position": {
-        "x": 3,
-        "y": 3
+        "x": 9,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 1
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 16,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 17,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 18,
+        "y": 1
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 19,
+        "y": 1
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 2
       },
       "terrain": "city",
       "city_owner_id": 1,
@@ -778,6 +481,237 @@
     },
     {
       "position": {
+        "x": 3,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 2
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 16,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 17,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 18,
+        "y": 2
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 19,
+        "y": 2
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 3
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 3
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
         "x": 4,
         "y": 3
       },
@@ -792,7 +726,7 @@
         "x": 5,
         "y": 3
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -825,7 +759,7 @@
         "x": 8,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -836,7 +770,7 @@
         "x": 9,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -847,7 +781,7 @@
         "x": 10,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -858,7 +792,7 @@
         "x": 11,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -869,7 +803,7 @@
         "x": 12,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -880,7 +814,7 @@
         "x": 13,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -891,7 +825,7 @@
         "x": 14,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -902,7 +836,7 @@
         "x": 15,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -913,7 +847,7 @@
         "x": 16,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -924,7 +858,7 @@
         "x": 17,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -935,7 +869,7 @@
         "x": 18,
         "y": 3
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -946,29 +880,7 @@
         "x": 19,
         "y": 3
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 3
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 3
-      },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -979,7 +891,7 @@
         "x": 0,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -990,7 +902,7 @@
         "x": 1,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1023,7 +935,7 @@
         "x": 4,
         "y": 4
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1056,7 +968,7 @@
         "x": 7,
         "y": 4
       },
-      "terrain": "plains",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1067,7 +979,7 @@
         "x": 8,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1078,7 +990,7 @@
         "x": 9,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1089,7 +1001,7 @@
         "x": 10,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1100,7 +1012,7 @@
         "x": 11,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1111,7 +1023,7 @@
         "x": 12,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1122,7 +1034,7 @@
         "x": 13,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1133,7 +1045,7 @@
         "x": 14,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1144,7 +1056,7 @@
         "x": 15,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1155,7 +1067,7 @@
         "x": 16,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1166,7 +1078,7 @@
         "x": 17,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1177,7 +1089,7 @@
         "x": 18,
         "y": 4
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1188,29 +1100,7 @@
         "x": 19,
         "y": 4
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 4
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 4
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1221,7 +1111,7 @@
         "x": 0,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1232,7 +1122,7 @@
         "x": 1,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1254,7 +1144,7 @@
         "x": 3,
         "y": 5
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1287,7 +1177,7 @@
         "x": 6,
         "y": 5
       },
-      "terrain": "plains",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1298,7 +1188,7 @@
         "x": 7,
         "y": 5
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1309,7 +1199,7 @@
         "x": 8,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1320,7 +1210,7 @@
         "x": 9,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1331,7 +1221,7 @@
         "x": 10,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1342,7 +1232,7 @@
         "x": 11,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1353,7 +1243,7 @@
         "x": 12,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1364,7 +1254,7 @@
         "x": 13,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1375,7 +1265,7 @@
         "x": 14,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1386,7 +1276,7 @@
         "x": 15,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1397,7 +1287,7 @@
         "x": 16,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1408,7 +1298,7 @@
         "x": 17,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1419,7 +1309,7 @@
         "x": 18,
         "y": 5
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1430,29 +1320,7 @@
         "x": 19,
         "y": 5
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 5
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 5
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1463,7 +1331,7 @@
         "x": 0,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1474,7 +1342,7 @@
         "x": 1,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1485,7 +1353,7 @@
         "x": 2,
         "y": 6
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1518,7 +1386,7 @@
         "x": 5,
         "y": 6
       },
-      "terrain": "plains",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1529,7 +1397,7 @@
         "x": 6,
         "y": 6
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1551,7 +1419,7 @@
         "x": 8,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1562,7 +1430,7 @@
         "x": 9,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1573,7 +1441,7 @@
         "x": 10,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1584,7 +1452,7 @@
         "x": 11,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1595,7 +1463,7 @@
         "x": 12,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1606,7 +1474,7 @@
         "x": 13,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1617,7 +1485,7 @@
         "x": 14,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1628,7 +1496,7 @@
         "x": 15,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1639,7 +1507,7 @@
         "x": 16,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1650,7 +1518,7 @@
         "x": 17,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1661,7 +1529,7 @@
         "x": 18,
         "y": 6
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1672,29 +1540,7 @@
         "x": 19,
         "y": 6
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 6
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 6
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1705,7 +1551,7 @@
         "x": 0,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1716,7 +1562,7 @@
         "x": 1,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1749,7 +1595,7 @@
         "x": 4,
         "y": 7
       },
-      "terrain": "plains",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1760,7 +1606,7 @@
         "x": 5,
         "y": 7
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1793,7 +1639,7 @@
         "x": 8,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1804,7 +1650,7 @@
         "x": 9,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1815,7 +1661,7 @@
         "x": 10,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1826,7 +1672,7 @@
         "x": 11,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1837,7 +1683,7 @@
         "x": 12,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1848,7 +1694,7 @@
         "x": 13,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1859,7 +1705,7 @@
         "x": 14,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1870,7 +1716,7 @@
         "x": 15,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1881,7 +1727,7 @@
         "x": 16,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1892,7 +1738,7 @@
         "x": 17,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1903,7 +1749,7 @@
         "x": 18,
         "y": 7
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1914,29 +1760,7 @@
         "x": 19,
         "y": 7
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 7
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 7
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1947,7 +1771,7 @@
         "x": 0,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1958,7 +1782,7 @@
         "x": 1,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1980,7 +1804,7 @@
         "x": 3,
         "y": 8
       },
-      "terrain": "plains",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -1991,7 +1815,7 @@
         "x": 4,
         "y": 8
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2035,7 +1859,7 @@
         "x": 8,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2090,7 +1914,7 @@
         "x": 13,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2101,7 +1925,7 @@
         "x": 14,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2112,7 +1936,7 @@
         "x": 15,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2123,7 +1947,7 @@
         "x": 16,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2134,7 +1958,7 @@
         "x": 17,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2145,7 +1969,7 @@
         "x": 18,
         "y": 8
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2156,29 +1980,7 @@
         "x": 19,
         "y": 8
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 8
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 8
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2189,7 +1991,7 @@
         "x": 0,
         "y": 9
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2200,7 +2002,7 @@
         "x": 1,
         "y": 9
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2211,7 +2013,7 @@
         "x": 2,
         "y": 9
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2222,7 +2024,7 @@
         "x": 3,
         "y": 9
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2288,7 +2090,7 @@
         "x": 9,
         "y": 9
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2299,7 +2101,7 @@
         "x": 10,
         "y": 9
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2310,18 +2112,18 @@
         "x": 11,
         "y": 9
       },
-      "terrain": "city",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
-      "build_choice": "infantry",
-      "city_role": "city"
+      "build_choice": null,
+      "city_role": null
     },
     {
       "position": {
         "x": 12,
         "y": 9
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2343,7 +2145,7 @@
         "x": 14,
         "y": 9
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2354,7 +2156,7 @@
         "x": 15,
         "y": 9
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2365,7 +2167,7 @@
         "x": 16,
         "y": 9
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2398,29 +2200,7 @@
         "x": 19,
         "y": 9
       },
-      "terrain": "plains",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 9
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 9
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2431,7 +2211,7 @@
         "x": 0,
         "y": 10
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2442,7 +2222,7 @@
         "x": 1,
         "y": 10
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2453,7 +2233,7 @@
         "x": 2,
         "y": 10
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2464,7 +2244,7 @@
         "x": 3,
         "y": 10
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2530,7 +2310,7 @@
         "x": 9,
         "y": 10
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2541,7 +2321,7 @@
         "x": 10,
         "y": 10
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2552,7 +2332,7 @@
         "x": 11,
         "y": 10
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2563,7 +2343,7 @@
         "x": 12,
         "y": 10
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2585,7 +2365,7 @@
         "x": 14,
         "y": 10
       },
-      "terrain": "plains",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2596,7 +2376,7 @@
         "x": 15,
         "y": 10
       },
-      "terrain": "forest",
+      "terrain": "water",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2640,29 +2420,7 @@
         "x": 19,
         "y": 10
       },
-      "terrain": "plains",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 10
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 10
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2673,7 +2431,7 @@
         "x": 0,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2684,7 +2442,7 @@
         "x": 1,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2695,7 +2453,7 @@
         "x": 2,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2706,7 +2464,7 @@
         "x": 3,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2717,7 +2475,7 @@
         "x": 4,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2728,7 +2486,7 @@
         "x": 5,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2739,7 +2497,7 @@
         "x": 6,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2750,7 +2508,7 @@
         "x": 7,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2761,7 +2519,7 @@
         "x": 8,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2772,7 +2530,7 @@
         "x": 9,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2783,7 +2541,7 @@
         "x": 10,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2794,7 +2552,7 @@
         "x": 11,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2805,7 +2563,7 @@
         "x": 12,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2816,7 +2574,7 @@
         "x": 13,
         "y": 11
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2827,7 +2585,7 @@
         "x": 14,
         "y": 11
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2882,29 +2640,7 @@
         "x": 19,
         "y": 11
       },
-      "terrain": "forest",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 11
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 11
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2915,7 +2651,7 @@
         "x": 0,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2926,7 +2662,7 @@
         "x": 1,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2937,7 +2673,7 @@
         "x": 2,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2948,7 +2684,7 @@
         "x": 3,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2959,7 +2695,7 @@
         "x": 4,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2970,7 +2706,7 @@
         "x": 5,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2981,7 +2717,7 @@
         "x": 6,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -2992,7 +2728,7 @@
         "x": 7,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3003,7 +2739,7 @@
         "x": 8,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3014,7 +2750,7 @@
         "x": 9,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3025,7 +2761,7 @@
         "x": 10,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3036,7 +2772,7 @@
         "x": 11,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3047,7 +2783,7 @@
         "x": 12,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3058,7 +2794,7 @@
         "x": 13,
         "y": 12
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3113,7 +2849,7 @@
         "x": 18,
         "y": 12
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3124,29 +2860,7 @@
         "x": 19,
         "y": 12
       },
-      "terrain": "plains",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 12
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 12
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3157,7 +2871,7 @@
         "x": 0,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3168,7 +2882,7 @@
         "x": 1,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3179,7 +2893,7 @@
         "x": 2,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3190,7 +2904,7 @@
         "x": 3,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3201,7 +2915,7 @@
         "x": 4,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3212,7 +2926,7 @@
         "x": 5,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3223,7 +2937,7 @@
         "x": 6,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3234,7 +2948,7 @@
         "x": 7,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3245,7 +2959,7 @@
         "x": 8,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3256,7 +2970,7 @@
         "x": 9,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3267,7 +2981,7 @@
         "x": 10,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3278,7 +2992,7 @@
         "x": 11,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3289,7 +3003,7 @@
         "x": 12,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3300,7 +3014,7 @@
         "x": 13,
         "y": 13
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3344,7 +3058,7 @@
         "x": 17,
         "y": 13
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3366,29 +3080,7 @@
         "x": 19,
         "y": 13
       },
-      "terrain": "plains",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 13
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 13
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3399,7 +3091,7 @@
         "x": 0,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3410,7 +3102,7 @@
         "x": 1,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3421,7 +3113,7 @@
         "x": 2,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3432,7 +3124,7 @@
         "x": 3,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3443,7 +3135,7 @@
         "x": 4,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3454,7 +3146,7 @@
         "x": 5,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3465,7 +3157,7 @@
         "x": 6,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3476,7 +3168,7 @@
         "x": 7,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3487,7 +3179,7 @@
         "x": 8,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3498,7 +3190,7 @@
         "x": 9,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3509,7 +3201,7 @@
         "x": 10,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3520,7 +3212,7 @@
         "x": 11,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3531,7 +3223,7 @@
         "x": 12,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3542,7 +3234,7 @@
         "x": 13,
         "y": 14
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3575,7 +3267,7 @@
         "x": 16,
         "y": 14
       },
-      "terrain": "forest",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3596,17 +3288,666 @@
       "position": {
         "x": 18,
         "y": 14
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 19,
+        "y": 14
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 15
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 15
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 16,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 17,
+        "y": 15
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 18,
+        "y": 15
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 19,
+        "y": 15
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 16
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 16
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 16,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 17,
+        "y": 16
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 18,
+        "y": 16
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 19,
+        "y": 16
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 17
+      },
+      "terrain": "mountain",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 1,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 2,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 4,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 5,
+        "y": 17
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 7,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 8,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 11,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 13,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 14,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 15,
+        "y": 17
+      },
+      "terrain": "plains",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 16,
+        "y": 17
+      },
+      "terrain": "forest",
+      "city_owner_id": null,
+      "production_points": 0,
+      "build_choice": null,
+      "city_role": null
+    },
+    {
+      "position": {
+        "x": 17,
+        "y": 17
       },
       "terrain": "city",
       "city_owner_id": 2,
-      "production_points": 0,
+      "production_points": 2,
       "build_choice": "tank",
       "city_role": "capital"
     },
     {
       "position": {
-        "x": 19,
-        "y": 14
+        "x": 18,
+        "y": 17
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -3616,21 +3957,10 @@
     },
     {
       "position": {
-        "x": 20,
-        "y": 14
+        "x": 19,
+        "y": 17
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 14
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3639,9 +3969,9 @@
     {
       "position": {
         "x": 0,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3650,9 +3980,9 @@
     {
       "position": {
         "x": 1,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3661,9 +3991,9 @@
     {
       "position": {
         "x": 2,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3672,9 +4002,9 @@
     {
       "position": {
         "x": 3,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3683,9 +4013,9 @@
     {
       "position": {
         "x": 4,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3694,9 +4024,9 @@
     {
       "position": {
         "x": 5,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3705,9 +4035,9 @@
     {
       "position": {
         "x": 6,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3716,9 +4046,9 @@
     {
       "position": {
         "x": 7,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3727,9 +4057,9 @@
     {
       "position": {
         "x": 8,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3738,9 +4068,9 @@
     {
       "position": {
         "x": 9,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3749,9 +4079,9 @@
     {
       "position": {
         "x": 10,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3760,9 +4090,9 @@
     {
       "position": {
         "x": 11,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3771,9 +4101,9 @@
     {
       "position": {
         "x": 12,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3782,9 +4112,9 @@
     {
       "position": {
         "x": 13,
-        "y": 15
+        "y": 18
       },
-      "terrain": "water",
+      "terrain": "plains",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3793,7 +4123,7 @@
     {
       "position": {
         "x": 14,
-        "y": 15
+        "y": 18
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -3804,7 +4134,7 @@
     {
       "position": {
         "x": 15,
-        "y": 15
+        "y": 18
       },
       "terrain": "forest",
       "city_owner_id": null,
@@ -3815,7 +4145,7 @@
     {
       "position": {
         "x": 16,
-        "y": 15
+        "y": 18
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -3826,7 +4156,7 @@
     {
       "position": {
         "x": 17,
-        "y": 15
+        "y": 18
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -3837,7 +4167,7 @@
     {
       "position": {
         "x": 18,
-        "y": 15
+        "y": 18
       },
       "terrain": "plains",
       "city_owner_id": null,
@@ -3848,31 +4178,9 @@
     {
       "position": {
         "x": 19,
-        "y": 15
+        "y": 18
       },
-      "terrain": "plains",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 15
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 15
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3881,9 +4189,9 @@
     {
       "position": {
         "x": 0,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3892,9 +4200,9 @@
     {
       "position": {
         "x": 1,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3903,9 +4211,9 @@
     {
       "position": {
         "x": 2,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3914,9 +4222,9 @@
     {
       "position": {
         "x": 3,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3925,9 +4233,9 @@
     {
       "position": {
         "x": 4,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3936,9 +4244,9 @@
     {
       "position": {
         "x": 5,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3947,9 +4255,9 @@
     {
       "position": {
         "x": 6,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3958,9 +4266,9 @@
     {
       "position": {
         "x": 7,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3969,9 +4277,9 @@
     {
       "position": {
         "x": 8,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3980,9 +4288,9 @@
     {
       "position": {
         "x": 9,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -3991,9 +4299,9 @@
     {
       "position": {
         "x": 10,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4002,9 +4310,9 @@
     {
       "position": {
         "x": 11,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4013,9 +4321,9 @@
     {
       "position": {
         "x": 12,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4024,9 +4332,9 @@
     {
       "position": {
         "x": 13,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4035,9 +4343,9 @@
     {
       "position": {
         "x": 14,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "forest",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4046,9 +4354,9 @@
     {
       "position": {
         "x": 15,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4057,9 +4365,9 @@
     {
       "position": {
         "x": 16,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4068,9 +4376,9 @@
     {
       "position": {
         "x": 17,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4079,9 +4387,9 @@
     {
       "position": {
         "x": 18,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4090,273 +4398,9 @@
     {
       "position": {
         "x": 19,
-        "y": 16
+        "y": 19
       },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 16
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 16
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 0,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 1,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 2,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 3,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 4,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 5,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 6,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 7,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 8,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 9,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 10,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 11,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 12,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 13,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 14,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 15,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 16,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 17,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 18,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 19,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 20,
-        "y": 17
-      },
-      "terrain": "water",
-      "city_owner_id": null,
-      "production_points": 0,
-      "build_choice": null,
-      "city_role": null
-    },
-    {
-      "position": {
-        "x": 21,
-        "y": 17
-      },
-      "terrain": "water",
+      "terrain": "mountain",
       "city_owner_id": null,
       "production_points": 0,
       "build_choice": null,
@@ -4369,8 +4413,8 @@
       "owner_id": 1,
       "unit_type": "infantry",
       "position": {
-        "x": 4,
-        "y": 4
+        "x": 3,
+        "y": 8
       },
       "moves_remaining": 0,
       "max_moves": 1,
@@ -4383,57 +4427,38 @@
       "cargo_capacity": 0,
       "cargo_unit_ids": [],
       "cargo_count": 0,
-      "embarked_in": null
+      "embarked_in": null,
+      "queued_destination": null
     },
     {
       "id": 2,
       "owner_id": 1,
-      "unit_type": "transport",
+      "unit_type": "tank",
       "position": {
-        "x": 5,
-        "y": 7
-      },
-      "moves_remaining": 4,
-      "max_moves": 4,
-      "hp": 12,
-      "max_hp": 12,
-      "attack": 1,
-      "defense": 4,
-      "domain": "sea",
-      "vision_range": 4,
-      "cargo_capacity": 2,
-      "cargo_unit_ids": [],
-      "cargo_count": 0,
-      "embarked_in": null
-    },
-    {
-      "id": 3,
-      "owner_id": 1,
-      "unit_type": "destroyer",
-      "position": {
-        "x": 9,
-        "y": 7
+        "x": 3,
+        "y": 9
       },
       "moves_remaining": 0,
-      "max_moves": 3,
-      "hp": 14,
-      "max_hp": 14,
-      "attack": 6,
-      "defense": 6,
-      "domain": "sea",
-      "vision_range": 4,
+      "max_moves": 2,
+      "hp": 12,
+      "max_hp": 12,
+      "attack": 7,
+      "defense": 5,
+      "domain": "land",
+      "vision_range": 3,
       "cargo_capacity": 0,
       "cargo_unit_ids": [],
       "cargo_count": 0,
-      "embarked_in": null
+      "embarked_in": null,
+      "queued_destination": null
     },
     {
       "id": 4,
       "owner_id": 2,
       "unit_type": "infantry",
       "position": {
-        "x": 18,
-        "y": 13
+        "x": 15,
+        "y": 14
       },
       "moves_remaining": 1,
       "max_moves": 1,
@@ -4446,33 +4471,79 @@
       "cargo_capacity": 0,
       "cargo_unit_ids": [],
       "cargo_count": 0,
-      "embarked_in": null
+      "embarked_in": null,
+      "queued_destination": null
     },
     {
       "id": 5,
       "owner_id": 2,
-      "unit_type": "transport",
+      "unit_type": "destroyer",
       "position": {
-        "x": 16,
-        "y": 10
+        "x": 4,
+        "y": 9
       },
-      "moves_remaining": 4,
-      "max_moves": 4,
+      "moves_remaining": 0,
+      "max_moves": 3,
       "hp": 12,
-      "max_hp": 12,
-      "attack": 1,
-      "defense": 4,
+      "max_hp": 14,
+      "attack": 6,
+      "defense": 6,
       "domain": "sea",
       "vision_range": 4,
-      "cargo_capacity": 2,
+      "cargo_capacity": 0,
       "cargo_unit_ids": [],
       "cargo_count": 0,
-      "embarked_in": null
+      "embarked_in": null,
+      "queued_destination": null
+    },
+    {
+      "id": 6,
+      "owner_id": 2,
+      "unit_type": "tank",
+      "position": {
+        "x": 17,
+        "y": 17
+      },
+      "moves_remaining": 2,
+      "max_moves": 2,
+      "hp": 12,
+      "max_hp": 12,
+      "attack": 7,
+      "defense": 5,
+      "domain": "land",
+      "vision_range": 3,
+      "cargo_capacity": 0,
+      "cargo_unit_ids": [],
+      "cargo_count": 0,
+      "embarked_in": null,
+      "queued_destination": null
+    },
+    {
+      "id": 7,
+      "owner_id": 1,
+      "unit_type": "tank",
+      "position": {
+        "x": 2,
+        "y": 2
+      },
+      "moves_remaining": 2,
+      "max_moves": 2,
+      "hp": 12,
+      "max_hp": 12,
+      "attack": 7,
+      "defense": 5,
+      "domain": "land",
+      "vision_range": 3,
+      "cargo_capacity": 0,
+      "cargo_unit_ids": [],
+      "cargo_count": 0,
+      "embarked_in": null,
+      "queued_destination": null
     }
   ],
-  "selected_unit_id": 2,
-  "next_unit_id": 6,
-  "last_event": "Moved unit 3 toward {'x': 13, 'y': 8} and stopped at {'x': 9, 'y': 7}.",
+  "selected_unit_id": 5,
+  "next_unit_id": 8,
+  "last_event": "Unit 5 attacked unit 3: defender -5 HP, attacker -0 HP. Defender 3 destroyed.",
   "game_over": false,
   "winner_id": null,
   "preview_target": null,
@@ -4480,6 +4551,14 @@
     "1": [
       {
         "x": 0,
+        "y": 0
+      },
+      {
+        "x": 0,
+        "y": 1
+      },
+      {
+        "x": 0,
         "y": 2
       },
       {
@@ -4491,6 +4570,14 @@
         "y": 4
       },
       {
+        "x": 0,
+        "y": 9
+      },
+      {
+        "x": 1,
+        "y": 0
+      },
+      {
         "x": 1,
         "y": 1
       },
@@ -4512,7 +4599,23 @@
       },
       {
         "x": 1,
+        "y": 6
+      },
+      {
+        "x": 1,
         "y": 7
+      },
+      {
+        "x": 1,
+        "y": 8
+      },
+      {
+        "x": 1,
+        "y": 9
+      },
+      {
+        "x": 1,
+        "y": 10
       },
       {
         "x": 2,
@@ -4551,6 +4654,18 @@
         "y": 8
       },
       {
+        "x": 2,
+        "y": 9
+      },
+      {
+        "x": 2,
+        "y": 10
+      },
+      {
+        "x": 2,
+        "y": 11
+      },
+      {
         "x": 3,
         "y": 0
       },
@@ -4591,366 +4706,606 @@
         "y": 9
       },
       {
-        "x": 4,
-        "y": 0
-      },
-      {
-        "x": 4,
-        "y": 1
-      },
-      {
-        "x": 4,
-        "y": 2
-      },
-      {
-        "x": 4,
-        "y": 3
-      },
-      {
-        "x": 4,
-        "y": 4
-      },
-      {
-        "x": 4,
-        "y": 5
-      },
-      {
-        "x": 4,
-        "y": 6
-      },
-      {
-        "x": 4,
-        "y": 7
-      },
-      {
-        "x": 4,
-        "y": 8
-      },
-      {
-        "x": 4,
-        "y": 9
-      },
-      {
-        "x": 4,
+        "x": 3,
         "y": 10
       },
       {
-        "x": 5,
-        "y": 1
-      },
-      {
-        "x": 5,
-        "y": 2
-      },
-      {
-        "x": 5,
-        "y": 3
-      },
-      {
-        "x": 5,
-        "y": 4
-      },
-      {
-        "x": 5,
-        "y": 5
-      },
-      {
-        "x": 5,
-        "y": 6
-      },
-      {
-        "x": 5,
-        "y": 7
-      },
-      {
-        "x": 5,
-        "y": 8
-      },
-      {
-        "x": 5,
-        "y": 9
-      },
-      {
-        "x": 5,
-        "y": 10
-      },
-      {
-        "x": 5,
+        "x": 3,
         "y": 11
       },
       {
-        "x": 6,
-        "y": 2
-      },
-      {
-        "x": 6,
-        "y": 3
-      },
-      {
-        "x": 6,
-        "y": 4
-      },
-      {
-        "x": 6,
-        "y": 5
-      },
-      {
-        "x": 6,
-        "y": 6
-      },
-      {
-        "x": 6,
-        "y": 7
-      },
-      {
-        "x": 6,
-        "y": 8
-      },
-      {
-        "x": 6,
-        "y": 9
-      },
-      {
-        "x": 6,
-        "y": 10
-      },
-      {
-        "x": 6,
-        "y": 11
-      },
-      {
-        "x": 7,
-        "y": 3
-      },
-      {
-        "x": 7,
-        "y": 4
-      },
-      {
-        "x": 7,
-        "y": 5
-      },
-      {
-        "x": 7,
-        "y": 6
-      },
-      {
-        "x": 7,
-        "y": 7
-      },
-      {
-        "x": 7,
-        "y": 8
-      },
-      {
-        "x": 7,
-        "y": 9
-      },
-      {
-        "x": 7,
-        "y": 10
-      },
-      {
-        "x": 7,
-        "y": 11
-      },
-      {
-        "x": 7,
+        "x": 3,
         "y": 12
       },
       {
-        "x": 8,
-        "y": 4
+        "x": 4,
+        "y": 0
       },
       {
-        "x": 8,
-        "y": 5
+        "x": 4,
+        "y": 1
       },
       {
-        "x": 8,
-        "y": 6
+        "x": 4,
+        "y": 2
       },
       {
-        "x": 8,
-        "y": 7
-      },
-      {
-        "x": 8,
-        "y": 8
-      },
-      {
-        "x": 8,
-        "y": 9
-      },
-      {
-        "x": 8,
-        "y": 10
-      },
-      {
-        "x": 8,
-        "y": 11
-      },
-      {
-        "x": 9,
+        "x": 4,
         "y": 3
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 4
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 5
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 6
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 7
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 8
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 9
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 10
       },
       {
-        "x": 9,
+        "x": 4,
         "y": 11
       },
       {
-        "x": 10,
+        "x": 4,
+        "y": 12
+      },
+      {
+        "x": 4,
+        "y": 13
+      },
+      {
+        "x": 5,
+        "y": 1
+      },
+      {
+        "x": 5,
+        "y": 2
+      },
+      {
+        "x": 5,
+        "y": 3
+      },
+      {
+        "x": 5,
         "y": 4
       },
       {
-        "x": 10,
+        "x": 5,
         "y": 5
       },
       {
-        "x": 10,
+        "x": 5,
         "y": 6
       },
       {
-        "x": 10,
+        "x": 5,
         "y": 7
       },
       {
-        "x": 10,
+        "x": 5,
         "y": 8
       },
       {
-        "x": 10,
+        "x": 5,
         "y": 9
       },
       {
-        "x": 10,
+        "x": 5,
         "y": 10
       },
       {
-        "x": 11,
+        "x": 5,
+        "y": 11
+      },
+      {
+        "x": 5,
+        "y": 12
+      },
+      {
+        "x": 6,
+        "y": 2
+      },
+      {
+        "x": 6,
+        "y": 3
+      },
+      {
+        "x": 6,
+        "y": 4
+      },
+      {
+        "x": 6,
         "y": 5
       },
       {
-        "x": 11,
+        "x": 6,
         "y": 6
       },
       {
-        "x": 11,
+        "x": 6,
         "y": 7
       },
       {
-        "x": 11,
+        "x": 6,
         "y": 8
       },
       {
-        "x": 11,
+        "x": 6,
         "y": 9
       },
       {
-        "x": 12,
-        "y": 6
+        "x": 6,
+        "y": 10
       },
       {
-        "x": 12,
+        "x": 6,
+        "y": 11
+      },
+      {
+        "x": 7,
+        "y": 3
+      },
+      {
+        "x": 7,
+        "y": 5
+      },
+      {
+        "x": 7,
         "y": 7
       },
       {
-        "x": 12,
+        "x": 7,
         "y": 8
       },
       {
-        "x": 13,
-        "y": 7
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 7,
+        "y": 10
+      },
+      {
+        "x": 8,
+        "y": 9
       }
     ],
     "2": [
       {
+        "x": 0,
+        "y": 9
+      },
+      {
+        "x": 0,
+        "y": 10
+      },
+      {
+        "x": 1,
+        "y": 8
+      },
+      {
+        "x": 1,
+        "y": 9
+      },
+      {
+        "x": 1,
+        "y": 10
+      },
+      {
+        "x": 1,
+        "y": 11
+      },
+      {
+        "x": 2,
+        "y": 7
+      },
+      {
+        "x": 2,
+        "y": 8
+      },
+      {
+        "x": 2,
+        "y": 9
+      },
+      {
+        "x": 2,
+        "y": 10
+      },
+      {
+        "x": 2,
+        "y": 11
+      },
+      {
+        "x": 2,
+        "y": 12
+      },
+      {
+        "x": 3,
+        "y": 6
+      },
+      {
+        "x": 3,
+        "y": 7
+      },
+      {
+        "x": 3,
+        "y": 8
+      },
+      {
+        "x": 3,
+        "y": 9
+      },
+      {
+        "x": 3,
+        "y": 10
+      },
+      {
+        "x": 3,
+        "y": 11
+      },
+      {
+        "x": 3,
+        "y": 12
+      },
+      {
+        "x": 3,
+        "y": 13
+      },
+      {
+        "x": 4,
+        "y": 5
+      },
+      {
+        "x": 4,
+        "y": 6
+      },
+      {
+        "x": 4,
+        "y": 7
+      },
+      {
+        "x": 4,
+        "y": 8
+      },
+      {
+        "x": 4,
+        "y": 9
+      },
+      {
+        "x": 4,
+        "y": 10
+      },
+      {
+        "x": 4,
+        "y": 11
+      },
+      {
+        "x": 4,
+        "y": 12
+      },
+      {
+        "x": 4,
+        "y": 13
+      },
+      {
+        "x": 4,
+        "y": 14
+      },
+      {
+        "x": 5,
+        "y": 6
+      },
+      {
+        "x": 5,
+        "y": 7
+      },
+      {
+        "x": 5,
+        "y": 8
+      },
+      {
+        "x": 5,
+        "y": 9
+      },
+      {
+        "x": 5,
+        "y": 10
+      },
+      {
+        "x": 5,
+        "y": 11
+      },
+      {
+        "x": 5,
+        "y": 12
+      },
+      {
+        "x": 5,
+        "y": 13
+      },
+      {
+        "x": 6,
+        "y": 6
+      },
+      {
+        "x": 6,
+        "y": 7
+      },
+      {
+        "x": 6,
+        "y": 8
+      },
+      {
+        "x": 6,
+        "y": 9
+      },
+      {
+        "x": 6,
+        "y": 10
+      },
+      {
+        "x": 6,
+        "y": 11
+      },
+      {
+        "x": 6,
+        "y": 12
+      },
+      {
+        "x": 6,
+        "y": 13
+      },
+      {
+        "x": 6,
+        "y": 14
+      },
+      {
+        "x": 7,
+        "y": 6
+      },
+      {
+        "x": 7,
+        "y": 7
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 7,
+        "y": 10
+      },
+      {
+        "x": 7,
+        "y": 11
+      },
+      {
+        "x": 7,
+        "y": 12
+      },
+      {
+        "x": 7,
+        "y": 13
+      },
+      {
+        "x": 7,
+        "y": 14
+      },
+      {
+        "x": 8,
+        "y": 7
+      },
+      {
+        "x": 8,
+        "y": 8
+      },
+      {
+        "x": 8,
+        "y": 9
+      },
+      {
+        "x": 8,
+        "y": 10
+      },
+      {
+        "x": 8,
+        "y": 11
+      },
+      {
+        "x": 8,
+        "y": 12
+      },
+      {
+        "x": 8,
+        "y": 13
+      },
+      {
+        "x": 9,
+        "y": 7
+      },
+      {
+        "x": 9,
+        "y": 8
+      },
+      {
+        "x": 9,
+        "y": 9
+      },
+      {
+        "x": 9,
+        "y": 10
+      },
+      {
+        "x": 9,
+        "y": 11
+      },
+      {
+        "x": 9,
+        "y": 12
+      },
+      {
+        "x": 9,
+        "y": 13
+      },
+      {
+        "x": 10,
+        "y": 6
+      },
+      {
+        "x": 10,
+        "y": 7
+      },
+      {
+        "x": 10,
+        "y": 8
+      },
+      {
+        "x": 10,
+        "y": 9
+      },
+      {
+        "x": 10,
+        "y": 10
+      },
+      {
+        "x": 10,
+        "y": 11
+      },
+      {
+        "x": 10,
+        "y": 12
+      },
+      {
+        "x": 10,
+        "y": 13
+      },
+      {
+        "x": 10,
+        "y": 14
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 10
+      },
+      {
+        "x": 11,
+        "y": 11
+      },
+      {
+        "x": 11,
+        "y": 12
+      },
+      {
+        "x": 11,
+        "y": 13
+      },
+      {
+        "x": 12,
+        "y": 8
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
         "x": 12,
         "y": 10
       },
       {
-        "x": 13,
-        "y": 9
-      },
-      {
-        "x": 13,
-        "y": 10
-      },
-      {
-        "x": 13,
+        "x": 12,
         "y": 11
       },
       {
-        "x": 14,
-        "y": 8
-      },
-      {
-        "x": 14,
-        "y": 9
-      },
-      {
-        "x": 14,
-        "y": 10
-      },
-      {
-        "x": 14,
-        "y": 11
-      },
-      {
-        "x": 14,
+        "x": 12,
         "y": 12
+      },
+      {
+        "x": 13,
+        "y": 9
+      },
+      {
+        "x": 13,
+        "y": 10
+      },
+      {
+        "x": 13,
+        "y": 11
+      },
+      {
+        "x": 13,
+        "y": 14
+      },
+      {
+        "x": 13,
+        "y": 15
+      },
+      {
+        "x": 13,
+        "y": 17
+      },
+      {
+        "x": 14,
+        "y": 10
+      },
+      {
+        "x": 14,
+        "y": 13
       },
       {
         "x": 14,
         "y": 14
       },
       {
-        "x": 15,
-        "y": 7
+        "x": 14,
+        "y": 15
       },
       {
-        "x": 15,
-        "y": 8
+        "x": 14,
+        "y": 16
       },
       {
-        "x": 15,
-        "y": 9
+        "x": 14,
+        "y": 17
       },
       {
-        "x": 15,
-        "y": 10
-      },
-      {
-        "x": 15,
-        "y": 11
+        "x": 14,
+        "y": 18
       },
       {
         "x": 15,
@@ -4969,32 +5324,20 @@
         "y": 15
       },
       {
-        "x": 16,
-        "y": 6
+        "x": 15,
+        "y": 16
       },
       {
-        "x": 16,
-        "y": 7
+        "x": 15,
+        "y": 17
       },
       {
-        "x": 16,
-        "y": 8
+        "x": 15,
+        "y": 18
       },
       {
-        "x": 16,
-        "y": 9
-      },
-      {
-        "x": 16,
-        "y": 10
-      },
-      {
-        "x": 16,
-        "y": 11
-      },
-      {
-        "x": 16,
-        "y": 12
+        "x": 15,
+        "y": 19
       },
       {
         "x": 16,
@@ -5013,28 +5356,16 @@
         "y": 16
       },
       {
-        "x": 17,
-        "y": 7
+        "x": 16,
+        "y": 17
       },
       {
-        "x": 17,
-        "y": 8
+        "x": 16,
+        "y": 18
       },
       {
-        "x": 17,
-        "y": 9
-      },
-      {
-        "x": 17,
-        "y": 10
-      },
-      {
-        "x": 17,
-        "y": 11
-      },
-      {
-        "x": 17,
-        "y": 12
+        "x": 16,
+        "y": 19
       },
       {
         "x": 17,
@@ -5057,28 +5388,12 @@
         "y": 17
       },
       {
-        "x": 18,
-        "y": 8
+        "x": 17,
+        "y": 18
       },
       {
-        "x": 18,
-        "y": 9
-      },
-      {
-        "x": 18,
-        "y": 10
-      },
-      {
-        "x": 18,
-        "y": 11
-      },
-      {
-        "x": 18,
-        "y": 12
-      },
-      {
-        "x": 18,
-        "y": 13
+        "x": 17,
+        "y": 19
       },
       {
         "x": 18,
@@ -5097,28 +5412,12 @@
         "y": 17
       },
       {
-        "x": 19,
-        "y": 9
+        "x": 18,
+        "y": 18
       },
       {
-        "x": 19,
-        "y": 10
-      },
-      {
-        "x": 19,
-        "y": 11
-      },
-      {
-        "x": 19,
-        "y": 12
-      },
-      {
-        "x": 19,
-        "y": 13
-      },
-      {
-        "x": 19,
-        "y": 14
+        "x": 18,
+        "y": 19
       },
       {
         "x": 19,
@@ -5133,40 +5432,12 @@
         "y": 17
       },
       {
-        "x": 20,
-        "y": 10
+        "x": 19,
+        "y": 18
       },
       {
-        "x": 20,
-        "y": 12
-      },
-      {
-        "x": 20,
-        "y": 13
-      },
-      {
-        "x": 20,
-        "y": 14
-      },
-      {
-        "x": 20,
-        "y": 15
-      },
-      {
-        "x": 20,
-        "y": 16
-      },
-      {
-        "x": 21,
-        "y": 13
-      },
-      {
-        "x": 21,
-        "y": 14
-      },
-      {
-        "x": 21,
-        "y": 15
+        "x": 19,
+        "y": 19
       }
     ]
   }

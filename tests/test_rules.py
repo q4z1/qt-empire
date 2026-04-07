@@ -372,7 +372,94 @@ def test_unit_moves_partway_toward_distant_target_when_range_is_insufficient() -
 
     assert result.ok is True
     assert game._state.units[1].position == Position(3, 1)
+    assert game._state.units[1].queued_destination == Position(4, 1)
     assert "toward" in result.message
+
+
+def test_pending_move_target_requires_confirmation_before_moving() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    pending_result = game.set_pending_move_target(1, {"x": 4, "y": 1})
+
+    assert pending_result.ok is True
+    assert game._state.pending_move_target == Position(4, 1)
+    assert game._state.units[1].position == Position(1, 1)
+
+    move_result = game.move_unit(1, {"x": 4, "y": 1})
+
+    assert move_result.ok is True
+    assert game._state.pending_move_target is None
+    assert game._state.units[1].position == Position(3, 1)
+
+
+def test_queued_remote_movement_continues_on_next_own_turn() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    first_result = game.move_unit(1, {"x": 4, "y": 1})
+    enemy_turn = game.end_turn()
+    own_turn = game.end_turn()
+
+    assert first_result.ok is True
+    assert enemy_turn.ok is True
+    assert own_turn.ok is True
+    assert game._state.units[1].position == Position(4, 1)
+    assert game._state.units[1].queued_destination is None
+    assert "completed queued movement" in own_turn.message
+
+
+def test_blocked_queued_target_cancels_future_movement() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    game.move_unit(1, {"x": 4, "y": 1})
+    game._state.units[2] = create_unit(2, 2, "infantry", Position(4, 1))
+    game.end_turn()
+    own_turn = game.end_turn()
+
+    assert game._state.units[1].position == Position(3, 1)
+    assert game._state.units[1].queued_destination is None
+    assert "cancelled queued movement" in own_turn.message
+
+
+def test_clear_unit_orders_removes_queued_destination() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    game.move_unit(1, {"x": 4, "y": 1})
+    result = game.clear_unit_orders(1)
+
+    assert result.ok is True
+    assert game._state.units[1].queued_destination is None
+    assert "Cleared queued orders" in result.message
+
+
+def test_new_remote_target_replaces_existing_orders() -> None:
+    state = make_small_state()
+    state.units = {
+        1: create_unit(1, 1, "tank", Position(1, 1)),
+    }
+    game = GameAPI(state)
+
+    game.move_unit(1, {"x": 4, "y": 1})
+    game._state.units[1].moves_remaining = game._state.units[1].max_moves
+    result = game.move_unit(1, {"x": 1, "y": 4})
+
+    assert result.ok is True
+    assert game._state.units[1].queued_destination == Position(1, 4)
 
 
 def test_preview_path_matches_reachable_remote_route() -> None:
@@ -443,6 +530,7 @@ def test_save_and_load_roundtrip_preserves_state(tmp_path) -> None:
     }
     game = GameAPI(state)
     game.move_unit(1, {"x": 2, "y": 1})
+    game._state.units[2].queued_destination = Position(4, 1)
     game._state.turn_number = 3
     game._state.last_event = "Custom event."
     game._state.remember_visible_positions(1, {(0, 0), (1, 1)})
@@ -455,6 +543,7 @@ def test_save_and_load_roundtrip_preserves_state(tmp_path) -> None:
     assert loaded_game._state.last_event == "Custom event."
     assert loaded_game._state.units[1].embarked_in == 2
     assert loaded_game._state.units[2].cargo_unit_ids == [1]
+    assert loaded_game._state.units[2].queued_destination == Position(4, 1)
     assert (0, 0) in loaded_game._state.explored_tiles_by_player[1]
     assert loaded_game._state.tiles[(2, 2)].city_role == "harbor"
     assert loaded_game._state.tiles[(2, 2)].build_choice == "transport"

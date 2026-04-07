@@ -71,6 +71,7 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - enthaelt jetzt auch einfache Pfadsuche fuer entfernte Bewegungsziele
 - liefert ausserdem eine Engine-berechnete Pfadvorschau fuer das aktuell gehoverte Ziel
 - die Vorschau unterscheidet zwischen vollem geplanten Pfad und dem in dieser Runde erreichbaren Teil
+- speichert ausserdem gemerkte Bewegungsziele direkt an Einheiten fuer spaetere automatische Fortsetzung
 
 ## Aktuelle UI-Module
 
@@ -149,11 +150,13 @@ Das Modell ist bewusst pragmatisch und noch nicht final Empire-Deluxe-genau.
 Der zuletzt bearbeitete Schwerpunkt war Bewegung und Bewegungs-UX:
 
 - entfernte Ziele koennen bereits per Pfadsuche angeklickt werden
+- Fernbewegung nutzt jetzt Klick-zur-Bestaetigung ueber ein `pending` Ziel
 - die Engine liefert eine Pfadvorschau mit vollem Pfad, erreichbarem Teil und Stopppunkt
 - QML rendert diese Vorschau nur noch, berechnet aber keine Route selbst
+- teilweise erreichte Fernziele koennen als Orders ueber mehrere eigene Zuege fortgesetzt und bewusst geloescht werden
 
 Der naechste logische Architektur-Schritt waere:
 
-- gemerktes Bewegungsziel pro Einheit oder pro Auswahl
-- automatisches Weiterlaufen ueber mehrere Zuege
+- kleine visuelle oder interaktive Verfeinerungen auf dem bestaetigten Bewegungsziel
+- spaeter optional Schrittanimationen auf Basis derselben Engine-Daten
 - weiterhin strikt in `game/logic`, ohne Routenlogik in QML zu duplizieren

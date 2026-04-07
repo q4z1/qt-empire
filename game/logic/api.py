@@ -50,6 +50,7 @@ class GameAPI:
             return self._result(False, f"Unit {unit_id} is not controlled by player {self._state.current_player}.")
 
         self._state.preview_target = None
+        self._state.pending_move_target = None
         self._state.selected_unit_id = unit_id
         return self._result(True, f"Selected unit {unit_id}.")
 
@@ -65,6 +66,7 @@ class GameAPI:
 
         target = self._normalize_position(target_position)
         self._state.preview_target = None
+        self._state.pending_move_target = None
         if not self._state.is_in_bounds(target):
             return self._result(False, f"Target {target.to_dict()} is outside the map.")
 
@@ -78,7 +80,7 @@ class GameAPI:
         if distance > 1:
             if blocking_unit is not None:
                 return self._result(False, f"Target {target.to_dict()} is occupied.")
-            return self._move_unit_towards_target(unit, target)
+            return self._move_unit_towards_target(unit, target, queue_on_partial=True)
 
         if blocking_unit is not None and blocking_unit.owner_id == unit.owner_id:
             if self._can_embark(unit, blocking_unit):
@@ -96,8 +98,10 @@ class GameAPI:
             return self._result(False, f"Unit {unit_id} needs {move_cost} movement points.")
 
         if blocking_unit is not None and blocking_unit.owner_id != unit.owner_id:
+            unit.queued_destination = None
             return self._resolve_attack(unit, blocking_unit, target_tile)
 
+        unit.queued_destination = None
         unit.position = target
         unit.moves_remaining -= move_cost
         self._sync_cargo_positions(unit)
@@ -108,7 +112,56 @@ class GameAPI:
         self._state.last_event = f"Moved unit {unit_id} to {target.to_dict()}."
         return self._result(True, self._state.last_event)
 
-    def _move_unit_towards_target(self, unit, target: Position) -> CommandResult:
+    def clear_unit_orders(self, unit_id: int) -> CommandResult:
+        inactive_result = self._ensure_game_active()
+        if inactive_result is not None:
+            return inactive_result
+        unit = self._state.units.get(unit_id)
+        if unit is None:
+            return self._result(False, f"Unit {unit_id} does not exist.")
+        if unit.owner_id != self._state.current_player:
+            return self._result(False, f"Unit {unit_id} is not controlled by player {self._state.current_player}.")
+        if unit.queued_destination is None:
+            return self._result(False, f"Unit {unit_id} has no queued orders.")
+
+        target = unit.queued_destination
+        unit.queued_destination = None
+        if self._state.selected_unit_id == unit_id:
+            self._state.preview_target = None
+            self._state.pending_move_target = None
+        self._state.last_event = f"Cleared queued orders for unit {unit_id} to {target.to_dict()}."
+        return self._result(True, self._state.last_event)
+
+    def set_pending_move_target(self, unit_id: int, target_position: dict[str, int] | Position | None) -> CommandResult:
+        inactive_result = self._ensure_game_active()
+        if inactive_result is not None:
+            return inactive_result
+        unit = self._state.units.get(unit_id)
+        if unit is None:
+            return self._result(False, f"Unit {unit_id} does not exist.")
+        if unit.owner_id != self._state.current_player:
+            return self._result(False, f"Unit {unit_id} is not controlled by player {self._state.current_player}.")
+
+        if target_position is None:
+            self._state.pending_move_target = None
+            self._state.last_event = f"Cleared pending move target for unit {unit_id}."
+            return self._result(True, self._state.last_event)
+
+        target = self._normalize_position(target_position)
+        if not self._state.is_in_bounds(target):
+            return self._result(False, f"Target {target.to_dict()} is outside the map.")
+        if self._state.get_unit_at(target) is not None:
+            return self._result(False, f"Target {target.to_dict()} is occupied.")
+        if target == unit.position:
+            return self._result(False, f"Unit {unit_id} is already at {target.to_dict()}.")
+
+        self._state.selected_unit_id = unit_id
+        self._state.pending_move_target = target
+        self._state.preview_target = None
+        self._state.last_event = f"Pending move target set for unit {unit_id} to {target.to_dict()}."
+        return self._result(True, self._state.last_event)
+
+    def _move_unit_towards_target(self, unit, target: Position, queue_on_partial: bool) -> CommandResult:
         if unit.moves_remaining < 1:
             return self._result(False, f"Unit {unit.unit_id} has no movement left.")
 
@@ -126,6 +179,10 @@ class GameAPI:
 
         unit.position = final_position
         unit.moves_remaining = remaining_moves
+        if queue_on_partial and final_position != target:
+            unit.queued_destination = target
+        else:
+            unit.queued_destination = None
         self._sync_cargo_positions(unit)
         self._capture_city_if_present(unit)
         self._state.selected_unit_id = unit.unit_id
@@ -230,12 +287,16 @@ class GameAPI:
         self._state.turn_number += 1
         self._state.selected_unit_id = None
         self._state.preview_target = None
+        self._state.pending_move_target = None
 
         support_messages = self._apply_city_support()
+        queued_messages = self._continue_queued_movements()
         production_messages = self._apply_city_production()
         message = f"Turn {self._state.turn_number} started for player {self._state.current_player}."
         if support_messages:
             message = f"{message} {' '.join(support_messages)}"
+        if queued_messages:
+            message = f"{message} {' '.join(queued_messages)}"
         if production_messages:
             message = f"{message} {' '.join(production_messages)}"
         self._state.last_event = message
@@ -306,7 +367,7 @@ class GameAPI:
 
     def get_preview_data(self, unit_id: int | None = None, target: Position | None = None) -> dict[str, object]:
         selected_unit_id = unit_id if unit_id is not None else self._state.selected_unit_id
-        preview_target = target if target is not None else self._state.preview_target
+        preview_target = target if target is not None else (self._state.preview_target or self._state.pending_move_target)
         if selected_unit_id is None or preview_target is None:
             return self._empty_preview_data()
 
@@ -550,6 +611,61 @@ class GameAPI:
             if unit.hp > previous_hp:
                 messages.append(f"Unit {unit.unit_id} repaired to {unit.hp}/{unit.max_hp} in {self._state.city_role(tile.position)}.")
         return messages
+
+    def _continue_queued_movements(self) -> list[str]:
+        messages: list[str] = []
+        for unit in sorted(self._state.units.values(), key=lambda item: item.unit_id):
+            if unit.owner_id != self._state.current_player:
+                continue
+            if unit.embarked_in is not None or unit.queued_destination is None:
+                continue
+
+            target = unit.queued_destination
+            if not self._state.is_in_bounds(target):
+                unit.queued_destination = None
+                messages.append(f"Unit {unit.unit_id} lost its queued destination.")
+                continue
+
+            occupant = self._state.get_unit_at(target)
+            if occupant is not None and occupant.unit_id != unit.unit_id:
+                unit.queued_destination = None
+                messages.append(f"Unit {unit.unit_id} cancelled queued movement because the target is occupied.")
+                continue
+
+            if unit.position == target:
+                unit.queued_destination = None
+                continue
+
+            queued_result = self._execute_queued_move(unit, target)
+            if queued_result is not None:
+                messages.append(queued_result)
+        return messages
+
+    def _execute_queued_move(self, unit, target: Position) -> str | None:
+        if unit.moves_remaining < 1:
+            return None
+
+        path = self._find_path(unit, target)
+        if path is None or len(path) < 2:
+            unit.queued_destination = None
+            return f"Unit {unit.unit_id} cancelled queued movement because no path remains."
+
+        reachable_steps = self._reachable_positions_for_path(unit, path)
+        if not reachable_steps:
+            return None
+
+        final_position = reachable_steps[-1]
+        unit.position = final_position
+        unit.moves_remaining = self._remaining_moves_after_path(unit, reachable_steps)
+        if final_position == target:
+            unit.queued_destination = None
+        self._sync_cargo_positions(unit)
+        self._capture_city_if_present(unit)
+        if self._state.game_over:
+            return self._state.last_event
+        if final_position == target:
+            return f"Unit {unit.unit_id} completed queued movement to {target.to_dict()}."
+        return f"Unit {unit.unit_id} continued toward {target.to_dict()} and stopped at {final_position.to_dict()}."
 
     def _city_build_options_for_tile(self, tile) -> tuple[str, ...]:
         city_role = self._state.city_role(tile.position)

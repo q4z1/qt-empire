@@ -24,6 +24,9 @@ Bereits vorhanden:
 - Einheiten: `infantry`, `tank`, `transport`, `destroyer`
 - Bewegung mit Terrain-/Domain-Regeln
 - Einheiten koennen jetzt per Klick auf entfernte Ziele entlang eines Pfads bewegt werden
+- Teilweise erreichte Fernziele koennen jetzt als Orders an einer Einheit haengen bleiben und in spaeteren eigenen Zuegen automatisch fortgesetzt werden
+- Diese Orders koennen jetzt bewusst geloescht werden, und ein neues Fernziel ersetzt bestehende Orders
+- Fernbewegung nutzt jetzt Klick-zur-Bestaetigung: erster Klick setzt das Ziel, zweiter Klick fuehrt aus
 - Hover ueber ein entferntes Ziel zeigt jetzt eine einfache Pfadvorschau fuer die aktuell selektierte Einheit
 - Die Vorschau zeigt jetzt auch lange Ziele jenseits des aktuellen Bewegungslimits mit Stopppunkt und Endziel
 - deterministischer Nahkampf mit Gegenschlag
@@ -56,7 +59,7 @@ Bereits vorhanden:
 - Tests für Kernregeln
 
 Verifiziert zuletzt:
-- `.venv/bin/pytest -q` -> `27 passed`
+- `.venv/bin/pytest -q` -> `32 passed`
 - `.venv/bin/python -m compileall main.py game tests`
 - Offscreen-QML-Load erfolgreich
 - aktualisierte Demo unter `captures/demo-launcher-ingame.mp4`
@@ -103,8 +106,8 @@ Tests:
 ## Naechster sinnvoller Schritt
 
 Wenn die naechste Sitzung direkt an die aktuelle Bewegungsarbeit anschliessen soll, ist die beste Fortsetzung:
-- Fernbewegung ueber mehrere Zuege mit gemerktem Ziel
-- optional danach Klick-zu-Bestaetigen oder kleine Schrittanimation
+- bestaetigtes Fernziel noch klarer visualisieren
+- danach kleine Schrittanimation oder Rueckkehr zu tieferen Spielregeln
 
 ## Struktur
 

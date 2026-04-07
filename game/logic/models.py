@@ -33,8 +33,9 @@ class Unit:
     cargo_capacity: int
     cargo_unit_ids: list[int]
     embarked_in: int | None = None
+    queued_destination: Position | None = None
 
-    def to_dict(self) -> dict[str, int | str | dict[str, int]]:
+    def to_dict(self) -> dict[str, int | str | None | dict[str, int]]:
         return {
             "id": self.unit_id,
             "owner_id": self.owner_id,
@@ -52,6 +53,7 @@ class Unit:
             "cargo_unit_ids": list(self.cargo_unit_ids),
             "cargo_count": len(self.cargo_unit_ids),
             "embarked_in": self.embarked_in,
+            "queued_destination": self.queued_destination.to_dict() if self.queued_destination is not None else None,
         }
 
     @classmethod
@@ -72,6 +74,7 @@ class Unit:
             cargo_capacity=int(data["cargo_capacity"]),
             cargo_unit_ids=[int(item) for item in data["cargo_unit_ids"]],
             embarked_in=int(data["embarked_in"]) if data["embarked_in"] is not None else None,
+            queued_destination=Position.from_dict(data["queued_destination"]) if data.get("queued_destination") is not None else None,
         )
 
 

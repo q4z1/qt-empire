@@ -97,6 +97,14 @@ class GameController(QObject):
     def setCityProduction(self, x: int, y: int, unit_type: str) -> None:
         self._apply_result(self._game.set_city_production({"x": x, "y": y}, unit_type).to_dict())
 
+    @Slot(int)
+    def clearUnitOrders(self, unit_id: int) -> None:
+        self._apply_result(self._game.clear_unit_orders(unit_id).to_dict())
+
+    @Slot(int, int, int)
+    def setPendingMoveTarget(self, unit_id: int, x: int, y: int) -> None:
+        self._apply_result(self._game.set_pending_move_target(unit_id, {"x": x, "y": y}).to_dict())
+
     @Slot(int, int)
     def setPreviewTarget(self, x: int, y: int) -> None:
         self._state = self._game.set_preview_target({"x": x, "y": y})

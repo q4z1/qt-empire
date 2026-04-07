@@ -20,6 +20,7 @@ class GameState:
     game_over: bool = False
     winner_id: int | None = None
     preview_target: Position | None = None
+    pending_move_target: Position | None = None
 
     def is_in_bounds(self, position: Position) -> bool:
         return 0 <= position.x < self.map_size.width and 0 <= position.y < self.map_size.height
@@ -100,6 +101,7 @@ class GameState:
             "game_over": self.game_over,
             "winner_id": self.winner_id,
             "preview_target": self.preview_target.to_dict() if self.preview_target is not None else None,
+            "pending_move_target": self.pending_move_target.to_dict() if self.pending_move_target is not None else None,
             "tiles": tiles,
             "units": units,
         }

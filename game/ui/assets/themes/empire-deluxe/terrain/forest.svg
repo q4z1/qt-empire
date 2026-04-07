@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8aa05b"/>
+      <stop offset="100%" stop-color="#6f8743"/>
+    </linearGradient>
+    <linearGradient id="canopy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4f6f2d"/>
+      <stop offset="100%" stop-color="#2f4a1e"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#bg)"/>
+  <path d="M0 86 L100 86" stroke="#56733a" stroke-width="3" opacity="0.35"/>
+  <g opacity="0.95">
+    <circle cx="20" cy="26" r="12" fill="url(#canopy)"/>
+    <circle cx="34" cy="22" r="10" fill="#3f5f26"/>
+    <rect x="26" y="34" width="4" height="13" rx="1.5" fill="#6b4f2e"/>
+
+    <circle cx="68" cy="24" r="13" fill="url(#canopy)"/>
+    <circle cx="82" cy="29" r="10" fill="#3f5f26"/>
+    <rect x="73" y="36" width="4" height="13" rx="1.5" fill="#6b4f2e"/>
+
+    <circle cx="42" cy="62" r="14" fill="url(#canopy)"/>
+    <circle cx="58" cy="64" r="11" fill="#3f5f26"/>
+    <rect x="48" y="73" width="4" height="13" rx="1.5" fill="#6b4f2e"/>
+  </g>
+  <path d="M6 52 C14 46 20 46 28 52" fill="none" stroke="#c4d28d" stroke-width="2" opacity="0.4"/>
+  <path d="M60 78 C70 72 78 72 92 78" fill="none" stroke="#c4d28d" stroke-width="2" opacity="0.3"/>
+</svg>

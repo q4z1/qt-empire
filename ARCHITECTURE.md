@@ -109,6 +109,8 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - Darstellung von Fog of War
 - Transport- und Cargo-Informationen
 - Einheiten- und Stadt-Icons aus lokalen SVG-Assets
+- erste Theme-Schicht mit Empire-Deluxe-artigen Terrain-SVGs fuer Plains, Forest, Mountain und Water
+- Stadt-Terrain bekommt ein eigenes SVG-Asset im Theme statt nur eines generischen Fallbacks
 - Stadtliste mit einfacher Produktionsauswahl
 - zeigt laufende Bewegungen als kleine Statuskarte in der Seitenleiste
 

@@ -4,6 +4,8 @@
 
 - GUI lokal interaktiv weiter prüfen und Layout iterativ verbessern
 - rechte Seitenleiste weiter verfeinern: Gruppierung, kompaktere Cards, bessere Scroll-Indikatoren
+- Theme-System weiter ausbauen: weitere Empire-Deluxe-Details, eventuell weitere Skins und bessere Karten-Texturen
+- Theme-System weiter ausbauen: Stadt- und Küstendetails, vielleicht stärkere Tile-Kontraste und weitere Terrain-Varianten
 - Menü und Statusbereich weiter atmosphärisch schärfen
 - Tooltip-/Hover-System später noch gezielter für Einheiten, Städte und Produktion ausbauen
 - CLI-Demo verkleinern, damit sie nicht den kompletten Kartenstate ausgibt

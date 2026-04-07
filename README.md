@@ -66,6 +66,8 @@ Bereits vorhanden:
 - Gegenfeuer verbraucht die Bewegungs-/Reaktionsfaehigkeit der verteidigenden Artillerie
 - Artillerie kann jetzt bis Reichweite 3 bombardieren, mit leichtem Schadensabfall auf Distanz 3
 - die Seitenleiste zeigt jetzt die Reichweite der selektierten Einheit direkt an
+- erstes Grafik-Theme mit Empire-Deluxe-anmutender Terrain-Darstellung auf Basis von SVG-Kacheln fuer Land und Wasser
+- Stadt-Terrain hat jetzt eine eigene Empire-Deluxe-artige SVG-Kachel statt nur eines Plains-Fallbacks
 - minimale Qt/QML-Oberfläche
 - headless Demo-Capture fuer Launcher- und Ingame-Sequenzen als MP4
 - der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung und Save/Load

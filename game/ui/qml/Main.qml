@@ -36,6 +36,25 @@ ApplicationWindow {
         "path": [],
         "duration_ms": 0
     })
+    readonly property var themeLibrary: ({
+        "empireDeluxe": {
+            "terrainSources": {
+                "plains": "../assets/themes/empire-deluxe/terrain/plains.svg",
+                "forest": "../assets/themes/empire-deluxe/terrain/forest.svg",
+                "mountain": "../assets/themes/empire-deluxe/terrain/mountain.svg",
+                "water": "../assets/themes/empire-deluxe/terrain/water.svg",
+                "city": "../assets/themes/empire-deluxe/terrain/city.svg"
+            },
+            "terrainFallbackColors": {
+                "plains": "#d8c79a",
+                "forest": "#7f9a54",
+                "mountain": "#8d8a84",
+                "water": "#6a9fb5",
+                "city": "#d8b26e"
+            }
+        }
+    })
+    readonly property string activeThemeId: "empireDeluxe"
     property var gameState: (typeof gameController !== "undefined" && gameController) ? gameController.state : emptyState
     property var movementAnimation: (typeof gameController !== "undefined" && gameController) ? gameController.movementAnimation : emptyMovementAnimation
     property real movementProgress: 0
@@ -317,11 +336,21 @@ ApplicationWindow {
                                 width: 30
                                 height: 30
                                 radius: 8
-                                color: tileVisible
-                                       ? terrainColor(tileData ? tileData.terrain : "plains")
-                                       : (tileExplored ? "#5e615d" : "#1f2730")
+                                    clip: true
+                                    color: tileVisible
+                                        ? terrainFallbackColor(tileData ? tileData.terrain : "plains")
+                                        : (tileExplored ? "#5e615d" : "#1f2730")
                                 border.width: selectedUnitId >= 0 && displayedOccupant && displayedOccupant.id === selectedUnitId ? 3 : 1
                                 border.color: selectedUnitId >= 0 && displayedOccupant && displayedOccupant.id === selectedUnitId ? "#8b1e3f" : (tileVisible ? "#9b8866" : "#39414a")
+
+                                    Image {
+                                     anchors.fill: parent
+                                     visible: tileVisible
+                                     source: terrainSource(tileData ? tileData.terrain : "plains")
+                                     fillMode: Image.Stretch
+                                     smooth: true
+                                     opacity: tileExplored ? 0.95 : 1.0
+                                    }
 
                                 Rectangle {
                                     anchors.fill: parent
@@ -1110,17 +1139,28 @@ ApplicationWindow {
     }
 
     function terrainColor(terrain) {
-        if (terrain === "water") {
-            return "#6a9fb5"
+        return terrainFallbackColor(terrain)
+    }
+
+    function activeTheme() {
+        if (themeLibrary[activeThemeId]) {
+            return themeLibrary[activeThemeId]
         }
-        if (terrain === "forest") {
-            return "#8aa05b"
+        return themeLibrary.empireDeluxe
+    }
+
+    function terrainSource(terrain) {
+        const theme = activeTheme()
+        if (theme && theme.terrainSources && theme.terrainSources[terrain]) {
+            return theme.terrainSources[terrain]
         }
-        if (terrain === "mountain") {
-            return "#8d8a84"
-        }
-        if (terrain === "city") {
-            return "#d8b26e"
+        return theme.terrainSources.plains
+    }
+
+    function terrainFallbackColor(terrain) {
+        const theme = activeTheme()
+        if (theme && theme.terrainFallbackColors && theme.terrainFallbackColors[terrain]) {
+            return theme.terrainFallbackColors[terrain]
         }
         return "#d9c7a4"
     }

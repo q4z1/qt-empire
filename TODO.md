@@ -1,62 +1,101 @@
 # TODO
 
-## Kurzfristig
+Ziel: vollständig spielbares Empire-Spiel (Einzelspieler + Hot-Seat).
+Einträge sind grob nach Priorität innerhalb jeder Kategorie sortiert.
 
-- GUI lokal interaktiv weiter prüfen und Layout iterativ verbessern
-- rechte Seitenleiste weiter verfeinern: Gruppierung, kompaktere Cards, bessere Scroll-Indikatoren
-- Theme-System weiter ausbauen: weitere Empire-Deluxe-Details, eventuell weitere Skins und bessere Karten-Texturen
-- Theme-System weiter ausbauen: Stadt- und Küstendetails, vielleicht stärkere Tile-Kontraste und weitere Terrain-Varianten
-- Theme-System weiter ausbauen: Uferverlaeufe, Kuestenlinien und ggf. distincte Meer- vs. Flussoptik
-- Theme-System weiter ausbauen: weitere Skins als echte Alternativen ergänzen
-- Theme-System weiter ausbauen: weitere Varianten fuer Strassen, Flusslaeufe und Uferkanten
-- Theme-System weiter ausbauen: weitere Varianten fuer forest, mountain und city
-- Theme-System weiter ausbauen: feinere Unterschiede zwischen den Varianten, etwa Stadtgrenzen, Wegkreuzungen oder Uferwechsel
-- Theme-System weiter ausbauen: UI-Palette noch genauer auf Empire-Deluxe-Atmosphaere trimmen
-- Menü und Statusbereich weiter atmosphärisch schärfen
-- Tooltip-/Hover-System später noch gezielter für Einheiten, Städte und Produktion ausbauen
-- CLI-Demo verkleinern, damit sie nicht den kompletten Kartenstate ausgibt
-- sichtbaren State optional kompakter serialisieren
-- Tooltips oder klarere Legende für Zielmarkierungen ergänzen
-- optional Einheit abwählen und Hover-Infos für Aktionsfelder ergänzen
-- Startmenü ausbauen: Dateiauswahl für Laden/Speichern, Einstellungen, Szenarioauswahl
-- Szenarioauswahl weiter ausbauen: Vorschaubilder, Schwierigkeitsgrad, Fraktionen
-- Terrain-Icons oder detailliertere Terrain-Darstellung später ergänzen
-- Demo-Capture spaeter noch weiter ausbauen: weichere Kamera-/Ablaufwechsel, gezielte Kampf-/Transport-Szenen und noch klarere Gefechtsdramaturgie
-- falls noch nuetzlich: weitere Soundeffekte fuer Attacken, Luftfahrzeuge oder UI-Feedback ergänzen
-- Kampf-Soundpalette spaeter noch feiner abstufen, falls mehr Einheitentypen oder echte Luftwaffe dazukommen
+---
 
-## Regeln als Nächstes
+## Pflicht für Release (Blocker)
 
-- Bewegung zuerst fertigziehen, bevor neue groessere Regelsysteme dazukommen
-- differenzierteres Produktionssystem mit mehr Bautypen und echten Werften
-- Artillerie-Regeln weiter ausbauen: Gegenfeuer-Feintuning und Reichweitenbalance
-- Produktionsoberflaeche weiter ausbauen: Kosten, Bauzeit, Stadtrolle klarer darstellen
-- Stadtrollen weiter ausbauen: Harbor/Factory weiter spezialisieren, dazu Hauptstadt
-- Hauptstadt-Regeln spaeter weiter ausbauen: Sonderproduktion, Nachschub, klarere Eroberungs- und Niederlageeffekte
-- weitere Einheitentypen
-- klareres Kampfsystem in Richtung Empire Deluxe
-- bessere Transportregeln: gezielte Cargo-Auswahl, mehrere Ladungstypen, Carrier/Transporter unterscheiden
-- Versorgung/Reparatur weiter differenzieren: nur bestimmte Einheitentypen, Nachschub, Hafenlogik
-- Siegbedingungen
-- Siegbedingungen ueber reine Hauptstadt-Eroberung hinaus ausbauen
+### KI
+- einfacher KI-Spieler: Einheiten zu feindlichen Städten bewegen und angrenzende Gegner angreifen
+- KI nutzt vorhandene `move_unit`/`end_turn`-API, keine Sonderrechte
+- KI-Zug in der UI sichtbar machen: kurze Pause oder Zusammenfassung, bevor der Spieler wieder dran ist
+- KI-Schwierigkeitsgrad: zumindest "einfach" und optional "mittel" (aggressivere Pfadwahl)
 
-## Mittelfristig
+### Produktion
+- Produktions-UI klar und direkt zugänglich: Klick auf eigene Stadt öffnet Bauauftrag-Auswahl
+- aktueller Bauauftrag und Fortschritt sichtbar auf der Karte oder in der Sidebar
+- Produktion ohne Stadtrolle (leere Stadt) sollte nutzbar sein oder klar erklären warum nicht
 
-- Fog of War weiter ausbauen
-- AI-Grundgerüst
-- Szenario-/Map-Loader statt fest kodierter Testkarte
-- Trennung zwischen internem Vollstate und explizitem View-State noch klarer herausziehen
-- Save/Load-Format versionieren und stabilisieren
+### Züge & Rundenfluss
+- klare "Spieler X ist dran"-Anzeige beim Zugwechsel (Banner oder Modal)
+- KI-Zug darf nicht interaktiv sein: Klicks während KI-Phase ignorieren oder blocken
 
-## Qualität
+### Spielende
+- Game-Over-Anzeige ausbessern: klarer Winner-Screen mit Zusammenfassung statt nur Header-Text
+- Neustart-Möglichkeit direkt aus dem Game-Over-Zustand heraus
 
-- mehr Tests für Sicht, Produktion und Kampfketten
-- Regressionstests für API-Verhalten
-- optional Snapshot-Tests für sichtbaren UI-State
+### Karten & Szenarien
+- mindestens 2-3 spielbare Szenarien unterschiedlicher Größe
+- Szenario-Loader aus JSON-Datei statt nur hardcodierter Szenarien
+- Startmenü zeigt Szenariobeschreibung und Kartengröße an
 
-## Langfristig
+### Save/Load
+- mehrere Speicherslots oder Dateiauswahl (nicht nur Quicksave)
+- Laden aus dem Hauptmenü heraus
 
-- API stabilisieren und einfrieren
+---
+
+## Soll für Release (wichtig, kein harter Blocker)
+
+### Einheiten & Kampf
+- Lufteinheiten: `bomber` (Angriff auf Land/See) und `fighter` (Luftüberlegenheit/Abfang)
+- Artillerie-Balancing finalisieren: Gegenfeuerwerte und Reichweite 3 prüfen
+- Transportregeln verbessern: gezielte Cargo-Auswahl, Carrier vs. Transport unterscheiden
+- Versorgung/Reparatur differenzieren: Hafenlogik für Seeeinheiten, Depots für Landeinheiten
+
+### Stadtrollen & Produktion
+- Harbor/Factory/Capital-Rollen weiter spezialisieren: welche Einheiten, welche Kosten
+- Bauzeit sichtbar (Züge bis fertig) und in der Sidebar anzeigen
+- leere Städte neutral/feindlich klar unterscheiden, Produktion erst nach Eroberung starten
+
+### Fog of War
+- Sichtradius abhängig von Einheitentyp klar sichtbar in der UI
+- entdeckte aber aktuell unsichtbare Einheiten als "zuletzt gesehen"-Phantome anzeigen
+- Fog-Grenze schärfer oder mit leichtem Verlauf darstellen
+
+### Spielfluss
+- Einheit kan abgewählt werden (Klick ins Leere oder Escape)
+- "Alle Einheiten bewegt"-Hinweis am Rundenende: noch unbewegte Einheiten hervorheben
+- Einheitenliste in der Sidebar anklickbar: Klick springt zur Einheit auf der Karte
+
+---
+
+## Nice-to-have (nach Release)
+
+### KI
+- stärkere KI: koordinierter Angriff, Verteidigung der Hauptstadt, Produktionspriorität
+- verschiedene KI-Persönlichkeiten (aggressiv, defensiv, wirtschaftlich)
+
+### Karten
+- einfacher Karten-Editor oder Textformat für eigene Maps
+- prozedurale Kartengenerierung als Alternative
+
+### UI & Theme
+- weitere Terrain-Varianten und feinere Küstenlinien
+- zweites vollständiges Theme als Alternative zu Empire Deluxe
+- Einheitendetail-Panel mit Stats beim selektieren
+
+### Sonstiges
+- Hot-Seat-Multiplayer: Bildschirm abdecken beim Spielerwechsel
+- optionale Rundenzeit-Begrenzung
+- Replay-Funktion auf Basis des Zuglogs
+- CLI-Demo kompakter serialisieren
+
+---
+
+## Qualität (laufend)
+
+- Tests für KI-Verhalten (deterministisch durch Seed)
+- mehr Tests für Produktion, Sicht und Kampfketten
+- Save/Load-Format versionieren
+- API einfrieren und dokumentieren bevor C++-Port beginnt
+
+---
+
+## Langfristig / Post-Release
+
 - C++-Port der Engine vorbereiten
 - Python- und C++-API strukturell angleichen
-- Performancekritische Teile identifizieren
+- Performancekritische Pfade identifizieren (Pfadsuche, Sichtberechnung)

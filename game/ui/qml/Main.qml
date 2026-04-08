@@ -37,12 +37,25 @@ ApplicationWindow {
         "duration_ms": 0
     })
     readonly property var themeLibrary: ({
+        "classicFlat": {
+            "useTerrainImages": false,
+            "terrainSources": {},
+            "terrainFallbackColors": {
+                "plains": "#d9c7a4",
+                "forest": "#8aa05b",
+                "mountain": "#8d8a84",
+                "water": "#6a9fb5",
+                "city": "#d8b26e"
+            }
+        },
         "empireDeluxe": {
+            "useTerrainImages": true,
             "terrainSources": {
                 "plains": "../assets/themes/empire-deluxe/terrain/plains.svg",
                 "forest": "../assets/themes/empire-deluxe/terrain/forest.svg",
                 "mountain": "../assets/themes/empire-deluxe/terrain/mountain.svg",
                 "water": "../assets/themes/empire-deluxe/terrain/water.svg",
+                "shore": "../assets/themes/empire-deluxe/terrain/shore.svg",
                 "city": "../assets/themes/empire-deluxe/terrain/city.svg"
             },
             "terrainFallbackColors": {
@@ -54,7 +67,7 @@ ApplicationWindow {
             }
         }
     })
-    readonly property string activeThemeId: "empireDeluxe"
+    property string activeThemeId: (typeof gameController !== "undefined" && gameController) ? gameController.activeThemeId : "empireDeluxe"
     property var gameState: (typeof gameController !== "undefined" && gameController) ? gameController.state : emptyState
     property var movementAnimation: (typeof gameController !== "undefined" && gameController) ? gameController.movementAnimation : emptyMovementAnimation
     property real movementProgress: 0
@@ -93,6 +106,10 @@ ApplicationWindow {
 
         function onSelectedScenarioChanged() {
             root.selectedScenarioId = gameController.selectedScenarioId
+        }
+
+        function onActiveThemeChanged() {
+            root.activeThemeId = gameController.activeThemeId
         }
     }
 
@@ -281,6 +298,36 @@ ApplicationWindow {
 
                         Label {
                             Layout.fillWidth: true
+                            text: "Grafik-Theme"
+                            color: "#17324d"
+                            font.bold: true
+                        }
+
+                        ComboBox {
+                            id: themeBox
+                            Layout.fillWidth: true
+                            model: themeOptions()
+                            textRole: "name"
+                            valueRole: "id"
+                            currentIndex: themeIndexForId(activeThemeId)
+
+                            onActivated: {
+                                const theme = model[currentIndex]
+                                if (theme) {
+                                    gameController.setActiveThemeId(theme.id)
+                                }
+                            }
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
+                            wrapMode: Text.WordWrap
+                            text: selectedThemeDescription()
+                            color: "#5b4b37"
+                        }
+
+                        Label {
+                            Layout.fillWidth: true
                             wrapMode: Text.WordWrap
                             text: "Aktuell verfügbar: neues Spiel starten und Quick-Load aus "
                                   + ((typeof gameController !== "undefined" && gameController) ? gameController.saveDisplayPath : "saves/quicksave.json")
@@ -332,6 +379,7 @@ ApplicationWindow {
                                 property var legalTarget: findLegalTarget(cellX, cellY)
                                 property bool tileVisible: tileData && tileData.visible
                                 property bool tileExplored: tileData && tileData.explored
+                                property bool coastalWaterTile: tileVisible && isCoastalWaterTile(cellX, cellY)
 
                                 width: 30
                                 height: 30
@@ -345,11 +393,20 @@ ApplicationWindow {
 
                                     Image {
                                      anchors.fill: parent
-                                     visible: tileVisible
-                                     source: terrainSource(tileData ? tileData.terrain : "plains")
+                                     visible: tileVisible && themeUsesTerrainImages()
+                                        source: terrainSourceForTile(tileData, cellX, cellY)
                                      fillMode: Image.Stretch
                                      smooth: true
                                      opacity: tileExplored ? 0.95 : 1.0
+                                    }
+
+                                    Image {
+                                        anchors.fill: parent
+                                    visible: coastalWaterTile && themeUsesTerrainImages()
+                                        source: terrainSource("shore")
+                                        fillMode: Image.Stretch
+                                        smooth: true
+                                        opacity: 0.95
                                     }
 
                                 Rectangle {
@@ -639,6 +696,28 @@ ApplicationWindow {
                                     wrapMode: Text.WordWrap
                                     text: gameState.last_event
                                     color: "#f6f1e8"
+                                }
+
+                                Text {
+                                    width: parent.width
+                                    text: "Theme: " + selectedThemeDescription()
+                                    color: "#d9c7a4"
+                                    font.pixelSize: 12
+                                }
+
+                                ComboBox {
+                                    width: parent.width
+                                    model: themeOptions()
+                                    textRole: "name"
+                                    valueRole: "id"
+                                    currentIndex: themeIndexForId(activeThemeId)
+
+                                    onActivated: {
+                                        const theme = model[currentIndex]
+                                        if (theme) {
+                                            gameController.setActiveThemeId(theme.id)
+                                        }
+                                    }
                                 }
 
                                 Text {
@@ -1154,7 +1233,42 @@ ApplicationWindow {
         if (theme && theme.terrainSources && theme.terrainSources[terrain]) {
             return theme.terrainSources[terrain]
         }
-        return theme.terrainSources.plains
+        return theme && theme.terrainSources && theme.terrainSources.plains ? theme.terrainSources.plains : ""
+    }
+
+    function terrainSourceForTile(tile, x, y) {
+        if (!tile) {
+            return terrainSource("plains")
+        }
+        if (!themeUsesTerrainImages()) {
+            return ""
+        }
+        return terrainSource(tile.terrain)
+    }
+
+    function themeUsesTerrainImages() {
+        const theme = activeTheme()
+        return !!(theme && theme.useTerrainImages)
+    }
+
+    function isCoastalWaterTile(x, y) {
+        const tile = findTile(x, y)
+        if (!tile || tile.terrain !== "water") {
+            return false
+        }
+        const neighbors = [
+            findTile(x + 1, y),
+            findTile(x - 1, y),
+            findTile(x, y + 1),
+            findTile(x, y - 1)
+        ]
+        for (let i = 0; i < neighbors.length; i++) {
+            const neighbor = neighbors[i]
+            if (neighbor && neighbor.terrain !== "water") {
+                return true
+            }
+        }
+        return false
     }
 
     function terrainFallbackColor(terrain) {
@@ -1274,6 +1388,33 @@ ApplicationWindow {
             text += " | Pending " + gameState.pending_move_target.x + ", " + gameState.pending_move_target.y
         }
         return text
+    }
+
+    function themeOptions() {
+        return [
+            { "id": "classicFlat", "name": "Classic Flat" },
+            { "id": "empireDeluxe", "name": "Empire Deluxe" }
+        ]
+    }
+
+    function themeIndexForId(themeId) {
+        const options = themeOptions()
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].id === themeId) {
+                return i
+            }
+        }
+        return 0
+    }
+
+    function selectedThemeDescription() {
+        const options = themeOptions()
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].id === activeThemeId) {
+                return options[i].name
+            }
+        }
+        return "Classic Flat"
     }
 
     function findUnitById(unitId) {

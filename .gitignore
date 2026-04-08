@@ -3,3 +3,4 @@ __pycache__/
 .venv/
 *.pyc
 saves/quicksave.json
+saves/ui-settings.json

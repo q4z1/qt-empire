@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
@@ -12,13 +13,16 @@ class GameController(QObject):
     stateChanged = Signal()
     commandMessageChanged = Signal()
     selectedScenarioChanged = Signal()
+    activeThemeChanged = Signal()
     movementAnimationChanged = Signal()
 
     def __init__(self, game: GameAPI | None = None) -> None:
         super().__init__()
         self._save_path = Path.cwd() / "saves" / "quicksave.json"
+        self._theme_settings_path = Path.cwd() / "saves" / "ui-settings.json"
         self._scenarios: list[dict[str, Any]] = list_scenarios()
         self._selected_scenario_id = self._scenarios[0]["id"]
+        self._active_theme_id = self._load_active_theme_id()
         self._game = game or create_game()
         self._state: dict[str, Any] = self._game.get_visible_state()
         self._command_message = "Ready."
@@ -47,6 +51,10 @@ class GameController(QObject):
     @Property(str, notify=selectedScenarioChanged)
     def selectedScenarioId(self) -> str:
         return self._selected_scenario_id
+
+    @Property(str, notify=activeThemeChanged)
+    def activeThemeId(self) -> str:
+        return self._active_theme_id
 
     @Property("QVariant", notify=movementAnimationChanged)
     def movementAnimation(self) -> dict[str, Any]:
@@ -94,6 +102,16 @@ class GameController(QObject):
             return
         self._selected_scenario_id = scenario_id
         self.selectedScenarioChanged.emit()
+
+    @Slot(str)
+    def setActiveThemeId(self, theme_id: str) -> None:
+        if theme_id == self._active_theme_id:
+            return
+        if theme_id not in {"classicFlat", "empireDeluxe"}:
+            return
+        self._active_theme_id = theme_id
+        self._save_active_theme_id()
+        self.activeThemeChanged.emit()
 
     @Slot()
     def saveGame(self) -> None:
@@ -255,3 +273,24 @@ class GameController(QObject):
             "path": [],
             "duration_ms": 0,
         }
+
+    def _load_active_theme_id(self) -> str:
+        if not self._theme_settings_path.exists():
+            return "empireDeluxe"
+
+        try:
+            data = json.loads(self._theme_settings_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return "empireDeluxe"
+
+        theme_id = data.get("active_theme_id")
+        if theme_id in {"classicFlat", "empireDeluxe"}:
+            return str(theme_id)
+        return "empireDeluxe"
+
+    def _save_active_theme_id(self) -> None:
+        self._theme_settings_path.parent.mkdir(parents=True, exist_ok=True)
+        self._theme_settings_path.write_text(
+            json.dumps({"active_theme_id": self._active_theme_id}, indent=2),
+            encoding="utf-8",
+        )

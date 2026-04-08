@@ -111,6 +111,9 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - Einheiten- und Stadt-Icons aus lokalen SVG-Assets
 - erste Theme-Schicht mit Empire-Deluxe-artigen Terrain-SVGs fuer Plains, Forest, Mountain und Water
 - Stadt-Terrain bekommt ein eigenes SVG-Asset im Theme statt nur eines generischen Fallbacks
+- Wasser-Terrain bekommt jetzt eine einfache Shoreline-Ueberlagerung an Landgrenzen
+- Theme-Umschalter zwischen flachem Prototyp-Look und Empire-Deluxe-Layout
+- aktive Theme-Auswahl wird im UI-Controller getrennt von den Spielständen in `saves/ui-settings.json` persistiert
 - Stadtliste mit einfacher Produktionsauswahl
 - zeigt laufende Bewegungen als kleine Statuskarte in der Seitenleiste
 

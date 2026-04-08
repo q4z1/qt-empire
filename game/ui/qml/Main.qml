@@ -140,6 +140,16 @@ ApplicationWindow {
     })
     property string activeThemeId: (typeof gameController !== "undefined" && gameController) ? gameController.activeThemeId : "empireDeluxe"
     property var gameState: (typeof gameController !== "undefined" && gameController) ? gameController.state : emptyState
+    // boardSnapshot is set atomically (single assignment) to prevent intermediate blank frames.
+    // It bundles: state, width, height, tileLookup, unitLookup.
+    property var boardSnapshot: ({"state": emptyState, "width": 0, "height": 0, "tileLookup": {}, "unitLookup": {}})
+    // Convenience aliases so existing references keep working
+    property var boardState: boardSnapshot.state
+    property int boardWidth: boardSnapshot.width
+    property int boardHeight: boardSnapshot.height
+    property var tileLookup: boardSnapshot.tileLookup
+    property var unitLookup: boardSnapshot.unitLookup
+    property var pendingBoardState: null
     property var movementAnimation: (typeof gameController !== "undefined" && gameController) ? gameController.movementAnimation : emptyMovementAnimation
     property real movementProgress: 0
     property bool movementTweenInternalStop: false
@@ -154,7 +164,14 @@ ApplicationWindow {
         target: gameController
 
         function onStateChanged() {
-            root.gameState = gameController.state
+            const nextState = gameController.state
+            root.gameState = nextState
+            if (movementAnimation && movementAnimation.active && movementAnimation.path && movementAnimation.path.length > 0) {
+                root.pendingBoardState = nextState
+                return
+            }
+            root.pendingBoardState = null
+            root.boardSnapshot = root.buildBoardSnapshot(nextState)
         }
 
         function onMovementAnimationChanged() {
@@ -175,6 +192,11 @@ ApplicationWindow {
                 movementTween.stop()
                 movementProgress = 0
                 movementTweenInternalStop = false
+                if (root.pendingBoardState !== null) {
+                    const pending = root.pendingBoardState
+                    root.pendingBoardState = null
+                    root.boardSnapshot = root.buildBoardSnapshot(pending)
+                }
             }
         }
 
@@ -191,6 +213,10 @@ ApplicationWindow {
         function onActiveThemeChanged() {
             root.activeThemeId = gameController.activeThemeId
         }
+    }
+
+    Component.onCompleted: {
+        boardSnapshot = buildBoardSnapshot(gameState)
     }
 
     NumberAnimation {
@@ -441,25 +467,33 @@ ApplicationWindow {
 
                     Grid {
                         id: board
-                        columns: gameState.map.width
+                        columns: boardWidth
                         spacing: 4
 
                         Repeater {
-                            model: gameState.map.width * gameState.map.height
+                            model: boardWidth * boardHeight
 
                             delegate: Rectangle {
                                 required property int index
 
-                                property int cellX: index % gameState.map.width
-                                property int cellY: Math.floor(index / gameState.map.width)
+                                property int cellX: index % boardWidth
+                                property int cellY: Math.floor(index / boardWidth)
                                 property var tileData: findTile(cellX, cellY)
                                 property var occupant: findMapUnit(cellX, cellY)
                                 property bool animatedUnitHidden: isMovementAnimationUnit(occupant)
-                                property var displayedOccupant: animatedUnitHidden ? null : occupant
+                                property var displayedOccupant: occupant
                                 property var legalTarget: findLegalTarget(cellX, cellY)
                                 property bool tileVisible: tileData && tileData.visible
                                 property bool tileExplored: tileData && tileData.explored
                                 property bool coastalWaterTile: tileVisible && isCoastalWaterTile(cellX, cellY)
+                                property bool roadOverlayTile: tileVisible && themeUsesTerrainImages() && isRoadOverlayTile(tileData, cellX, cellY)
+                                property bool riverOverlayTile: tileVisible && themeUsesTerrainImages() && isRiverOverlayTile(tileData, cellX, cellY)
+                                property bool previewFullStep: isPreviewFullStep(cellX, cellY)
+                                property bool previewReachableStep: isPreviewReachableStep(cellX, cellY)
+                                property bool previewTarget: isPreviewTarget(cellX, cellY)
+                                property bool pendingMoveTarget: isPendingMoveTarget(cellX, cellY)
+                                property bool queuedOrderTarget: isQueuedOrderTarget(cellX, cellY)
+                                property bool previewStop: isPreviewStop(cellX, cellY)
 
                                 width: 30
                                 height: 30
@@ -475,6 +509,7 @@ ApplicationWindow {
                                      anchors.fill: parent
                                      visible: tileVisible && themeUsesTerrainImages()
                                         source: terrainSourceForTile(tileData, cellX, cellY)
+                                        cache: true
                                      fillMode: Image.Stretch
                                      smooth: true
                                      opacity: tileExplored ? 0.95 : 1.0
@@ -484,6 +519,7 @@ ApplicationWindow {
                                         anchors.fill: parent
                                     visible: coastalWaterTile && themeUsesTerrainImages()
                                         source: terrainSource("shore")
+                                        cache: true
                                         fillMode: Image.Stretch
                                         smooth: true
                                         opacity: 0.95
@@ -491,8 +527,9 @@ ApplicationWindow {
 
                                     Image {
                                         anchors.fill: parent
-                                        visible: tileVisible && themeUsesTerrainImages() && isRoadOverlayTile(tileData, cellX, cellY)
+                                        visible: roadOverlayTile && themeUsesTerrainImages()
                                         source: terrainSource("road")
+                                        cache: true
                                         fillMode: Image.Stretch
                                         smooth: true
                                         opacity: 0.72
@@ -500,8 +537,9 @@ ApplicationWindow {
 
                                     Image {
                                         anchors.fill: parent
-                                        visible: tileVisible && themeUsesTerrainImages() && isRiverOverlayTile(tileData, cellX, cellY)
+                                        visible: riverOverlayTile && themeUsesTerrainImages()
                                         source: terrainSource("river")
+                                        cache: true
                                         fillMode: Image.Stretch
                                         smooth: true
                                         opacity: 0.42
@@ -519,8 +557,8 @@ ApplicationWindow {
                                     anchors.fill: parent
                                     anchors.margins: 10
                                     radius: 5
-                                    color: isPreviewReachableStep(cellX, cellY) ? "#fff4a3" : (isPreviewFullStep(cellX, cellY) ? "#f3df9d" : "transparent")
-                                    opacity: isPreviewReachableStep(cellX, cellY) ? 0.7 : (isPreviewFullStep(cellX, cellY) ? 0.35 : 0.0)
+                                    color: previewReachableStep ? "#fff4a3" : (previewFullStep ? "#f3df9d" : "transparent")
+                                    opacity: previewReachableStep ? 0.7 : (previewFullStep ? 0.35 : 0.0)
                                 }
 
                                 Rectangle {
@@ -528,16 +566,16 @@ ApplicationWindow {
                                     anchors.margins: 4
                                     radius: 6
                                     color: "transparent"
-                                    border.width: isPendingMoveTarget(cellX, cellY)
+                                    border.width: pendingMoveTarget
                                                   ? 4
-                                                  : (isQueuedOrderTarget(cellX, cellY)
+                                                  : (queuedOrderTarget
                                                      ? 3
-                                                     : (isPreviewTarget(cellX, cellY) ? 2 : (isPreviewStop(cellX, cellY) ? 2 : 0)))
-                                    border.color: isPendingMoveTarget(cellX, cellY)
+                                                     : (previewTarget ? 2 : (previewStop ? 2 : 0)))
+                                    border.color: pendingMoveTarget
                                                   ? "#f6f1e8"
-                                                  : (isQueuedOrderTarget(cellX, cellY)
+                                                  : (queuedOrderTarget
                                                      ? "#8dd8ff"
-                                                     : (isPreviewTarget(cellX, cellY) ? "#fff4a3" : "#e18b5a"))
+                                                     : (previewTarget ? "#fff4a3" : "#e18b5a"))
                                 }
 
                                 Rectangle {
@@ -545,13 +583,13 @@ ApplicationWindow {
                                     anchors.margins: 1
                                     radius: 8
                                     color: "transparent"
-                                    border.width: isPendingMoveTarget(cellX, cellY) || isQueuedOrderTarget(cellX, cellY) ? 1 : 0
-                                    border.color: isPendingMoveTarget(cellX, cellY) ? "#17324d" : "#c9f0ff"
-                                    opacity: isPendingMoveTarget(cellX, cellY) ? 0.95 : 0.7
+                                    border.width: pendingMoveTarget || queuedOrderTarget ? 1 : 0
+                                    border.color: pendingMoveTarget ? "#17324d" : "#c9f0ff"
+                                    opacity: pendingMoveTarget ? 0.95 : 0.7
                                 }
 
                                 Rectangle {
-                                    visible: isPreviewStop(cellX, cellY)
+                                    visible: previewStop
                                     width: 8
                                     height: 8
                                     radius: 4
@@ -584,7 +622,9 @@ ApplicationWindow {
                                     anchors.centerIn: parent
                                     width: 22
                                     height: 22
-                                    opacity: tileVisible ? 1.0 : (tileExplored ? 0.55 : 0.0)
+                                    opacity: animatedUnitHidden
+                                             ? (tileVisible ? 0.45 : (tileExplored ? 0.3 : 0.0))
+                                             : (tileVisible ? 1.0 : (tileExplored ? 0.55 : 0.0))
                                     visible: displayedOccupant || hasCityIcon(tileData)
 
                                     Image {
@@ -592,6 +632,7 @@ ApplicationWindow {
                                         width: 18
                                         height: 18
                                         source: displayedOccupant ? unitIconSource(displayedOccupant.unit_type) : cityIconSource()
+                                        cache: true
                                         fillMode: Image.PreserveAspectFit
                                         smooth: true
                                     }
@@ -650,37 +691,43 @@ ApplicationWindow {
                             }
                         }
 
+                    }
+
+                    // movementLayer is a sibling of the Grid (NOT a Grid child) so it
+                    // does not participate in Grid layout and cannot deform column widths.
+                    Item {
+                        id: movementLayer
+                        x: board.x
+                        y: board.y
+                        width: boardPixelWidth()
+                        height: boardPixelHeight()
+                        visible: movementAnimation.active && movementAnimation.path && movementAnimation.path.length > 0
+                        z: 10
+
                         Item {
-                            id: movementLayer
-                            width: boardPixelWidth()
-                            height: boardPixelHeight()
-                            visible: movementAnimation.active && movementAnimation.path && movementAnimation.path.length > 0
-                            z: 10
+                            visible: movementLayer.visible
+                            width: 22
+                            height: 22
+                            x: movementGhostLeft()
+                            y: movementGhostTop()
+                            opacity: 0.96
 
-                            Item {
-                                visible: movementLayer.visible
-                                width: 22
-                                height: 22
-                                x: movementGhostLeft()
-                                y: movementGhostTop()
-                                opacity: 0.96
+                            Rectangle {
+                                anchors.fill: parent
+                                radius: 11
+                                color: movementGhostColor()
+                                border.width: 2
+                                border.color: "#f6f1e8"
+                            }
 
-                                Rectangle {
-                                    anchors.fill: parent
-                                    radius: 11
-                                    color: movementGhostColor()
-                                    border.width: 2
-                                    border.color: "#f6f1e8"
-                                }
-
-                                Image {
-                                    anchors.centerIn: parent
-                                    width: 18
-                                    height: 18
-                                    source: movementAnimation.unit_type ? unitIconSource(movementAnimation.unit_type) : ""
-                                    fillMode: Image.PreserveAspectFit
-                                    smooth: true
-                                }
+                            Image {
+                                anchors.centerIn: parent
+                                width: 18
+                                height: 18
+                                source: movementAnimation.unit_type ? unitIconSource(movementAnimation.unit_type) : ""
+                                cache: true
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
                             }
                         }
                     }
@@ -1137,17 +1184,17 @@ ApplicationWindow {
     }
 
     function boardPixelWidth() {
-        if (!gameState.map || gameState.map.width <= 0) {
+        if (boardWidth <= 0) {
             return 0
         }
-        return gameState.map.width * boardCellSize() + Math.max(0, gameState.map.width - 1) * boardGap()
+        return boardWidth * boardCellSize() + Math.max(0, boardWidth - 1) * boardGap()
     }
 
     function boardPixelHeight() {
-        if (!gameState.map || gameState.map.height <= 0) {
+        if (boardHeight <= 0) {
             return 0
         }
-        return gameState.map.height * boardCellSize() + Math.max(0, gameState.map.height - 1) * boardGap()
+        return boardHeight * boardCellSize() + Math.max(0, boardHeight - 1) * boardGap()
     }
 
     function boardTileTopLeft(position) {
@@ -1228,6 +1275,10 @@ ApplicationWindow {
     }
 
     function findMapUnit(x, y) {
+        const key = x + "," + y
+        if (unitLookup && unitLookup[key]) {
+            return unitLookup[key]
+        }
         for (let i = 0; i < gameState.units.length; i++) {
             const unit = gameState.units[i]
             if (unit.embarked_in !== undefined && unit.embarked_in !== null) {
@@ -1241,6 +1292,10 @@ ApplicationWindow {
     }
 
     function findTile(x, y) {
+        const key = x + "," + y
+        if (tileLookup && tileLookup[key]) {
+            return tileLookup[key]
+        }
         for (let i = 0; i < gameState.tiles.length; i++) {
             const tile = gameState.tiles[i]
             if (tile.position.x === x && tile.position.y === y) {
@@ -1250,14 +1305,146 @@ ApplicationWindow {
         return null
     }
 
-    function findLegalTarget(x, y) {
-        for (let i = 0; i < gameState.legal_targets.length; i++) {
-            const target = gameState.legal_targets[i]
-            if (target.position.x === x && target.position.y === y) {
-                return target
+    function buildBoardSnapshot(state) {
+        const nextTileLookup = {}
+        const nextUnitLookup = {}
+        const nextLegalTargetLookup = {}
+        const nextPreviewFullLookup = {}
+        const nextPreviewReachableLookup = {}
+        const nextPreviewTargetLookup = {}
+        const nextPendingMoveTargetLookup = {}
+        const nextPreviewStopLookup = {}
+        const nextCells = []
+
+        const stateMap = state && state.map ? state.map : {"width": 0, "height": 0}
+        const stateTiles = state && state.tiles ? state.tiles : []
+        const stateUnits = state && state.units ? state.units : []
+        const stateLegalTargets = state && state.legal_targets ? state.legal_targets : []
+        const statePreviewFullPath = state && state.preview_full_path ? state.preview_full_path : []
+        const statePreviewReachablePath = state && state.preview_reachable_path ? state.preview_reachable_path : []
+        const statePreviewTarget = state && state.preview_target ? state.preview_target : null
+        const statePendingMoveTarget = state && state.pending_move_target ? state.pending_move_target : null
+        const statePreviewStopPosition = state && state.preview_stop_position ? state.preview_stop_position : null
+        const stateSelectedUnitId = state && state.selected_unit_id !== undefined && state.selected_unit_id !== null ? state.selected_unit_id : -1
+        const queuedDestinationByUnitId = {}
+
+        for (let i = 0; i < stateTiles.length; i++) {
+            const tile = stateTiles[i]
+            nextTileLookup[tile.position.x + "," + tile.position.y] = tile
+        }
+
+        for (let i = 0; i < stateUnits.length; i++) {
+            const unit = stateUnits[i]
+            if (unit.embarked_in !== undefined && unit.embarked_in !== null) {
+                continue
+            }
+            nextUnitLookup[unit.position.x + "," + unit.position.y] = unit
+            if (unit.queued_destination) {
+                queuedDestinationByUnitId[unit.id] = unit.queued_destination
             }
         }
-        return null
+
+        for (let i = 0; i < stateLegalTargets.length; i++) {
+            const target = stateLegalTargets[i]
+            if (target && target.position) {
+                nextLegalTargetLookup[target.position.x + "," + target.position.y] = target
+            }
+        }
+
+        for (let i = 0; i < statePreviewFullPath.length; i++) {
+            const step = statePreviewFullPath[i]
+            nextPreviewFullLookup[step.x + "," + step.y] = true
+        }
+
+        for (let i = 0; i < statePreviewReachablePath.length; i++) {
+            const step = statePreviewReachablePath[i]
+            nextPreviewReachableLookup[step.x + "," + step.y] = true
+        }
+
+        if (statePreviewTarget) {
+            nextPreviewTargetLookup[statePreviewTarget.x + "," + statePreviewTarget.y] = true
+        }
+
+        if (statePendingMoveTarget) {
+            nextPendingMoveTargetLookup[statePendingMoveTarget.x + "," + statePendingMoveTarget.y] = true
+        }
+
+        if (statePreviewStopPosition) {
+            nextPreviewStopLookup[statePreviewStopPosition.x + "," + statePreviewStopPosition.y] = true
+        }
+
+        function isCoastalWaterTileFromLookup(x, y) {
+            const tile = nextTileLookup[x + "," + y]
+            if (!tile || tile.terrain !== "water") {
+                return false
+            }
+            const neighbors = [
+                nextTileLookup[(x + 1) + "," + y],
+                nextTileLookup[(x - 1) + "," + y],
+                nextTileLookup[x + "," + (y + 1)],
+                nextTileLookup[x + "," + (y - 1)]
+            ]
+            for (let i = 0; i < neighbors.length; i++) {
+                const neighbor = neighbors[i]
+                if (neighbor && neighbor.terrain !== "water") {
+                    return true
+                }
+            }
+            return false
+        }
+
+        for (let y = 0; y < stateMap.height; y++) {
+            for (let x = 0; x < stateMap.width; x++) {
+                const key = x + "," + y
+                const tile = nextTileLookup[key] || null
+                const occupant = nextUnitLookup[key] || null
+                const tileVisible = !!(tile && tile.visible)
+                const tileExplored = !!(tile && tile.explored)
+                const queuedDestination = occupant && occupant.id !== undefined ? queuedDestinationByUnitId[occupant.id] : null
+                const roadOverlayTile = !!(tileVisible && tile && tile.terrain === "plains" && ((tile.city_owner_id !== null && tile.city_owner_id !== undefined) || ((x + y) % 7) === 0))
+                const riverOverlayTile = !!(tileVisible && tile && tile.terrain === "water" && ((x + y) % 5) === 0 && !isCoastalWaterTileFromLookup(x, y))
+                const queuedOrderTarget = !!(queuedDestination
+                                             && stateSelectedUnitId >= 0
+                                             && !statePendingMoveTarget
+                                             && !statePreviewTarget
+                                             && occupant
+                                             && occupant.id === stateSelectedUnitId
+                                             && queuedDestination.x === x
+                                             && queuedDestination.y === y)
+
+                nextCells.push({
+                    "x": x,
+                    "y": y,
+                    "tileData": tile,
+                    "occupant": occupant,
+                    "legalTarget": nextLegalTargetLookup[key] || null,
+                    "tileVisible": tileVisible,
+                    "tileExplored": tileExplored,
+                    "coastalWaterTile": isCoastalWaterTileFromLookup(x, y),
+                    "roadOverlayTile": roadOverlayTile,
+                    "riverOverlayTile": riverOverlayTile,
+                    "previewFullStep": !!nextPreviewFullLookup[key],
+                    "previewReachableStep": !!nextPreviewReachableLookup[key],
+                    "previewTarget": !!nextPreviewTargetLookup[key],
+                    "pendingMoveTarget": !!nextPendingMoveTargetLookup[key],
+                    "queuedOrderTarget": queuedOrderTarget,
+                    "previewStop": !!nextPreviewStopLookup[key]
+                })
+            }
+        }
+
+        return {
+            "state": state,
+            "width": stateMap.width,
+            "height": stateMap.height,
+            "cells": nextCells,
+            "tileLookup": nextTileLookup,
+            "unitLookup": nextUnitLookup
+        }
+    }
+
+    function rebuildLookups() {
+        boardSnapshot = buildBoardSnapshot(gameState)
     }
 
     function isPreviewFullStep(x, y) {
@@ -1307,6 +1494,16 @@ ApplicationWindow {
                   && unit.queued_destination
                   && unit.queued_destination.x === x
                   && unit.queued_destination.y === y)
+    }
+
+    function findLegalTarget(x, y) {
+        for (let i = 0; i < gameState.legal_targets.length; i++) {
+            const target = gameState.legal_targets[i]
+            if (target.position.x === x && target.position.y === y) {
+                return target
+            }
+        }
+        return null
     }
 
     function isPreviewStop(x, y) {

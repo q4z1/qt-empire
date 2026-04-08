@@ -29,6 +29,7 @@ class GameController(QObject):
         self._state: dict[str, Any] = self._game.get_visible_state()
         self._command_message = "Ready."
         self._movement_animation: dict[str, Any] = self._empty_movement_animation()
+        self._pending_result: dict[str, Any] | None = None
 
     @Property("QVariant", notify=stateChanged)
     def state(self) -> dict[str, Any]:
@@ -73,10 +74,14 @@ class GameController(QObject):
         action_type = self._action_type_for_target(target)
         movement_animation = self._build_movement_animation(unit_id, target)
         result = self._game.move_unit(unit_id, target).to_dict()
-        self._apply_result(result)
         if result["ok"] and movement_animation is not None:
+            self._pending_result = result
             self._movement_animation = movement_animation
             self.movementAnimationChanged.emit()
+            return
+
+        self._pending_result = None
+        self._apply_result(result)
         if result["ok"] and action_type == "attack" and unit is not None:
             unit_type = str(unit.get("unit_type", ""))
             domain = str(unit.get("domain", "land"))
@@ -160,6 +165,10 @@ class GameController(QObject):
     @Slot()
     def clearMovementAnimation(self) -> None:
         self._clear_movement_animation()
+        if self._pending_result is not None:
+            pending_result = self._pending_result
+            self._pending_result = None
+            self._apply_result(pending_result)
 
     @Slot(int, int)
     def setPreviewTarget(self, x: int, y: int) -> None:

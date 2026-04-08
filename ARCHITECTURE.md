@@ -116,6 +116,8 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - aktive Theme-Auswahl wird im UI-Controller getrennt von den Spielständen in `saves/ui-settings.json` persistiert
 - einfache Strassen- und Fluss-Overlay-SVGs sorgen fuer etwas mehr Abwechslung auf der Karte
 - Plains und Wasser nutzen jetzt deterministische SVG-Varianten pro Kachel fuer mehr visuelle Streuung
+- Forest, Mountain und City nutzen ebenfalls deterministische SVG-Varianten pro Kachel
+- die aktive Theme-Auswahl steuert jetzt zusätzlich die zentralen UI-Farben von Menü, Board und Seitenleiste
 - Stadtliste mit einfacher Produktionsauswahl
 - zeigt laufende Bewegungen als kleine Statuskarte in der Seitenleiste
 

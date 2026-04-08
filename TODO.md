@@ -10,6 +10,8 @@
 - Theme-System weiter ausbauen: weitere Skins als echte Alternativen ergänzen
 - Theme-System weiter ausbauen: weitere Varianten fuer Strassen, Flusslaeufe und Uferkanten
 - Theme-System weiter ausbauen: weitere Varianten fuer forest, mountain und city
+- Theme-System weiter ausbauen: feinere Unterschiede zwischen den Varianten, etwa Stadtgrenzen, Wegkreuzungen oder Uferwechsel
+- Theme-System weiter ausbauen: UI-Palette noch genauer auf Empire-Deluxe-Atmosphaere trimmen
 - Menü und Statusbereich weiter atmosphärisch schärfen
 - Tooltip-/Hover-System später noch gezielter für Einheiten, Städte und Produktion ausbauen
 - CLI-Demo verkleinern, damit sie nicht den kompletten Kartenstate ausgibt

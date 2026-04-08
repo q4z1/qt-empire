@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d5aa66"/>
+      <stop offset="100%" stop-color="#b98f54"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4ead8"/>
+      <stop offset="100%" stop-color="#7b654f"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94543a"/>
+      <stop offset="100%" stop-color="#623726"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#bg)"/>
+  <rect x="8" y="74" width="84" height="10" rx="3" fill="#8b6844" opacity="0.44"/>
+  <rect x="16" y="46" width="14" height="28" fill="#6f5b48"/>
+  <rect x="33" y="38" width="18" height="36" fill="#8c7660"/>
+  <rect x="55" y="32" width="16" height="42" fill="#75604d"/>
+  <rect x="75" y="44" width="10" height="30" fill="#96816d"/>
+  <polygon points="16,46 23,37 30,46" fill="url(#roof)"/>
+  <polygon points="33,38 42,28 51,38" fill="url(#roof)"/>
+  <polygon points="55,32 63,22 71,32" fill="url(#roof)"/>
+  <polygon points="75,44 80,37 85,44" fill="url(#roof)"/>
+  <rect x="20" y="54" width="3" height="8" fill="url(#stone)"/>
+  <rect x="39" y="46" width="4" height="10" fill="url(#stone)"/>
+  <rect x="61" y="41" width="4" height="11" fill="url(#stone)"/>
+  <rect x="78" y="51" width="3" height="8" fill="url(#stone)"/>
+  <path d="M4 18 H96" stroke="#f6e4bf" stroke-width="1.5" opacity="0.26"/>
+</svg>

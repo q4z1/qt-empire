@@ -73,6 +73,8 @@ Bereits vorhanden:
 - die Theme-Auswahl bleibt jetzt getrennt von den Spielständen in einer kleinen UI-Settings-Datei erhalten
 - Empire-Deluxe-Terrain hat jetzt auch einfache Strassen- und Fluss-Overlay-Varianten fuer mehr Abwechslung
 - Plains und Wasser werden jetzt pro Kachel deterministisch aus mehreren SVG-Varianten gewählt
+- Forest, Mountain und City nutzen jetzt ebenfalls mehrere Empire-Deluxe-SVG-Varianten pro Kachel
+- das aktive Theme beeinflusst jetzt auch Menü, Board und Seitenleiste farblich
 - minimale Qt/QML-Oberfläche
 - headless Demo-Capture fuer Launcher- und Ingame-Sequenzen als MP4
 - der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung und Save/Load

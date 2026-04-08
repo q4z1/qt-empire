@@ -8,7 +8,7 @@ ApplicationWindow {
     height: 760
     visible: true
     title: "Empire Prototype"
-    color: currentScreen === "menu" ? "#d7cbb7" : "#e8e1d4"
+    color: currentScreen === "menu" ? themeUiColor("menuBackgroundTop") : themeUiColor("gameBackground")
 
     readonly property var emptyState: ({
         "map": {"width": 0, "height": 0},
@@ -40,6 +40,27 @@ ApplicationWindow {
         "classicFlat": {
             "useTerrainImages": false,
             "terrainSources": {},
+            "uiColors": {
+                "menuBackgroundTop": "#efe3cf",
+                "menuBackgroundBottom": "#c5b18d",
+                "menuBorder": "#8d7651",
+                "menuCard": "#f5ede0",
+                "menuCardBorder": "#aa8d63",
+                "gameBackground": "#e8e1d4",
+                "boardContainer": "#f6f1e8",
+                "boardBorder": "#c7baa5",
+                "sidePanel": "#17324d",
+                "statusPanel": "#1f3a57",
+                "sectionPanel": "#274867",
+                "panelBorder": "#466684",
+                "panelAccent": "#6b92b3",
+                "textMain": "#17324d",
+                "textMuted": "#274867",
+                "textSoft": "#5b4b37",
+                "textLight": "#f6f1e8",
+                "textHighlight": "#d9c7a4",
+                "separator": "#17324d"
+            },
             "terrainFallbackColors": {
                 "plains": "#d9c7a4",
                 "forest": "#8aa05b",
@@ -60,16 +81,52 @@ ApplicationWindow {
                 "river": "../assets/themes/empire-deluxe/terrain/river.svg",
                 "city": "../assets/themes/empire-deluxe/terrain/city.svg"
             },
+            "uiColors": {
+                "menuBackgroundTop": "#efe3cf",
+                "menuBackgroundBottom": "#c4a974",
+                "menuBorder": "#7d6239",
+                "menuCard": "#f6eddc",
+                "menuCardBorder": "#9a7a4d",
+                "gameBackground": "#dfd2b2",
+                "boardContainer": "#f2e6c8",
+                "boardBorder": "#aa9160",
+                "sidePanel": "#1d354d",
+                "statusPanel": "#284d70",
+                "sectionPanel": "#355f84",
+                "panelBorder": "#4d6d8d",
+                "panelAccent": "#7a97b1",
+                "textMain": "#17324d",
+                "textMuted": "#274867",
+                "textSoft": "#5b4b37",
+                "textLight": "#f7f2e8",
+                "textHighlight": "#e6d1a6",
+                "separator": "#17324d"
+            },
             "terrainVariants": {
                 "plains": [
                     "../assets/themes/empire-deluxe/terrain/plains.svg",
                     "../assets/themes/empire-deluxe/terrain/plains-2.svg",
                     "../assets/themes/empire-deluxe/terrain/plains-3.svg"
                 ],
+                "forest": [
+                    "../assets/themes/empire-deluxe/terrain/forest.svg",
+                    "../assets/themes/empire-deluxe/terrain/forest-2.svg",
+                    "../assets/themes/empire-deluxe/terrain/forest-3.svg"
+                ],
+                "mountain": [
+                    "../assets/themes/empire-deluxe/terrain/mountain.svg",
+                    "../assets/themes/empire-deluxe/terrain/mountain-2.svg",
+                    "../assets/themes/empire-deluxe/terrain/mountain-3.svg"
+                ],
                 "water": [
                     "../assets/themes/empire-deluxe/terrain/water.svg",
                     "../assets/themes/empire-deluxe/terrain/water-2.svg",
                     "../assets/themes/empire-deluxe/terrain/water-3.svg"
+                ],
+                "city": [
+                    "../assets/themes/empire-deluxe/terrain/city.svg",
+                    "../assets/themes/empire-deluxe/terrain/city-2.svg",
+                    "../assets/themes/empire-deluxe/terrain/city-3.svg"
                 ]
             },
             "terrainFallbackColors": {
@@ -158,13 +215,13 @@ ApplicationWindow {
                 text: "Empire"
                 font.pixelSize: 28
                 font.family: "Serif"
-                color: "#17324d"
+                color: themeUiColor("textMain")
             }
 
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
-                color: "#17324d"
+                color: themeUiColor("separator")
                 opacity: 0.25
             }
 
@@ -173,7 +230,7 @@ ApplicationWindow {
                       ? "Winner: Player " + gameState.winner_id
                       : "Turn " + gameState.turn.number + " / Player " + gameState.turn.current_player
                 font.pixelSize: 18
-                color: "#17324d"
+                color: themeUiColor("textMain")
             }
 
             Button {
@@ -209,14 +266,14 @@ ApplicationWindow {
             anchors.fill: parent
             visible: currentScreen === "menu"
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#efe3cf" }
-                GradientStop { position: 1.0; color: "#c5b18d" }
+                GradientStop { position: 0.0; color: themeUiColor("menuBackgroundTop") }
+                GradientStop { position: 1.0; color: themeUiColor("menuBackgroundBottom") }
             }
 
             Rectangle {
                 anchors.fill: parent
                 color: "transparent"
-                border.color: "#8d7651"
+                border.color: themeUiColor("menuBorder")
                 border.width: 18
             }
 
@@ -230,7 +287,7 @@ ApplicationWindow {
                     text: "Empire"
                     font.pixelSize: 64
                     font.family: "Serif"
-                    color: "#17324d"
+                    color: themeUiColor("textMain")
                 }
 
                 Label {
@@ -238,7 +295,7 @@ ApplicationWindow {
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     text: "Rundenbasiertes Strategie-Prototyping mit getrennten Engine- und QML-Schichten."
-                    color: "#274867"
+                    color: themeUiColor("textMuted")
                     font.pixelSize: 18
                 }
 
@@ -246,8 +303,8 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     implicitHeight: 360
                     radius: 20
-                    color: "#f5ede0"
-                    border.color: "#aa8d63"
+                    color: themeUiColor("menuCard")
+                    border.color: themeUiColor("menuCardBorder")
                     border.width: 1
 
                     ColumnLayout {
@@ -283,7 +340,7 @@ ApplicationWindow {
                         Label {
                             Layout.fillWidth: true
                             text: "Szenario"
-                            color: "#17324d"
+                            color: themeUiColor("textMain")
                             font.bold: true
                         }
 
@@ -307,13 +364,13 @@ ApplicationWindow {
                             Layout.fillWidth: true
                             wrapMode: Text.WordWrap
                             text: selectedScenarioDescription()
-                            color: "#5b4b37"
+                            color: themeUiColor("textSoft")
                         }
 
                         Label {
                             Layout.fillWidth: true
                             text: "Grafik-Theme"
-                            color: "#17324d"
+                            color: themeUiColor("textMain")
                             font.bold: true
                         }
 
@@ -337,7 +394,7 @@ ApplicationWindow {
                             Layout.fillWidth: true
                             wrapMode: Text.WordWrap
                             text: selectedThemeDescription()
-                            color: "#5b4b37"
+                            color: themeUiColor("textSoft")
                         }
 
                         Label {
@@ -345,7 +402,7 @@ ApplicationWindow {
                             wrapMode: Text.WordWrap
                             text: "Aktuell verfügbar: neues Spiel starten und Quick-Load aus "
                                   + ((typeof gameController !== "undefined" && gameController) ? gameController.saveDisplayPath : "saves/quicksave.json")
-                            color: "#5b4b37"
+                            color: themeUiColor("textSoft")
                         }
                     }
                 }
@@ -362,8 +419,8 @@ ApplicationWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 radius: 18
-                color: "#f6f1e8"
-                border.color: "#c7baa5"
+                color: themeUiColor("boardContainer")
+                border.color: themeUiColor("boardBorder")
                 border.width: 1
 
                 Flickable {
@@ -626,7 +683,7 @@ ApplicationWindow {
                 Layout.maximumWidth: 360
                 Layout.fillHeight: true
                 radius: 18
-                color: "#17324d"
+                color: themeUiColor("sidePanel")
 
                 ScrollView {
                     id: sideScroll
@@ -643,8 +700,8 @@ ApplicationWindow {
                         Rectangle {
                             Layout.fillWidth: true
                             radius: 16
-                            color: "#1f3a57"
-                            border.color: "#466684"
+                            color: themeUiColor("statusPanel")
+                            border.color: themeUiColor("panelBorder")
                             border.width: 1
                             implicitHeight: statusColumn.implicitHeight + 24
 
@@ -658,8 +715,8 @@ ApplicationWindow {
                                     visible: movementAnimation && movementAnimation.active && movementAnimation.path && movementAnimation.path.length > 0
                                     width: parent.width
                                     radius: 12
-                                    color: "#274867"
-                                    border.color: "#6b92b3"
+                                    color: themeUiColor("sectionPanel")
+                                    border.color: themeUiColor("panelAccent")
                                     border.width: 1
                                     implicitHeight: movementColumn.implicitHeight + 24
 
@@ -672,7 +729,7 @@ ApplicationWindow {
                                         Text {
                                             text: "Movement"
                                             font.pixelSize: 18
-                                            color: "#f6f1e8"
+                                            color: themeUiColor("textLight")
                                             font.bold: true
                                         }
 
@@ -680,7 +737,7 @@ ApplicationWindow {
                                             width: parent.width
                                             wrapMode: Text.WordWrap
                                             text: movementSummary()
-                                            color: "#d9c7a4"
+                                            color: themeUiColor("textHighlight")
                                         }
                                     }
                                 }
@@ -688,7 +745,7 @@ ApplicationWindow {
                                 Text {
                                     text: "Status"
                                     font.pixelSize: 24
-                                    color: "#f6f1e8"
+                                    color: themeUiColor("textLight")
                                 }
 
                                 Text {
@@ -696,7 +753,7 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: gameState.game_over ? "Game Over. Player " + gameState.winner_id + " wins." : ""
-                                    color: "#f1dfb0"
+                                    color: themeUiColor("textHighlight")
                                     font.bold: true
                                 }
 
@@ -704,7 +761,7 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: (typeof gameController !== "undefined" && gameController) ? gameController.commandMessage : ""
-                                    color: "#d9c7a4"
+                                    color: themeUiColor("textHighlight")
                                 }
 
                                 Text {
@@ -712,14 +769,14 @@ ApplicationWindow {
                                     wrapMode: Text.WordWrap
                                     text: "Quick Save: "
                                           + ((typeof gameController !== "undefined" && gameController) ? gameController.saveDisplayPath : "saves/quicksave.json")
-                                    color: "#9fb7d0"
+                                    color: themeUiColor("panelAccent")
                                     font.pixelSize: 12
                                 }
 
                                 Rectangle {
                                     width: parent.width
                                     height: 1
-                                    color: "#6e8aa8"
+                                    color: themeUiColor("separator")
                                     opacity: 0.35
                                 }
 
@@ -727,13 +784,13 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: gameState.last_event
-                                    color: "#f6f1e8"
+                                    color: themeUiColor("textLight")
                                 }
 
                                 Text {
                                     width: parent.width
                                     text: "Theme: " + selectedThemeDescription()
-                                    color: "#d9c7a4"
+                                    color: themeUiColor("textHighlight")
                                     font.pixelSize: 12
                                 }
 
@@ -756,7 +813,7 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: selectedUnitHeadline()
-                                    color: selectedUnitId >= 0 ? "#f6f1e8" : "#d9c7a4"
+                                    color: selectedUnitId >= 0 ? themeUiColor("textLight") : themeUiColor("textHighlight")
                                     font.bold: selectedUnitId >= 0
                                 }
 
@@ -764,7 +821,7 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: selectedUnitId >= 0 ? selectedTargetSummary() : "Select a unit to see legal actions"
-                                    color: "#d9c7a4"
+                                    color: themeUiColor("textHighlight")
                                 }
 
                                 Button {
@@ -817,22 +874,22 @@ ApplicationWindow {
                         Rectangle {
                             Layout.fillWidth: true
                             height: 1
-                            color: "#d9c7a4"
+                            color: themeUiColor("textHighlight")
                             opacity: 0.3
                         }
 
                         Label {
                             text: "Legend"
                             font.pixelSize: 20
-                            color: "#f6f1e8"
+                            color: themeUiColor("textLight")
                             font.bold: true
                         }
 
                         Rectangle {
                             Layout.fillWidth: true
                             radius: 12
-                            color: "#274867"
-                            border.color: "#49698a"
+                            color: themeUiColor("sectionPanel")
+                            border.color: themeUiColor("panelBorder")
                             border.width: 1
                             implicitHeight: legendColumn.implicitHeight + 24
 
@@ -1258,6 +1315,17 @@ ApplicationWindow {
             return themeLibrary[activeThemeId]
         }
         return themeLibrary.empireDeluxe
+    }
+
+    function themeUiColor(name, fallback) {
+        const theme = activeTheme()
+        if (theme && theme.uiColors && theme.uiColors[name]) {
+            return theme.uiColors[name]
+        }
+        if (fallback !== undefined) {
+            return fallback
+        }
+        return "#d9c7a4"
     }
 
     function terrainSource(terrain) {

@@ -21,7 +21,9 @@
 - Startmenü ausbauen: Dateiauswahl für Laden/Speichern, Einstellungen, Szenarioauswahl
 - Szenarioauswahl weiter ausbauen: Vorschaubilder, Schwierigkeitsgrad, Fraktionen
 - Terrain-Icons oder detailliertere Terrain-Darstellung später ergänzen
-- Demo-Capture spaeter noch weiter ausbauen: weichere Kamera-/Ablaufwechsel und gezielte Kampf-/Transport-Szenen
+- Demo-Capture spaeter noch weiter ausbauen: weichere Kamera-/Ablaufwechsel, gezielte Kampf-/Transport-Szenen und noch klarere Gefechtsdramaturgie
+- falls noch nuetzlich: weitere Soundeffekte fuer Attacken, Luftfahrzeuge oder UI-Feedback ergänzen
+- Kampf-Soundpalette spaeter noch feiner abstufen, falls mehr Einheitentypen oder echte Luftwaffe dazukommen
 
 ## Regeln als Nächstes
 

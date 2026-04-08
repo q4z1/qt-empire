@@ -77,7 +77,9 @@ Bereits vorhanden:
 - das aktive Theme beeinflusst jetzt auch Menü, Board und Seitenleiste farblich
 - minimale Qt/QML-Oberfläche
 - headless Demo-Capture fuer Launcher- und Ingame-Sequenzen als MP4
-- der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung und Save/Load
+- Bewegungs-Klänge fuer die vorhandenen Einheiten sind eingebunden und der Demo-Export erzeugt jetzt einen Audio-Track
+- Gefechte haben jetzt ebenfalls Soundeffekte, getrennt nach Land-, Luft- und Seegefecht
+- der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung, Save/Load und sichtbaren Gefechten
 - Tests für Kernregeln
 
 - Verifiziert zuletzt:

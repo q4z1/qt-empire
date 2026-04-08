@@ -98,9 +98,11 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - erkennt auch Zugstart-Bewegungen aus queued Orders und speist sie als dieselbe UI-Animation ein
 
 [`game/ui/demo_capture.py`](/home/min/Development/empire/game/ui/demo_capture.py)
-- headless Capture-Helfer fuer kurze UI-Demos
+- headless Capture-Helfer fuer UI-Demos mit Launcher-, Bewegungs- und Kampfsequenzen
 - rendert Frames direkt aus dem QML-Fenster und kodiert sie mit `ffmpeg` zu MP4
-- bildet inzwischen einen laengeren, skriptbaren Showcase-Ablauf fuer Launcher und Gameplay ab
+- erstellt beim Export eine separate Audio-Spur aus den gleichen Bewegungs-Sounds wie die UI
+- hoert auch auf Kampf-Soundevents und mischt Land-, Luft- und Seegefechtsklänge in den Export
+- bildet inzwischen einen laengeren, skriptbaren Showcase-Ablauf fuer Launcher und Gameplay bis hin zu sichtbaren Gefechten ab
 
 [`game/ui/qml/Main.qml`](/home/min/Development/empire/game/ui/qml/Main.qml)
 - Startmenü und Spielansicht in einer einfachen Screen-Struktur
@@ -184,6 +186,7 @@ Der zuletzt bearbeitete Schwerpunkt war Bewegung und Bewegungs-UX:
 - eine kleine Schrittanimation fuer bestätigte Fernbewegungen und queued Fortsetzungen liegt jetzt in der QML-UI
 - die Seitenleiste zeigt laufende Bewegungen als kompakte Statuskarte
 - die Seitenleiste zeigt jetzt auch die Reichweite der selektierten Einheit an
+- Gefechte loesen jetzt domainabhängige Sounds aus, ohne dass die UI eigene Kampfregeln berechnet
 
 Der naechste logische Architektur-Schritt waere:
 

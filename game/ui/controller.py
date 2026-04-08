@@ -8,6 +8,7 @@ from PySide6.QtCore import QObject, Property, Signal, Slot
 
 from game.logic import GameAPI, create_game, create_game_for_scenario, list_scenarios, load_game
 from game.logic.models import Position
+from .audio import battle_sound_duration_ms
 
 class GameController(QObject):
     stateChanged = Signal()
@@ -15,6 +16,7 @@ class GameController(QObject):
     selectedScenarioChanged = Signal()
     activeThemeChanged = Signal()
     movementAnimationChanged = Signal()
+    battleSoundRequested = Signal(str, str, int)
 
     def __init__(self, game: GameAPI | None = None) -> None:
         super().__init__()
@@ -67,12 +69,18 @@ class GameController(QObject):
     @Slot(int, int, int)
     def moveUnit(self, unit_id: int, x: int, y: int) -> None:
         target = Position(x=x, y=y)
+        unit = self._find_unit(unit_id)
+        action_type = self._action_type_for_target(target)
         movement_animation = self._build_movement_animation(unit_id, target)
         result = self._game.move_unit(unit_id, target).to_dict()
         self._apply_result(result)
         if result["ok"] and movement_animation is not None:
             self._movement_animation = movement_animation
             self.movementAnimationChanged.emit()
+        if result["ok"] and action_type == "attack" and unit is not None:
+            unit_type = str(unit.get("unit_type", ""))
+            domain = str(unit.get("domain", "land"))
+            self.battleSoundRequested.emit(domain, unit_type, battle_sound_duration_ms(unit_type, domain))
 
     @Slot()
     def endTurn(self) -> None:

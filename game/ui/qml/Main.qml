@@ -167,11 +167,20 @@ ApplicationWindow {
                 movementTween.duration = movementAnimation.duration_ms || 0
                 movementTween.start()
                 movementTweenInternalStop = false
+                if (typeof gameAudio !== "undefined" && gameAudio) {
+                    gameAudio.playMovement(movementAnimation.unit_type, movementAnimation.duration_ms || 0)
+                }
             } else {
                 movementTweenInternalStop = true
                 movementTween.stop()
                 movementProgress = 0
                 movementTweenInternalStop = false
+            }
+        }
+
+        function onBattleSoundRequested(domain, unitType, durationMs) {
+            if (typeof gameAudio !== "undefined" && gameAudio) {
+                gameAudio.playBattle(domain, unitType, durationMs || 0)
             }
         }
 
@@ -848,7 +857,7 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: previewSummary()
-                                    color: "#f1dfb0"
+                                    color: themeUiColor("textHighlight")
                                     font.pixelSize: 12
                                     visible: previewSummary() !== ""
                                 }
@@ -857,7 +866,7 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: hoverInfo !== "" ? hoverInfo : "Hover a visible tile for details"
-                                    color: "#f1dfb0"
+                                    color: themeUiColor("textHighlight")
                                     font.pixelSize: 12
                                 }
 
@@ -865,7 +874,7 @@ ApplicationWindow {
                                     width: parent.width
                                     wrapMode: Text.WordWrap
                                     text: "Vision: bright visible, gray explored, dark unknown"
-                                    color: "#9fb7d0"
+                                    color: themeUiColor("panelAccent")
                                     font.pixelSize: 12
                                 }
                             }
@@ -902,25 +911,25 @@ ApplicationWindow {
                                 Row {
                                     spacing: 8
                                     Rectangle { width: 14; height: 14; radius: 4; color: "#e8cf54" }
-                                    Text { text: "Move"; color: "#d9c7a4" }
+                                    Text { text: "Move"; color: themeUiColor("textHighlight") }
                                 }
 
                                 Row {
                                     spacing: 8
                                     Rectangle { width: 14; height: 14; radius: 4; color: "#c84c4c" }
-                                    Text { text: "Attack"; color: "#d9c7a4" }
+                                    Text { text: "Attack"; color: themeUiColor("textHighlight") }
                                 }
 
                                 Row {
                                     spacing: 8
                                     Rectangle { width: 14; height: 14; radius: 4; color: "#8167d8" }
-                                    Text { text: "Embark"; color: "#d9c7a4" }
+                                    Text { text: "Embark"; color: themeUiColor("textHighlight") }
                                 }
 
                                 Row {
                                     spacing: 8
                                     Rectangle { width: 14; height: 14; radius: 4; color: "#2e9d8f" }
-                                    Text { text: "Disembark"; color: "#d9c7a4" }
+                                    Text { text: "Disembark"; color: themeUiColor("textHighlight") }
                                 }
 
                                 Row {
@@ -931,9 +940,9 @@ ApplicationWindow {
                                         radius: 4
                                         color: "transparent"
                                         border.width: 3
-                                        border.color: "#f6f1e8"
+                                        border.color: themeUiColor("textLight")
                                     }
-                                    Text { text: "Pending target"; color: "#d9c7a4" }
+                                    Text { text: "Pending target"; color: themeUiColor("textHighlight") }
                                 }
 
                                 Row {
@@ -944,15 +953,15 @@ ApplicationWindow {
                                         radius: 4
                                         color: "transparent"
                                         border.width: 3
-                                        border.color: "#8dd8ff"
+                                        border.color: themeUiColor("panelAccent")
                                     }
-                                    Text { text: "Queued orders"; color: "#d9c7a4" }
+                                    Text { text: "Queued orders"; color: themeUiColor("textHighlight") }
                                 }
 
                                 Row {
                                     spacing: 8
                                     Rectangle { width: 14; height: 14; radius: 7; color: "#e18b5a" }
-                                    Text { text: "Stop this turn"; color: "#d9c7a4" }
+                                    Text { text: "Stop this turn"; color: themeUiColor("textHighlight") }
                                 }
                             }
                         }

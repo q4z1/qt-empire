@@ -80,13 +80,14 @@ Bereits vorhanden:
 - Bewegungs-Klänge fuer die vorhandenen Einheiten sind eingebunden und der Demo-Export erzeugt jetzt einen Audio-Track
 - Gefechte haben jetzt ebenfalls Soundeffekte, getrennt nach Land-, Luft- und Seegefecht
 - der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung, Save/Load und sichtbaren Gefechten
+- visuelles Flackern der Map waehrend Bewegungsanimationen behoben: movementLayer war faelschlicherweise Kind des Grid-Items und hat das Layout verformt; Zustandsupdates werden jetzt atomar als einzelnes boardSnapshot-Objekt gesetzt
 - Tests für Kernregeln
 
 - Verifiziert zuletzt:
 - `.venv/bin/pytest -q` -> `42 passed`
 - `.venv/bin/python -m compileall main.py game tests`
 - Offscreen-QML-Load und `capture-demo` erfolgreich
-- Bewegungsanimation fuer direkte und queued Fernbewegungen in der UI eingebaut und im Demo-Lauf mitverifiziert
+- Bewegungsanimation ohne Map-Blanking verifiziert
 - aktualisierte Demo unter `captures/demo-launcher-ingame.mp4`
 
 ## Projekt starten
@@ -130,11 +131,8 @@ Tests:
 
 ## Naechster sinnvoller Schritt
 
-Wenn die naechste Sitzung direkt an die aktuelle Bewegungsarbeit anschliessen soll, ist die beste Fortsetzung:
-
 - Artillerie weiter feinbalancieren: Gegenfeuerwerte, Reichweite 3 und eventuelle Gegenmaßnahmen im Gegenspiel
-- Artillerie-Regeln weiter schaerfen, etwa mit Gegenfeuer- oder Reichweitenbalance
-- danach Rueckkehr zu tieferen Spielregeln
+- danach Rueckkehr zu tieferen Spielregeln: Produktionssystem, weitere Einheitentypen, Siegbedingungen
 
 ## Struktur
 

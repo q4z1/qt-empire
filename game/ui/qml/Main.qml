@@ -56,7 +56,21 @@ ApplicationWindow {
                 "mountain": "../assets/themes/empire-deluxe/terrain/mountain.svg",
                 "water": "../assets/themes/empire-deluxe/terrain/water.svg",
                 "shore": "../assets/themes/empire-deluxe/terrain/shore.svg",
+                "road": "../assets/themes/empire-deluxe/terrain/road.svg",
+                "river": "../assets/themes/empire-deluxe/terrain/river.svg",
                 "city": "../assets/themes/empire-deluxe/terrain/city.svg"
+            },
+            "terrainVariants": {
+                "plains": [
+                    "../assets/themes/empire-deluxe/terrain/plains.svg",
+                    "../assets/themes/empire-deluxe/terrain/plains-2.svg",
+                    "../assets/themes/empire-deluxe/terrain/plains-3.svg"
+                ],
+                "water": [
+                    "../assets/themes/empire-deluxe/terrain/water.svg",
+                    "../assets/themes/empire-deluxe/terrain/water-2.svg",
+                    "../assets/themes/empire-deluxe/terrain/water-3.svg"
+                ]
             },
             "terrainFallbackColors": {
                 "plains": "#d8c79a",
@@ -407,6 +421,24 @@ ApplicationWindow {
                                         fillMode: Image.Stretch
                                         smooth: true
                                         opacity: 0.95
+                                    }
+
+                                    Image {
+                                        anchors.fill: parent
+                                        visible: tileVisible && themeUsesTerrainImages() && isRoadOverlayTile(tileData, cellX, cellY)
+                                        source: terrainSource("road")
+                                        fillMode: Image.Stretch
+                                        smooth: true
+                                        opacity: 0.72
+                                    }
+
+                                    Image {
+                                        anchors.fill: parent
+                                        visible: tileVisible && themeUsesTerrainImages() && isRiverOverlayTile(tileData, cellX, cellY)
+                                        source: terrainSource("river")
+                                        fillMode: Image.Stretch
+                                        smooth: true
+                                        opacity: 0.42
                                     }
 
                                 Rectangle {
@@ -1243,7 +1275,24 @@ ApplicationWindow {
         if (!themeUsesTerrainImages()) {
             return ""
         }
+        const variantSource = terrainVariantSource(tile.terrain, x, y)
+        if (variantSource !== "") {
+            return variantSource
+        }
         return terrainSource(tile.terrain)
+    }
+
+    function terrainVariantSource(terrain, x, y) {
+        const theme = activeTheme()
+        if (!theme || !theme.terrainVariants || !theme.terrainVariants[terrain]) {
+            return ""
+        }
+        const variants = theme.terrainVariants[terrain]
+        if (!variants || variants.length === 0) {
+            return ""
+        }
+        const index = Math.abs((x * 31) + (y * 17)) % variants.length
+        return variants[index]
     }
 
     function themeUsesTerrainImages() {
@@ -1269,6 +1318,23 @@ ApplicationWindow {
             }
         }
         return false
+    }
+
+    function isRoadOverlayTile(tile, x, y) {
+        if (!tile || tile.terrain !== "plains") {
+            return false
+        }
+        if (tile.city_owner_id !== null && tile.city_owner_id !== undefined) {
+            return true
+        }
+        return ((x + y) % 7) === 0
+    }
+
+    function isRiverOverlayTile(tile, x, y) {
+        if (!tile || tile.terrain !== "water") {
+            return false
+        }
+        return ((x + y) % 5) === 0 && !isCoastalWaterTile(x, y)
     }
 
     function terrainFallbackColor(terrain) {

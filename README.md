@@ -71,6 +71,8 @@ Bereits vorhanden:
 - Wasser bekommt jetzt eine einfache Shoreline-Ueberlagerung an Landgrenzen, damit Kuesten weniger hart abbrechen
 - das Grafik-Theme kann jetzt zwischen einem flachen Prototyp-Look und Empire Deluxe umgeschaltet werden
 - die Theme-Auswahl bleibt jetzt getrennt von den Spielständen in einer kleinen UI-Settings-Datei erhalten
+- Empire-Deluxe-Terrain hat jetzt auch einfache Strassen- und Fluss-Overlay-Varianten fuer mehr Abwechslung
+- Plains und Wasser werden jetzt pro Kachel deterministisch aus mehreren SVG-Varianten gewählt
 - minimale Qt/QML-Oberfläche
 - headless Demo-Capture fuer Launcher- und Ingame-Sequenzen als MP4
 - der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung und Save/Load

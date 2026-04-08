@@ -8,6 +8,8 @@
 - Theme-System weiter ausbauen: Stadt- und Küstendetails, vielleicht stärkere Tile-Kontraste und weitere Terrain-Varianten
 - Theme-System weiter ausbauen: Uferverlaeufe, Kuestenlinien und ggf. distincte Meer- vs. Flussoptik
 - Theme-System weiter ausbauen: weitere Skins als echte Alternativen ergänzen
+- Theme-System weiter ausbauen: weitere Varianten fuer Strassen, Flusslaeufe und Uferkanten
+- Theme-System weiter ausbauen: weitere Varianten fuer forest, mountain und city
 - Menü und Statusbereich weiter atmosphärisch schärfen
 - Tooltip-/Hover-System später noch gezielter für Einheiten, Städte und Produktion ausbauen
 - CLI-Demo verkleinern, damit sie nicht den kompletten Kartenstate ausgibt

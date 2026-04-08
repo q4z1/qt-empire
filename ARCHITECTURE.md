@@ -114,6 +114,8 @@ Der sichtbare State enthält inzwischen auch UI-taugliche Aktionsdaten wie `lega
 - Wasser-Terrain bekommt jetzt eine einfache Shoreline-Ueberlagerung an Landgrenzen
 - Theme-Umschalter zwischen flachem Prototyp-Look und Empire-Deluxe-Layout
 - aktive Theme-Auswahl wird im UI-Controller getrennt von den Spielständen in `saves/ui-settings.json` persistiert
+- einfache Strassen- und Fluss-Overlay-SVGs sorgen fuer etwas mehr Abwechslung auf der Karte
+- Plains und Wasser nutzen jetzt deterministische SVG-Varianten pro Kachel fuer mehr visuelle Streuung
 - Stadtliste mit einfacher Produktionsauswahl
 - zeigt laufende Bewegungen als kleine Statuskarte in der Seitenleiste
 

@@ -7,6 +7,7 @@ from typing import Any
 from PySide6.QtCore import QObject, Property, Signal, Slot
 
 from game.logic import GameAPI, create_game, create_game_for_scenario, list_scenarios, load_game
+from game.logic.ai import AIPlayer
 from game.logic.models import Position
 from .audio import battle_sound_duration_ms
 
@@ -17,6 +18,7 @@ class GameController(QObject):
     activeThemeChanged = Signal()
     movementAnimationChanged = Signal()
     battleSoundRequested = Signal(str, str, int)
+    aiTurnChanged = Signal()  # emitted when AI starts/finishes its turn
 
     def __init__(self, game: GameAPI | None = None) -> None:
         super().__init__()
@@ -30,6 +32,8 @@ class GameController(QObject):
         self._command_message = "Ready."
         self._movement_animation: dict[str, Any] = self._empty_movement_animation()
         self._pending_result: dict[str, Any] | None = None
+        self._ai_player = AIPlayer(player_id=2)
+        self._ai_thinking = False
 
     @Property("QVariant", notify=stateChanged)
     def state(self) -> dict[str, Any]:
@@ -62,6 +66,10 @@ class GameController(QObject):
     @Property("QVariant", notify=movementAnimationChanged)
     def movementAnimation(self) -> dict[str, Any]:
         return self._movement_animation
+
+    @Property(bool, notify=aiTurnChanged)
+    def aiThinking(self) -> bool:
+        return self._ai_thinking
 
     @Slot(int)
     def selectUnit(self, unit_id: int) -> None:
@@ -97,6 +105,7 @@ class GameController(QObject):
         if queued_animation is not None:
             self._movement_animation = queued_animation
             self.movementAnimationChanged.emit()
+        self._run_ai_turn_if_needed()
 
     @Slot()
     def startNewGame(self) -> None:
@@ -106,6 +115,7 @@ class GameController(QObject):
         self._clear_movement_animation()
         self.stateChanged.emit()
         self.commandMessageChanged.emit()
+        self._run_ai_turn_if_needed()
 
     @Slot(str)
     def setSelectedScenario(self, scenario_id: str) -> None:
@@ -145,6 +155,7 @@ class GameController(QObject):
         self._clear_movement_animation()
         self.stateChanged.emit()
         self.commandMessageChanged.emit()
+        self._run_ai_turn_if_needed()
 
     @Slot(int, int, str)
     def setCityProduction(self, x: int, y: int, unit_type: str) -> None:
@@ -311,3 +322,21 @@ class GameController(QObject):
             json.dumps({"active_theme_id": self._active_theme_id}, indent=2),
             encoding="utf-8",
         )
+
+    def _run_ai_turn_if_needed(self) -> None:
+        """If the current player is the AI, run its turn and return to player 1."""
+        if self._state.get("game_over"):
+            return
+        current_player = self._state.get("turn", {}).get("current_player")
+        if current_player != self._ai_player.player_id:
+            return
+
+        self._ai_thinking = True
+        self.aiTurnChanged.emit()
+
+        self._ai_player.take_turn(self._game)
+
+        self._ai_thinking = False
+        self._state = self._game.get_visible_state()
+        self.stateChanged.emit()
+        self.aiTurnChanged.emit()

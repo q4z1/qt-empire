@@ -81,13 +81,15 @@ Bereits vorhanden:
 - Gefechte haben jetzt ebenfalls Soundeffekte, getrennt nach Land-, Luft- und Seegefecht
 - der Demo-Capture zeigt jetzt eine laengere, nachvollziehbare Sequenz mit Szenariowahl, Pfadvorschau, Bewegung, Save/Load und sichtbaren Gefechten
 - visuelles Flackern der Map waehrend Bewegungsanimationen behoben: movementLayer war faelschlicherweise Kind des Grid-Items und hat das Layout verformt; Zustandsupdates werden jetzt atomar als einzelnes boardSnapshot-Objekt gesetzt
+- einfacher KI-Gegner fuer Spieler 2 eingebaut: bewegt Einheiten auf naechste feindliche/neutrale Stadt zu, greift angrenzende Gegner an, setzt Produktion automatisch; KI-Zug laeuft nach End-Turn automatisch durch mit Overlay-Anzeige
 - Tests für Kernregeln
 
 - Verifiziert zuletzt:
-- `.venv/bin/pytest -q` -> `42 passed`
+- `.venv/bin/pytest -q` -> `49 passed`
 - `.venv/bin/python -m compileall main.py game tests`
 - Offscreen-QML-Load und `capture-demo` erfolgreich
 - Bewegungsanimation ohne Map-Blanking verifiziert
+- KI-Gegner spielt Spieler 2 automatisch nach End-Turn
 - aktualisierte Demo unter `captures/demo-launcher-ingame.mp4`
 
 ## Projekt starten
@@ -131,8 +133,9 @@ Tests:
 
 ## Naechster sinnvoller Schritt
 
-- Artillerie weiter feinbalancieren: Gegenfeuerwerte, Reichweite 3 und eventuelle Gegenmaßnahmen im Gegenspiel
-- danach Rueckkehr zu tieferen Spielregeln: Produktionssystem, weitere Einheitentypen, Siegbedingungen
+- Game-Over-Screen verbessern: Winner-Banner mit Neustart-Option
+- Produktion in der UI direkt per Stadtklick setzbar machen
+- mindestens 2-3 Szenarien aus JSON laden statt hardcodiert
 
 ## Struktur
 

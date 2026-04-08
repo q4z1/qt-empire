@@ -153,6 +153,7 @@ ApplicationWindow {
     property var movementAnimation: (typeof gameController !== "undefined" && gameController) ? gameController.movementAnimation : emptyMovementAnimation
     property real movementProgress: 0
     property bool movementTweenInternalStop: false
+    property bool aiThinking: (typeof gameController !== "undefined" && gameController) ? gameController.aiThinking : false
     property int selectedUnitId: (gameState && gameState.selected_unit_id !== undefined && gameState.selected_unit_id !== null)
                                  ? gameState.selected_unit_id
                                  : -1
@@ -288,7 +289,7 @@ ApplicationWindow {
 
             Button {
                 text: "End Turn"
-                enabled: !gameState.game_over
+                enabled: !gameState.game_over && !aiThinking
                 onClicked: gameController.endTurn()
             }
         }
@@ -1167,6 +1168,34 @@ ApplicationWindow {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // AI-turn overlay — shown while the AI is computing its moves
+    Rectangle {
+        anchors.fill: parent
+        visible: aiThinking
+        color: "#80000000"
+        z: 100
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 16
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Gegner denkt..."
+                color: "#f6f1e8"
+                font.pixelSize: 28
+                font.bold: true
+            }
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Spieler 2 ist am Zug"
+                color: "#c8bea8"
+                font.pixelSize: 16
             }
         }
     }

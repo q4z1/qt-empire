@@ -6,6 +6,7 @@ from pathlib import Path
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
+from .audio import GameAudio
 from .controller import GameController
 
 
@@ -14,7 +15,9 @@ def run_ui() -> int:
     engine = QQmlApplicationEngine()
 
     controller = GameController()
+    audio = GameAudio()
     engine.rootContext().setContextProperty("gameController", controller)
+    engine.rootContext().setContextProperty("gameAudio", audio)
 
     qml_path = Path(__file__).resolve().parent / "qml" / "Main.qml"
     engine.load(str(qml_path))
